@@ -1,1 +1,1 @@
-# Stundenplan-1.-Semester
+# Stundenplan-1.Semester
