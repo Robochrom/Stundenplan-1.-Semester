@@ -1,0 +1,73 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Stundenplan WS 26/27</title><style>
+:root{box-sizing:border-box;--bg:#f3f6f9;--card:#fff;--ink:#14212b;--mute:#5d6b77;--line:#dbe3ea;--chip:#e6edf3;--accent:#0b5cad}
+@media (prefers-color-scheme:dark){:root{--bg:#10171d;--card:#18222b;--ink:#e8eef3;--mute:#93a3b0;--line:#2a3743;--chip:#243240;--accent:#6aaeea}}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.4 -apple-system,system-ui,sans-serif}
+main{max-width:640px;margin:0 auto;padding:20px 14px 40px}h1{font-size:1.5rem;margin:0 0 2px}.sub{color:var(--mute);font-size:.9rem;margin:0 0 14px}
+input{position:absolute;opacity:0;pointer-events:none}
+.bar{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:10px}
+label{font-size:.9rem;border:1px solid var(--line);background:var(--chip);padding:8px 14px;border-radius:999px;cursor:pointer}
+#ra:checked~.bar label[for=ra],#rg:checked~.bar label[for=rg],#ru:checked~.bar label[for=ru],#vl:checked~.bar label[for=vl],#vw:checked~.bar label[for=vw]{background:var(--accent);color:#fff;border-color:var(--accent)}
+#rg:checked~#days .u,#ru:checked~#days .g,#rg:checked~#wk .u,#ru:checked~#wk .g{display:none}
+#vl:checked~#wk,#vw:checked~#days{display:none}
+.day{margin-bottom:22px}.day h2{font-size:1.1rem;margin:0 0 8px}
+.ev{display:grid;grid-template-columns:56px 1fr;gap:10px;margin-bottom:8px}
+.t{font-size:.85rem;color:var(--mute);text-align:right;padding-top:12px;line-height:1.25}
+.card{background:var(--card);border:1px solid var(--line);border-left:6px solid var(--c);border-radius:10px;padding:10px 12px}
+.card.opt{border-style:dashed;border-left-style:solid;background:transparent}
+.n{font-weight:650}.n small{font-weight:500;color:var(--c);margin-left:6px;font-size:.85rem}
+.m{font-size:.88rem;color:var(--mute);margin-top:2px}.tags{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+.tag{font-size:.75rem;padding:2px 8px;border-radius:999px;background:var(--chip)}.tag.mine{background:var(--c);color:#fff}
+#wk{overflow-x:auto;margin:0 -14px;padding:0 14px}
+.grid{min-width:520px;display:grid;grid-template-columns:38px repeat(5,1fr);gap:0 3px}
+.hd{font-weight:650;text-align:center;font-size:.85rem;padding:6px 0}
+.ax{position:relative;height:726px}.ax span{position:absolute;right:4px;font-size:.7rem;color:var(--mute);transform:translateY(-50%)}
+.col{position:relative;height:726px;background:repeating-linear-gradient(to bottom,var(--line) 0,var(--line) 1px,transparent 1px,transparent 66px);border-right:1px solid var(--line)}
+.b{position:absolute;left:1px;right:1px;border-radius:6px;color:#fff;font-size:.72rem;line-height:1.25;padding:4px 5px;overflow:hidden}
+.b.opt{opacity:.6;outline:1.5px dashed var(--ink);outline-offset:-2px}
+.note{font-size:.8rem;color:var(--mute);margin-top:8px}
+.box{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:12px 14px;font-size:.9rem;margin-top:18px}
+.box h3{font-size:1rem;margin:0 0 6px}.box p{margin:4px 0}
+
+#nowbar{display:none;background:var(--card);border:1px solid #d62828;border-left:6px solid #d62828;border-radius:10px;padding:9px 12px;font-size:.9rem;margin-bottom:12px}
+.now{position:absolute;left:0;right:0;height:0;border-top:2px solid #e11d1d;z-index:3;pointer-events:none}
+.now::before{content:"";position:absolute;left:-4px;top:-5px;width:8px;height:8px;border-radius:50%;background:#e11d1d}
+</style></head><body><main>
+<h1>Mein Stundenplan</h1><p class="sub">Maschinenbau · BMB1 Zug 2 · Winter 26/27 · Stand 30.09.2026</p>
+<div id="nowbar"></div><input type="radio" name="m" id="ra" checked><input type="radio" name="m" id="rg"><input type="radio" name="m" id="ru">
+<input type="radio" name="v" id="vl" checked><input type="radio" name="v" id="vw">
+<div class="bar"><label for="vl">Liste</label><label for="vw">Woche</label></div>
+<div class="bar"><label for="rg">Gerade KW</label><label for="ru">Ungerade KW</label><label for="ra">Alles</label></div>
+<div id="days"><section class="day"><h2>Montag</h2><div class="ev"><div class="t">08:00<br>09:30</div><div class="card" style="--c:#2a6fdb"><div class="n">Ingenieurmathematik 1<small>Übung 4.3</small></div><div class="m">Khayat · KA.107</div><div class="tags"><span class="tag ">Nur deine Mathe-Gruppe</span></div></div></div><div class="ev"><div class="t">09:45<br>11:15</div><div class="card" style="--c:#2a6fdb"><div class="n">Ingenieurmathematik 1<small>Übung 4.4</small></div><div class="m">Khayat · KA.104</div><div class="tags"><span class="tag ">Nur deine Mathe-Gruppe</span></div></div></div><div class="ev"><div class="t">12:15<br>13:45</div><div class="card" style="--c:#2a6fdb"><div class="n">Ingenieurmathematik 1<small>Vorlesung</small></div><div class="m">Basting · KA.034</div></div></div><div class="ev u"><div class="t">14:00<br>15:30</div><div class="card" style="--c:#2a9d8f"><div class="n">Werkstoffkunde<small>Vorlesung</small></div><div class="m">Frick · WD.001</div><div class="tags"><span class="tag ">Ungerade KW</span></div></div></div><div class="ev"><div class="t">17:30<br>19:00</div><div class="card opt" style="--c:#d6456b"><div class="n">Physik<small>Tutorium</small></div><div class="m">Tutor</div><div class="tags"><span class="tag ">Freiwillig</span></div></div></div></section><section class="day"><h2>Dienstag</h2><div class="ev"><div class="t">08:00<br>09:30</div><div class="card" style="--c:#d9822b"><div class="n">Konstruktion 1<small>Vorlesung</small></div><div class="m">Koch · KA.034</div></div></div><div class="ev"><div class="t">11:30<br>13:00</div><div class="card" style="--c:#7b4fd1"><div class="n">Technische Mechanik 1<small>Vorlesung</small></div><div class="m">Adrian · KA.213</div></div></div><div class="ev"><div class="t">14:00<br>15:30</div><div class="card" style="--c:#7b4fd1"><div class="n">Technische Mechanik 1<small>Vorlesung</small></div><div class="m">Adrian · KA.213</div></div></div><div class="ev g"><div class="t">17:30<br>19:00</div><div class="card" style="--c:#8a6d1f"><div class="n">CAD 1<small>Vorlesung</small></div><div class="m">Koch · online</div><div class="tags"><span class="tag ">Gerade KW</span><span class="tag ">Online</span></div></div></div></section><section class="day"><h2>Mittwoch</h2><div class="ev"><div class="t">08:00<br>09:30</div><div class="card" style="--c:#2a9d8f"><div class="n">Werkstoffkunde<small>Vorlesung</small></div><div class="m">Frick · WD.001</div></div></div><div class="ev"><div class="t">09:45<br>11:15</div><div class="card" style="--c:#2a9d8f"><div class="n">Werkstoffkunde<small>Vorlesung</small></div><div class="m">Frick · WD.001</div></div></div><div class="ev"><div class="t">11:30<br>13:00</div><div class="card" style="--c:#7b4fd1"><div class="n">Technische Mechanik 1<small>Vorlesung</small></div><div class="m">Adrian · KA.002</div></div></div><div class="ev"><div class="t">14:00<br>15:30</div><div class="card" style="--c:#3d8a3d"><div class="n">Informatik<small>Vorlesung</small></div><div class="m">Gölzer · KA.034</div><div class="tags"><span class="tag ">1. Semesterhälfte</span></div></div></div></section><section class="day"><h2>Donnerstag</h2><div class="ev"><div class="t">09:45<br>11:15</div><div class="card" style="--c:#d6456b"><div class="n">Physik<small>Vorlesung</small></div><div class="m">Kottcke · KA.215</div></div></div><div class="ev"><div class="t">11:30<br>13:00</div><div class="card" style="--c:#2a6fdb"><div class="n">Ingenieurmathematik 1<small>Vorlesung</small></div><div class="m">Basting · KA.213</div></div></div><div class="ev g"><div class="t">15:45<br>17:15</div><div class="card" style="--c:#d9822b"><div class="n">Konstruktion 1<small>Übung 6.4</small></div><div class="m">Frey · KA.336</div><div class="tags"><span class="tag mine">Deine Gruppe</span><span class="tag ">Gerade KW</span></div></div></div><div class="ev"><div class="t">17:30<br>19:00</div><div class="card opt" style="--c:#8a6d1f"><div class="n">CAD 1<small>Tutorium</small></div><div class="m">Tutor · online</div><div class="tags"><span class="tag ">Online</span><span class="tag ">Freiwillig</span></div></div></div></section><section class="day"><h2>Freitag</h2><div class="ev u"><div class="t">08:00<br>09:30</div><div class="card" style="--c:#d9822b"><div class="n">Konstruktion 1<small>Vorlesung</small></div><div class="m">Koch · KA.002</div><div class="tags"><span class="tag ">Ungerade KW</span></div></div></div><div class="ev u"><div class="t">09:45<br>11:15</div><div class="card" style="--c:#d6456b"><div class="n">Physik<small>Vorlesung</small></div><div class="m">Kottcke · KA.213</div><div class="tags"><span class="tag ">Ungerade KW</span></div></div></div><div class="ev"><div class="t">15:45<br>17:15</div><div class="card" style="--c:#3d8a3d"><div class="n">Informatik<small>Übung 7.4</small></div><div class="m">Wagner · KI.203</div><div class="tags"><span class="tag mine">Deine Gruppe</span></div></div></div></section></div>
+<div id="wk"><div class="grid"><div></div><div class="hd">Mo</div><div class="hd">Di</div><div class="hd">Mi</div><div class="hd">Do</div><div class="hd">Fr</div><div class="ax"><span style="top:0px">8:00</span><span style="top:66px">9:00</span><span style="top:132px">10:00</span><span style="top:198px">11:00</span><span style="top:264px">12:00</span><span style="top:330px">13:00</span><span style="top:396px">14:00</span><span style="top:462px">15:00</span><span style="top:528px">16:00</span><span style="top:594px">17:00</span><span style="top:660px">18:00</span><span style="top:726px">19:00</span></div><div class="col"><div class="b" style="top:0px;height:97px;background:#2a6fdb"><b>INMA1</b> Ue 4.3<br>KA.107</div><div class="b" style="top:116px;height:97px;background:#2a6fdb"><b>INMA1</b> Ue 4.4<br>KA.104</div><div class="b" style="top:280px;height:97px;background:#2a6fdb"><b>INMA1</b> SU<br>KA.034</div><div class="b u" style="top:396px;height:97px;background:#2a9d8f"><b>WSK</b> SU (U)<br>WD.001</div><div class="b opt" style="top:627px;height:97px;background:#d6456b"><b>PHYS</b> Tut<br></div></div><div class="col"><div class="b" style="top:0px;height:97px;background:#d9822b"><b>K1</b> SU<br>KA.034</div><div class="b" style="top:231px;height:97px;background:#7b4fd1"><b>TM1</b> SU<br>KA.213</div><div class="b" style="top:396px;height:97px;background:#7b4fd1"><b>TM1</b> SU<br>KA.213</div><div class="b g" style="top:627px;height:97px;background:#8a6d1f"><b>CAD1</b> SU (G)<br>online</div></div><div class="col"><div class="b" style="top:0px;height:97px;background:#2a9d8f"><b>WSK</b> SU<br>WD.001</div><div class="b" style="top:116px;height:97px;background:#2a9d8f"><b>WSK</b> SU<br>WD.001</div><div class="b" style="top:231px;height:97px;background:#7b4fd1"><b>TM1</b> SU<br>KA.002</div><div class="b" style="top:396px;height:97px;background:#3d8a3d"><b>INFO</b> SU<br>KA.034</div></div><div class="col"><div class="b" style="top:116px;height:97px;background:#d6456b"><b>PHYS</b> SU<br>KA.215</div><div class="b" style="top:231px;height:97px;background:#2a6fdb"><b>INMA1</b> SU<br>KA.213</div><div class="b g" style="top:512px;height:97px;background:#d9822b"><b>K1</b> Ue 6.4 (G) ★<br>KA.336</div><div class="b opt" style="top:627px;height:97px;background:#8a6d1f"><b>CAD1</b> Tut<br>online</div></div><div class="col"><div class="b u" style="top:0px;height:97px;background:#d9822b"><b>K1</b> SU (U)<br>KA.002</div><div class="b u" style="top:116px;height:97px;background:#d6456b"><b>PHYS</b> SU (U)<br>KA.213</div><div class="b" style="top:512px;height:97px;background:#3d8a3d"><b>INFO</b> Ue 7.4 ★<br>KI.203</div></div></div>
+<p class="note">★ deine Gruppe · (G) gerade KW · (U) ungerade KW · gestrichelt = freiwillig. Mathe-Übung 4.3 und 4.4: nur deine Gruppe.</p></div>
+<div class="box"><h3>Block / nach Vereinbarung</h3><p>Beginning:Pro, Schaal Roman</p><p>INMA1-Tutorium (freiwillig)</p><p>TM1-Tutorium, Gruppe 2.2 (freiwillig)</p></div>
+<div class="box"><h3>Kürzel</h3><p><b>SU</b> Vorlesung · <b>Ue</b> Übung in deiner Gruppe</p><p>Gestrichelte Karten sind freiwillig. Die Mathe-Übung gibt es in zwei Gruppen (4.3 und 4.4). Du gehörst nur zu einer.</p></div>
+</main><script>
+(function(){
+function isoWeek(d){var t=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));var n=t.getUTCDay()||7;t.setUTCDate(t.getUTCDate()+4-n);return Math.ceil(((t-Date.UTC(t.getUTCFullYear(),0,1))/864e5+1)/7);}
+function dur(m){m=Math.max(1,Math.round(m));var h=Math.floor(m/60),r=m%60;return h?(h+" Std"+(r?" "+r+" min":"")):(r+" min");}
+var first=true;
+function tick(){
+var now=new Date(),wd=now.getDay(),min=now.getHours()*60+now.getMinutes(),par=isoWeek(now)%2===0?"g":"u";
+if(first){first=false;var r=document.getElementById(par==="g"?"rg":"ru");if(r)r.checked=true;}
+var old=document.querySelectorAll(".now");for(var i=0;i<old.length;i++)old[i].parentNode.removeChild(old[i]);
+var bar=document.getElementById("nowbar"),cols=document.querySelectorAll("#wk .col");
+if(wd<1||wd>5){bar.style.display="block";bar.textContent="Wochenende. Heute keine Termine.";return;}
+if(min>=480&&min<=1140){var l=document.createElement("div");l.className="now";l.style.top=((min-480)*1.1)+"px";cols[wd-1].appendChild(l);}
+var bl=cols[wd-1].querySelectorAll(".b"),ev=[];
+for(var j=0;j<bl.length;j++){var b=bl[j];if(b.className.indexOf(par==="g"?" u":" g")>-1&&b.className.split(" ").indexOf(par==="g"?"u":"g")>-1)continue;
+var s=480+parseFloat(b.style.top)/1.1,e=s+(parseFloat(b.style.height)+2)/1.1;
+var parts=b.innerHTML.split("<br>"),nm=parts[0].replace(/<[^>]+>/g,"").replace(/\s*\((G|U)\)/,"").replace(/\s*★/,"").trim(),rm=(parts[1]||"").trim();
+ev.push({s:s,e:e,n:nm+(rm?" ("+rm+")":""),o:b.className.indexOf("opt")>-1});}
+ev.sort(function(a,b){return a.s-b.s;});
+var cur=null,nxt=null;
+for(var k=0;k<ev.length;k++){if(ev[k].s<=min&&min<ev[k].e&&!cur)cur=ev[k];if(ev[k].s>min&&!nxt)nxt=ev[k];}
+var t;
+if(cur)t="Jetzt: "+cur.n+(cur.o?" (freiwillig)":"")+" · endet in "+dur(cur.e-min);
+else if(nxt)t="Als Nächstes: "+nxt.n+(nxt.o?" (freiwillig)":"")+" · startet in "+dur(nxt.s-min);
+else t="Heute keine Termine mehr.";
+bar.style.display="block";bar.textContent=t;
+}
+tick();setInterval(tick,30000);
+})();
+</script></body></html>
