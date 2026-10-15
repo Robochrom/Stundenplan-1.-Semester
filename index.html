@@ -1,4 +1,29 @@
-<!DOCTYPE html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>Stundenplan WS 26/27</title><style>
+<!DOCTYPE html><html lang="de"><head><meta charset="utf-8">
+<script>
+/* ================================================================
+   DEINE EINSTELLUNGEN – gelten auf ALLEN Geräten
+   ----------------------------------------------------------------
+   AUSFÄLLE (an einem bestimmten Tag):
+     { datum: "21.10.2026", start: "08:00", fach: "Werkstoffkunde" },
+       ohne start          -> alle Termine dieses Fachs an dem Tag
+       ohne fach und start -> der ganze Tag fällt aus
+       optional: grund: "Prof krank"
+   ABWÄHLEN (dauerhaft, jede Woche):
+     { fach: "Physik" },                            -> ganzes Modul
+     { tag: "Mo", start: "08:00", fach: "Mathe" },  -> ein Termin
+   Fächer: Mathe, Konstruktion, Werkstoffkunde, Mechanik,
+           Physik, Informatik, CAD
+   Jeder Eintrag steht in { } und endet mit einem Komma.
+   Am einfachsten: Menü ☰ -> Reiter "GitHub" -> Code kopieren.
+   ================================================================ */
+// ▼▼▼ AB HIER ERSETZEN ▼▼▼
+var AUSFAELLE = [
+];
+var ABGEWAEHLT = [
+];
+// ▲▲▲ BIS HIER ERSETZEN ▲▲▲
+</script>
+<meta name="viewport" content="width=device-width,initial-scale=1"><title>Stundenplan WS 26/27</title><style>
 :root{box-sizing:border-box;--bg:#f3f6f9;--card:#fff;--ink:#14212b;--mute:#5d6b77;--line:#dbe3ea;--chip:#e6edf3;--accent:#0b5cad}
 @media (prefers-color-scheme:dark){:root{--bg:#10171d;--card:#18222b;--ink:#e8eef3;--mute:#93a3b0;--line:#2a3743;--chip:#243240;--accent:#6aaeea}}
 *{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.4 -apple-system,system-ui,sans-serif}
@@ -114,21 +139,48 @@ body.so .bar,body.so #days,body.so #wk,body.so #cur,body.so .extra,body.so #nowb
 .ev.live .card::before{content:"● läuft gerade";display:block;font-size:.72rem;font-weight:700;color:#e11d1d;margin-bottom:2px}
 .ev.past{opacity:.5}
 .b.live{outline:2px solid #e11d1d;outline-offset:1px;z-index:2}.b.past{opacity:.45}
+
+#cfgwarn{background:#fdecec;color:#8a1414;border:1px solid #f3b4b4;border-radius:10px;padding:9px 12px;font-size:.88rem;margin-bottom:12px}
+@media (prefers-color-scheme:dark){#cfgwarn{background:#3a1a1c;color:#ffc9c9;border-color:#6b2a2e}}
+#cfgwarn:empty{display:none}
+#pk,#pw,#pg{display:none}#set.t1 #pk,#set.t2 #pw,#set.t3 #pg{display:block}
+.gh{display:inline-block;font-size:.68rem;font-weight:700;padding:1px 7px;border-radius:999px;background:#24292f;color:#fff;margin-left:6px;vertical-align:1px}
+@media (prefers-color-scheme:dark){.gh{background:#e6edf3;color:#24292f}}
+.g-box{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;font-size:.9rem;margin-top:8px}
+.g-warn{background:#fdecec;color:#8a1414;border-color:#f3b4b4}
+@media (prefers-color-scheme:dark){.g-warn{background:#3a1a1c;color:#ffc9c9;border-color:#6b2a2e}}
+.g-warn li{margin:3px 0}.g-steps{margin:6px 0 0;padding-left:20px;font-size:.9rem}.g-steps li{margin:5px 0}
+#gcode{width:100%;min-height:150px;margin-top:8px;font:12px/1.45 ui-monospace,Menlo,monospace;border:1px solid var(--line);border-radius:10px;padding:10px;background:var(--card);color:var(--ink)}
+#set .g-main{background:var(--accent);color:#fff;border-color:var(--accent);font-weight:650}
+/* Ausfall: grau, schraffiert, dünner roter Rand */
+.ev.cxw .card{border:1px solid #e11d1d;border-left:6px solid #9aa6b1;background:repeating-linear-gradient(135deg,transparent 0 8px,rgba(120,130,140,.13) 8px 16px),var(--card);box-shadow:none}
+.b.cxw{background:repeating-linear-gradient(135deg,#8b97a3 0 6px,#77838f 6px 12px)!important;outline:1.5px solid #e11d1d;outline-offset:-1.5px;box-shadow:none}
+/* Läuft gerade: grün */
+.ev.live .card{box-shadow:0 0 0 2px #16a34a,0 4px 14px rgba(22,163,74,.22)}
+.ev.live .t{color:#16a34a;font-weight:700}
+.ev.live .card::before{content:"● LÄUFT GERADE";color:#16a34a;letter-spacing:.04em}
+.b.live{outline:2px solid #16a34a;outline-offset:1px;box-shadow:0 0 0 5px rgba(22,163,74,.22)}
+@media (prefers-reduced-motion:no-preference){.ev.live .card,.b.live{animation:lv 2.4s ease-in-out infinite}}
+@keyframes lv{50%{box-shadow:0 0 0 2px #16a34a,0 0 0 7px rgba(22,163,74,.12)}}
+.t-row.now{outline:2px solid #16a34a}.t-row.now .t-st{color:#16a34a}
+.c-lab.live{color:#16a34a}
 </style></head><body><main>
-<div class="top"><div><h1>Mein Stundenplan</h1><p class="sub">Maschinenbau · BMB1 Zug 2 · Winter 26/27 · Stand 30.09.2026</p></div><button id="gear" aria-label="Einstellungen"><span></span><span></span><span></span></button></div>
+<div class="top"><div><h1>Mein Stundenplan</h1><p class="sub">Maschinenbau · BMB1 Zug 2 · Winter 26/27 · Stand 30.09.2026</p></div><button id="gear" aria-label="Einstellungen"><span></span><span></span><span></span></button></div><div id="cfgwarn"></div>
 <input type="radio" name="m" id="ra" checked><input type="radio" name="m" id="rg"><input type="radio" name="m" id="ru">
 <input type="radio" name="v" id="vl" checked><input type="radio" name="v" id="vw"><input type="radio" name="v" id="va"><div id="nowbar"></div>
 <div class="bar"><label for="vl">Liste</label><label for="vw">Woche</label><label for="va">Aktuell</label></div>
 <div class="bar pbar"><label for="rg">Gerade KW</label><label for="ru">Ungerade KW</label><label for="ra">Alles</label></div>
 <div id="wsum"></div><div id="days"><section class="day"><h2>Montag</h2><div class="ev" data-i="0"><div class="t">08:00<br>09:30</div><div class="card" style="--c:#2a6fdb"><div class="n">Ingenieurmathematik 1<small>Übung 4.3</small></div><div class="m">Khayat · KA.107</div><div class="tags"><span class="tag ">Freie Wahl (4.3 oder 4.4)</span></div></div></div><div class="ev" data-i="1"><div class="t">09:45<br>11:15</div><div class="card" style="--c:#2a6fdb"><div class="n">Ingenieurmathematik 1<small>Übung 4.4</small></div><div class="m">Khayat · KA.104</div><div class="tags"><span class="tag ">Freie Wahl (4.3 oder 4.4)</span></div></div></div><div class="ev" data-i="2"><div class="t">12:15<br>13:45</div><div class="card" style="--c:#2a6fdb"><div class="n">Ingenieurmathematik 1<small>Vorlesung</small></div><div class="m">Basting · KA.034</div></div></div><div class="ev u" data-i="3"><div class="t">14:00<br>15:30</div><div class="card" style="--c:#2a9d8f"><div class="n">Werkstoffkunde<small>Vorlesung</small></div><div class="m">Frick · WD.001</div><div class="tags"><span class="tag ">Ungerade KW</span></div></div></div><div class="ev" data-i="4"><div class="t">17:30<br>19:00</div><div class="card opt" style="--c:#d6456b"><div class="n">Physik<small>Tutorium</small></div><div class="m">Tutor</div><div class="tags"><span class="tag ">Freiwillig</span></div></div></div></section><section class="day"><h2>Dienstag</h2><div class="ev" data-i="5"><div class="t">08:00<br>09:30</div><div class="card" style="--c:#d9822b"><div class="n">Konstruktion 1<small>Vorlesung</small></div><div class="m">Koch · KA.034</div></div></div><div class="ev" data-i="6"><div class="t">11:30<br>13:00</div><div class="card" style="--c:#7b4fd1"><div class="n">Technische Mechanik 1<small>Vorlesung</small></div><div class="m">Adrian · KA.213</div></div></div><div class="ev" data-i="7"><div class="t">14:00<br>15:30</div><div class="card" style="--c:#7b4fd1"><div class="n">Technische Mechanik 1<small>Vorlesung</small></div><div class="m">Adrian · KA.213</div></div></div><div class="ev g" data-i="8"><div class="t">17:30<br>19:00</div><div class="card" style="--c:#8a6d1f"><div class="n">CAD 1<small>Vorlesung</small></div><div class="m">Koch · online</div><div class="tags"><span class="tag ">Gerade KW</span><span class="tag ">Online</span></div></div></div></section><section class="day"><h2>Mittwoch</h2><div class="ev" data-i="9"><div class="t">08:00<br>09:30</div><div class="card" style="--c:#2a9d8f"><div class="n">Werkstoffkunde<small>Vorlesung</small></div><div class="m">Frick · WD.001</div></div></div><div class="ev" data-i="10"><div class="t">09:45<br>11:15</div><div class="card" style="--c:#2a9d8f"><div class="n">Werkstoffkunde<small>Vorlesung</small></div><div class="m">Frick · WD.001</div></div></div><div class="ev" data-i="11"><div class="t">11:30<br>13:00</div><div class="card" style="--c:#7b4fd1"><div class="n">Technische Mechanik 1<small>Vorlesung</small></div><div class="m">Adrian · KA.002</div></div></div><div class="ev" data-i="12"><div class="t">14:00<br>15:30</div><div class="card" style="--c:#3d8a3d"><div class="n">Informatik<small>Vorlesung</small></div><div class="m">Gölzer · KA.034</div><div class="tags"><span class="tag ">1. Semesterhälfte</span></div></div></div></section><section class="day"><h2>Donnerstag</h2><div class="ev" data-i="13"><div class="t">09:45<br>11:15</div><div class="card" style="--c:#d6456b"><div class="n">Physik<small>Vorlesung</small></div><div class="m">Kottcke · KA.215</div></div></div><div class="ev" data-i="14"><div class="t">11:30<br>13:00</div><div class="card" style="--c:#2a6fdb"><div class="n">Ingenieurmathematik 1<small>Vorlesung</small></div><div class="m">Basting · KA.213</div></div></div><div class="ev g" data-i="15"><div class="t">15:45<br>17:15</div><div class="card" style="--c:#d9822b"><div class="n">Konstruktion 1<small>Übung 6.4</small></div><div class="m">Frey · KA.336</div><div class="tags"><span class="tag mine">Deine Gruppe</span><span class="tag ">Gerade KW</span></div></div></div><div class="ev" data-i="16"><div class="t">17:30<br>19:00</div><div class="card opt" style="--c:#8a6d1f"><div class="n">CAD 1<small>Tutorium</small></div><div class="m">Tutor · online</div><div class="tags"><span class="tag ">Online</span><span class="tag ">Freiwillig</span></div></div></div></section><section class="day"><h2>Freitag</h2><div class="ev u" data-i="17"><div class="t">08:00<br>09:30</div><div class="card" style="--c:#d9822b"><div class="n">Konstruktion 1<small>Vorlesung</small></div><div class="m">Koch · KA.002</div><div class="tags"><span class="tag ">Ungerade KW</span></div></div></div><div class="ev u" data-i="18"><div class="t">09:45<br>11:15</div><div class="card" style="--c:#d6456b"><div class="n">Physik<small>Vorlesung</small></div><div class="m">Kottcke · KA.213</div><div class="tags"><span class="tag ">Ungerade KW</span></div></div></div><div class="ev" data-i="19"><div class="t">15:45<br>17:15</div><div class="card" style="--c:#3d8a3d"><div class="n">Informatik<small>Übung 7.4</small></div><div class="m">Wagner · KI.203</div><div class="tags"><span class="tag mine">Deine Gruppe</span></div></div></div></section></div>
 <div id="wk"><div class="grid"><div></div><div class="hd">Mo</div><div class="hd">Di</div><div class="hd">Mi</div><div class="hd">Do</div><div class="hd">Fr</div><div class="ax"><span style="top:0px">8:00</span><span style="top:66px">9:00</span><span style="top:132px">10:00</span><span style="top:198px">11:00</span><span style="top:264px">12:00</span><span style="top:330px">13:00</span><span style="top:396px">14:00</span><span style="top:462px">15:00</span><span style="top:528px">16:00</span><span style="top:594px">17:00</span><span style="top:660px">18:00</span><span style="top:726px">19:00</span></div><div class="col"><div class="b" data-i="0" style="top:0px;height:97px;background:#2a6fdb"><b>INMA1</b> Ue 4.3<br>KA.107</div><div class="b" data-i="1" style="top:116px;height:97px;background:#2a6fdb"><b>INMA1</b> Ue 4.4<br>KA.104</div><div class="b" data-i="2" style="top:280px;height:97px;background:#2a6fdb"><b>INMA1</b> SU<br>KA.034</div><div class="b u" data-i="3" style="top:396px;height:97px;background:#2a9d8f"><b>WSK</b> SU (U)<br>WD.001</div><div class="b opt" data-i="4" style="top:627px;height:97px;background:#d6456b"><b>PHYS</b> Tut<br></div></div><div class="col"><div class="b" data-i="5" style="top:0px;height:97px;background:#d9822b"><b>K1</b> SU<br>KA.034</div><div class="b" data-i="6" style="top:231px;height:97px;background:#7b4fd1"><b>TM1</b> SU<br>KA.213</div><div class="b" data-i="7" style="top:396px;height:97px;background:#7b4fd1"><b>TM1</b> SU<br>KA.213</div><div class="b g" data-i="8" style="top:627px;height:97px;background:#8a6d1f"><b>CAD1</b> SU (G)<br>online</div></div><div class="col"><div class="b" data-i="9" style="top:0px;height:97px;background:#2a9d8f"><b>WSK</b> SU<br>WD.001</div><div class="b" data-i="10" style="top:116px;height:97px;background:#2a9d8f"><b>WSK</b> SU<br>WD.001</div><div class="b" data-i="11" style="top:231px;height:97px;background:#7b4fd1"><b>TM1</b> SU<br>KA.002</div><div class="b" data-i="12" style="top:396px;height:97px;background:#3d8a3d"><b>INFO</b> SU<br>KA.034</div></div><div class="col"><div class="b" data-i="13" style="top:116px;height:97px;background:#d6456b"><b>PHYS</b> SU<br>KA.215</div><div class="b" data-i="14" style="top:231px;height:97px;background:#2a6fdb"><b>INMA1</b> SU<br>KA.213</div><div class="b g" data-i="15" style="top:512px;height:97px;background:#d9822b"><b>K1</b> Ue 6.4 (G) ★<br>KA.336</div><div class="b opt" data-i="16" style="top:627px;height:97px;background:#8a6d1f"><b>CAD1</b> Tut<br>online</div></div><div class="col"><div class="b u" data-i="17" style="top:0px;height:97px;background:#d9822b"><b>K1</b> SU (U)<br>KA.002</div><div class="b u" data-i="18" style="top:116px;height:97px;background:#d6456b"><b>PHYS</b> SU (U)<br>KA.213</div><div class="b" data-i="19" style="top:512px;height:97px;background:#3d8a3d"><b>INFO</b> Ue 7.4 ★<br>KI.203</div></div></div>
-<p class="note">★ deine Gruppe · (G) gerade KW · (U) ungerade KW · gestrichelt = freiwillig. Mathe-Übung Mo: 4.3 oder 4.4 frei wählbar.</p></div>
+<p class="note">★ deine Gruppe · (G)/(U) gerade/ungerade KW · gestrichelt = freiwillig · grün umrandet = läuft gerade · grau schraffiert mit rotem Rand = fällt aus. Mathe-Übung Mo: 4.3 oder 4.4 frei wählbar.</p></div>
 <div id="set"></div><div id="cur"><p class="note">Die Ansicht „Aktuell“ braucht JavaScript. Öffne die Datei in Safari oder über den Link.</p></div><div class="box extra"><h3>Block / nach Vereinbarung</h3><p>Beginning:Pro, Schaal Roman</p><p>INMA1-Tutorium (freiwillig)</p><p>TM1-Tutorium, Gruppe 2.2 (freiwillig)</p></div>
 <div class="box extra"><h3>Kürzel</h3><p><b>SU</b> Vorlesung · <b>Ue</b> Übung in deiner Gruppe</p><p>Gestrichelte Karten sind freiwillig. Die Mathe-Übung am Montag wählst du frei (4.3 um 8:00 oder 4.4 um 9:45). Die andere kannst du im Menü unter „Wiederkehrend“ abwählen.</p></div>
 </main><script>
 (function(){
 var E=[[1, 480, 570, "Ingenieurmathematik 1", "#2a6fdb", "Übung 4.3", "Khayat", "KA.107", "x"], [1, 585, 675, "Ingenieurmathematik 1", "#2a6fdb", "Übung 4.4", "Khayat", "KA.104", "x"], [1, 735, 825, "Ingenieurmathematik 1", "#2a6fdb", "Vorlesung", "Basting", "KA.034", ""], [1, 840, 930, "Werkstoffkunde", "#2a9d8f", "Vorlesung", "Frick", "WD.001", "u"], [1, 1050, 1140, "Physik", "#d6456b", "Tutorium", "Tutor", "", "f"], [2, 480, 570, "Konstruktion 1", "#d9822b", "Vorlesung", "Koch", "KA.034", ""], [2, 690, 780, "Technische Mechanik 1", "#7b4fd1", "Vorlesung", "Adrian", "KA.213", ""], [2, 840, 930, "Technische Mechanik 1", "#7b4fd1", "Vorlesung", "Adrian", "KA.213", ""], [2, 1050, 1140, "CAD 1", "#8a6d1f", "Vorlesung", "Koch", "online", "go"], [3, 480, 570, "Werkstoffkunde", "#2a9d8f", "Vorlesung", "Frick", "WD.001", ""], [3, 585, 675, "Werkstoffkunde", "#2a9d8f", "Vorlesung", "Frick", "WD.001", ""], [3, 690, 780, "Technische Mechanik 1", "#7b4fd1", "Vorlesung", "Adrian", "KA.002", ""], [3, 840, 930, "Informatik", "#3d8a3d", "Vorlesung", "Gölzer", "KA.034", "h"], [4, 585, 675, "Physik", "#d6456b", "Vorlesung", "Kottcke", "KA.215", ""], [4, 690, 780, "Ingenieurmathematik 1", "#2a6fdb", "Vorlesung", "Basting", "KA.213", ""], [4, 945, 1035, "Konstruktion 1", "#d9822b", "Übung 6.4", "Frey", "KA.336", "gm"], [4, 1050, 1140, "CAD 1", "#8a6d1f", "Tutorium", "Tutor", "online", "fo"], [5, 480, 570, "Konstruktion 1", "#d9822b", "Vorlesung", "Koch", "KA.002", "u"], [5, 585, 675, "Physik", "#d6456b", "Vorlesung", "Kottcke", "KA.213", "u"], [5, 945, 1035, "Informatik", "#3d8a3d", "Übung 7.4", "Wagner", "KI.203", "m"]];
 var DN=["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"],DS=["So","Mo","Di","Mi","Do","Fr","Sa"],MN=["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
+var ALIAS={"Ingenieurmathematik 1":["inma","inma1","mathe","mathe1","mathematik","ingenieurmathematik"],"Konstruktion 1":["k1","konstruktion","kon"],"Werkstoffkunde":["wsk","werkstoff","werkstoffe"],"Technische Mechanik 1":["tm","tm1","mechanik","technischemechanik"],"Physik":["phys"],"Informatik":["info","cs"],"CAD 1":["cad","cad1"]};
+var START="// ▼▼▼ AB HIER ERSETZEN ▼▼▼",END="// ▲▲▲ BIS HIER ERSETZEN ▲▲▲";
 var K="sp_state_v1",st={off:[],cx:[]};
 try{var raw=localStorage.getItem(K);if(raw){var o=JSON.parse(raw);if(o&&o.off&&o.cx)st=o;}}catch(x){}
 function save(){try{localStorage.setItem(K,JSON.stringify(st));}catch(x){}}
@@ -140,14 +192,41 @@ function ds(d){return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate());}
 function pd(s){var a=s.split("-");return new Date(+a[0],+a[1]-1,+a[2]);}
 function dmy(d){return p(d.getDate())+"."+p(d.getMonth()+1)+"."+d.getFullYear();}
 function parOf(d){return isoWeek(d)%2===0?"g":"u";}
-function isOff(i){return st.off.indexOf(i)>-1;}
-function cxIdx(i,s){for(var k=0;k<st.cx.length;k++)if(st.cx[k].i===i&&st.cx[k].d===s)return k;return -1;}
-function hasCx(s){for(var k=0;k<st.cx.length;k++)if(st.cx[k].d===s)return true;return false;}
-function good(i,s){return !isOff(i)&&cxIdx(i,s)<0;}
 function evFor(d){var wd=d.getDay(),par=parOf(d),l=[];for(var i=0;i<E.length;i++){var e=E[i],f=e[8];if(e[0]!==wd)continue;if(f.indexOf("g")>-1&&par!=="g")continue;if(f.indexOf("u")>-1&&par!=="u")continue;l.push(i);}l.sort(function(a,b){return E[a][1]-E[b][1];});return l;}
+function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
+/* ---------- GitHub-Einstellungen einlesen ---------- */
+function norm(s){return String(s==null?"":s).toLowerCase().replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/ß/g,"ss").replace(/[^a-z0-9]/g,"");}
+function matchFach(i,f){var n=norm(f);if(!n)return true;var nm=E[i][3];if((ALIAS[nm]||[]).indexOf(n)>-1)return true;return n.length>=3&&norm(nm).indexOf(n)===0;}
+function matchArt(i,a){var n=norm(a);if(!n)return true;var t=norm(E[i][5]);return t.indexOf(n)===0||(n==="su"&&t.indexOf("vorlesung")===0)||(n==="ue"&&t.indexOf("uebung")===0);}
+function parseStart(s){if(s==null||s==="")return null;var m=String(s).trim().match(/^(\d{1,2})(?:[:.](\d{2}))?$/);return m?(+m[1])*60+(m[2]?+m[2]:0):NaN;}
+function parseD(s){s=String(s==null?"":s).trim();var m=s.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/),y,mo,d;if(m){d=+m[1];mo=+m[2];y=+m[3];}else{m=s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);if(!m)return null;y=+m[1];mo=+m[2];d=+m[3];}var r=new Date(y,mo-1,d);return(r.getDate()===d&&r.getMonth()===mo-1)?r:null;}
+function parseTag(s){var n=norm(s);if(!n)return null;return["so","mo","di","mi","do","fr","sa"].indexOf(n.slice(0,2));}
+function desc(o){var a=[];["datum","tag","start","fach","art"].forEach(function(k){if(o[k])a.push(o[k]);});return "„"+(a.join(" ")||"leerer Eintrag")+"“";}
+var CFG_OK=(typeof AUSFAELLE!=="undefined"&&typeof ABGEWAEHLT!=="undefined"),RAW_A=[],RAW_W=[],GOFF=[],GCX=[],WARN=[];
+if(!CFG_OK)WARN.push("Die Einstellungen auf GitHub enthalten einen Tippfehler (meist ein fehlendes Komma oder Anführungszeichen) und werden gerade ignoriert. Mit „Ganze Datei kopieren“ erzeugst du einen sauberen Stand.");
+else{RAW_A=Array.isArray(AUSFAELLE)?AUSFAELLE:[];RAW_W=Array.isArray(ABGEWAEHLT)?ABGEWAEHLT:[];
+RAW_A.forEach(function(o){if(!o||typeof o!=="object")return;var d=parseD(o.datum);if(!d){WARN.push("Ausfall ohne gültiges Datum: "+desc(o)+". Format: TT.MM.JJJJ");return;}
+var sm=parseStart(o.start);if(sm!==null&&isNaN(sm)){WARN.push("Ungültige Uhrzeit bei "+desc(o)+". Format: 08:00");return;}
+var l=evFor(d).filter(function(i){return matchFach(i,o.fach)&&matchArt(i,o.art)&&(sm===null||E[i][1]===sm);});
+if(!l.length){WARN.push("Kein passender Termin für "+desc(o)+". Stimmen Datum, Uhrzeit und Fach?");return;}
+l.forEach(function(i){GCX.push({i:i,d:ds(d),g:o.grund?String(o.grund):""});});});
+RAW_W.forEach(function(o){if(!o||typeof o!=="object")return;if(!norm(o.fach)){WARN.push("Abwahl ohne Fach: "+desc(o));return;}
+var td=parseTag(o.tag);if(td===-1){WARN.push("Unbekannter Tag bei "+desc(o)+". Nutze Mo, Di, Mi, Do oder Fr");return;}
+var sm=parseStart(o.start);if(sm!==null&&isNaN(sm)){WARN.push("Ungültige Uhrzeit bei "+desc(o));return;}
+var l=[];for(var i=0;i<E.length;i++)if(matchFach(i,o.fach)&&matchArt(i,o.art)&&(td===null||E[i][0]===td)&&(sm===null||E[i][1]===sm))l.push(i);
+if(!l.length){WARN.push("Kein passender Termin für Abwahl "+desc(o));return;}
+l.forEach(function(i){if(GOFF.indexOf(i)<0)GOFF.push(i);});});}
+/* ---------- Status ---------- */
+function isOffG(i){return GOFF.indexOf(i)>-1;}
+function isOff(i){return st.off.indexOf(i)>-1||isOffG(i);}
+function cxIdx(i,s){for(var k=0;k<st.cx.length;k++)if(st.cx[k].i===i&&st.cx[k].d===s)return k;return -1;}
+function gcx(i,s){for(var k=0;k<GCX.length;k++)if(GCX[k].i===i&&GCX[k].d===s)return GCX[k];return null;}
+function isCx(i,s){return cxIdx(i,s)>-1||!!gcx(i,s);}
+function hasCx(s){var k;for(k=0;k<st.cx.length;k++)if(st.cx[k].d===s)return true;for(k=0;k<GCX.length;k++)if(GCX[k].d===s)return true;return false;}
+function good(i,s){return !isOff(i)&&!isCx(i,s);}
 function tags(f){var t=[];if(f.indexOf("m")>-1)t.push("Deine Gruppe");if(f.indexOf("x")>-1)t.push("Freie Wahl (4.3 oder 4.4)");if(f.indexOf("o")>-1)t.push("Online");if(f.indexOf("f")>-1)t.push("Freiwillig");return t.length?'<div class="c-room" style="margin-top:6px">'+t.join(" · ")+'</div>':"";}
 function card(lab,e,chip,prog){var r=[e[6],e[7]].filter(function(x){return x;}).join(" · ");
-return '<div class="c-card" style="--c:'+e[4]+'"><div class="c-lab">'+lab+'</div><div class="c-big">'+e[3]+'</div><div class="c-sub">'+e[5]+'</div><div class="c-time">'+fmt(e[1])+' – '+fmt(e[2])+'</div><div class="c-room">'+r+'</div>'+tags(e[8])+(chip?'<div class="c-chip">'+chip+'</div>':"")+(prog!=null?'<div class="c-bar"><i style="width:'+Math.round(prog*100)+'%"></i></div>':"")+'</div>';}
+return '<div class="c-card" style="--c:'+e[4]+'"><div class="c-lab'+(lab==="JETZT"?' live':'')+'">'+(lab==="JETZT"?'● ':'')+lab+'</div><div class="c-big">'+e[3]+'</div><div class="c-sub">'+e[5]+'</div><div class="c-time">'+fmt(e[1])+' – '+fmt(e[2])+'</div><div class="c-room">'+r+'</div>'+tags(e[8])+(chip?'<div class="c-chip">'+chip+'</div>':"")+(prog!=null?'<div class="c-bar"><i style="width:'+Math.round(prog*100)+'%"></i></div>':"")+'</div>';}
 function empty(lab,big,sub){return '<div class="c-card c-empty" style="--c:var(--line)"><div class="c-lab">'+lab+'</div><div class="c-big">'+big+'</div><div class="c-sub">'+sub+'</div></div>';}
 function render(){
 var now=new Date(),wd=now.getDay(),min=now.getHours()*60+now.getMinutes(),s0=ds(now),par=parOf(now),wk=(wd>=1&&wd<=5);
@@ -161,15 +240,15 @@ for(var j=0;j<act.length;j++){var q=E[act[j]];if(!cur&&q[1]<=min&&min<q[2])cur=q
 if(cur)out+=card("JETZT",cur,"endet in "+dur(cur[2]-min),(min-cur[1])/(cur[2]-cur[1]));
 else if(!wk)out+=empty("JETZT","Wochenende","Keine Termine.");
 else if(!ids.length)out+=empty("JETZT","Heute frei","Keine Termine heute.");
-else if(!act.length)out+=empty("JETZT","Heute frei","Alle Termine fallen aus oder sind deaktiviert.");
+else if(!act.length)out+=empty("JETZT","Heute frei","Alle Termine fallen aus oder sind abgewählt.");
 else if(min<E[act[0]][1])out+=empty("JETZT","Noch nichts los","Heute geht es um "+fmt(E[act[0]][1])+" Uhr los.");
 else if(nxt)out+=empty("JETZT","Gerade frei","Pause bis "+fmt(nxt[1])+" Uhr.");
 else out+=empty("JETZT","Feierabend","Für heute ist alles geschafft.");
 if(nxt)out+=card("DANACH",nxt,"startet in "+dur(nxt[1]-min),null);
 else out+=empty("DANACH","Heute nichts mehr","Keine weiteren Termine heute.");
 if(ids.length){out+='<div class="c-lab" style="margin:20px 0 8px">HEUTE IM ÜBERBLICK</div>';
-for(var k=0;k<ids.length;k++){var i2=ids[k],r=E[i2],cls,sl;
-if(isOff(i2)){cls="off";sl="deaktiviert";}else if(cxIdx(i2,s0)>-1){cls="cxl";sl="fällt aus";}else if(r[2]<=min){cls="done";sl="vorbei";}else if(r[1]<=min){cls="now";sl="läuft";}else{cls="later";sl="";}
+for(var k=0;k<ids.length;k++){var i2=ids[k],r=E[i2],cls,sl,g;
+if(isOff(i2)){cls="off";sl="abgewählt";}else if(isCx(i2,s0)){cls="cxl";g=gcx(i2,s0);sl="fällt aus"+(g&&g.g?"<br>"+esc(g.g):"");}else if(r[2]<=min){cls="done";sl="vorbei";}else if(r[1]<=min){cls="now";sl="● läuft";}else{cls="later";sl="";}
 var rm=[r[6],r[7]].filter(function(x){return x;}).join(" · ");
 out+='<div class="t-row '+cls+'" style="--c:'+r[4]+'"><div class="t-tm">'+fmt(r[1])+'<br>'+fmt(r[2])+'</div><div class="t-nm"><b>'+r[3]+'</b> <small>'+r[5]+'</small><div class="c-room">'+rm+'</div></div><div class="t-st">'+sl+'</div></div>';}}
 document.getElementById("cur").innerHTML=out;}
@@ -177,7 +256,7 @@ function enhance(){
 var now=new Date(),td=now.getDay(),wd7=td||7,mon=new Date(now.getFullYear(),now.getMonth(),now.getDate()-wd7+1),min=now.getHours()*60+now.getMinutes(),s0=ds(now);
 var secs=document.querySelectorAll("#days .day"),hds=document.querySelectorAll("#wk .hd"),cols=document.querySelectorAll("#wk .col"),tot=0,mins=0,cx=0;
 for(var d=1;d<=5;d++){var dt=new Date(mon.getFullYear(),mon.getMonth(),mon.getDate()+d-1),s=ds(dt),l=evFor(dt),a=l.filter(function(i){return good(i,s);});
-cx+=l.filter(function(i){return !isOff(i)&&cxIdx(i,s)>-1;}).length;tot+=a.length;for(var k=0;k<a.length;k++)mins+=E[a[k]][2]-E[a[k]][1];
+cx+=l.filter(function(i){return !isOff(i)&&isCx(i,s);}).length;tot+=a.length;for(var k=0;k<a.length;k++)mins+=E[a[k]][2]-E[a[k]][1];
 var dm=p(dt.getDate())+"."+p(dt.getMonth()+1)+".",info=a.length?(a.length+(a.length===1?" Termin":" Termine")+" · "+fmt(E[a[0]][1])+"–"+fmt(E[a[a.length-1]][2])):"frei";
 var sec=secs[d-1];if(sec){var h2=sec.querySelector("h2");if(!h2.getAttribute("data-n"))h2.setAttribute("data-n",h2.textContent);h2.innerHTML=h2.getAttribute("data-n")+' <span class="dmeta">'+dm+' · '+info+'</span>';sec.classList.toggle("today",d===td);}
 var hd=hds[d-1];if(hd){if(!hd.getAttribute("data-n"))hd.setAttribute("data-n",hd.textContent);hd.innerHTML=hd.getAttribute("data-n")+'<small>'+dm+'</small>';hd.classList.toggle("today",d===td);}
@@ -193,8 +272,26 @@ var els=document.querySelectorAll("[data-i]");
 for(var n=0;n<els.length;n++){var el=els[n],i=parseInt(el.getAttribute("data-i"),10),e=E[i];
 el.classList.remove("off");el.classList.remove("cxw");el.classList.remove("skip");el.removeAttribute("data-note");el.removeAttribute("title");
 var d=new Date(mon.getFullYear(),mon.getMonth(),mon.getDate()+e[0]-1),dss=ds(d);
-if(isOff(i)){el.classList.add("off");el.setAttribute("data-note","deaktiviert");el.classList.add("skip");}
-else if(cxIdx(i,dss)>-1){var nt="Fällt aus am "+p(d.getDate())+"."+p(d.getMonth()+1)+".";el.classList.add("cxw");el.setAttribute("data-note",nt);el.setAttribute("title",nt);if(dss===s0)el.classList.add("skip");}}}
+if(isOff(i)){el.classList.add("off");el.setAttribute("data-note","abgewählt");el.classList.add("skip");}
+else if(isCx(i,dss)){var g=gcx(i,dss),nt="Fällt aus am "+p(d.getDate())+"."+p(d.getMonth()+1)+"."+(g&&g.g?" · "+g.g:"");el.classList.add("cxw");el.setAttribute("data-note",nt);el.setAttribute("title",nt);if(dss===s0)el.classList.add("skip");}}
+var w=document.getElementById("cfgwarn");if(w)w.innerHTML=WARN.length?"⚠ "+(WARN.length===1?"Ein Eintrag":WARN.length+" Einträge")+" aus den GitHub-Einstellungen konnte"+(WARN.length===1?"":"n")+" nicht übernommen werden. Details im Menü ☰ unter „GitHub“.":"";}
+/* ---------- Code für GitHub ---------- */
+function qv(v){return '"'+String(v).replace(/\\/g,"\\\\").replace(/"/g,'\\"')+'"';}
+function ser(o,keys){var a=[];keys.forEach(function(k){if(o[k]!=null&&o[k]!=="")a.push(k+": "+qv(o[k]));});return "  { "+a.join(", ")+" },";}
+function genBlock(){var s0=ds(new Date()),A=[],W=[];
+RAW_A.forEach(function(o){if(!o||typeof o!=="object")return;var d=parseD(o.datum);if(d&&ds(d)<s0)return;A.push(o);});
+st.cx.forEach(function(c){if(c.d<s0||gcx(c.i,c.d))return;var e=E[c.i];A.push({datum:dmy(pd(c.d)),start:fmt(e[1]),fach:e[3]});});
+A.sort(function(x,y){var a=parseD(x.datum),b=parseD(y.datum);if(!a&&!b)return 0;if(!a)return 1;if(!b)return -1;return a-b||((parseStart(x.start)||0)-(parseStart(y.start)||0));});
+RAW_W.forEach(function(o){if(o&&typeof o==="object")W.push(o);});
+st.off.forEach(function(i){if(isOffG(i))return;var e=E[i];W.push({tag:DS[e[0]],start:fmt(e[1]),fach:e[3]});});
+return START+"\nvar AUSFAELLE = [\n"+A.map(function(o){return ser(o,["datum","start","fach","art","grund"]);}).join("\n")+(A.length?"\n":"")+"];\nvar ABGEWAEHLT = [\n"+W.map(function(o){return ser(o,["tag","start","fach","art"]);}).join("\n")+(W.length?"\n":"")+"];\n"+END;}
+var SRC=null;
+try{if(/^https?:/.test(location.protocol)&&window.fetch)fetch(location.href,{cache:"no-store"}).then(function(r){return r.ok?r.text():null;}).then(function(t){if(t&&t.indexOf(START)>-1&&t.indexOf(END)>-1){SRC=t;if(tab==="g")buildSet();}}).catch(function(){});}catch(x){}
+function fullFile(){if(!SRC)return null;var a=SRC.indexOf(START),b=SRC.indexOf(END,a);if(a<0||b<0)return null;return SRC.slice(0,a)+genBlock()+SRC.slice(b+END.length);}
+function copyText(txt,btn){var old=btn.textContent;function ok(){btn.textContent="Kopiert ✓";setTimeout(function(){btn.textContent=old;},2000);}
+function fb(){var ta=document.createElement("textarea");ta.value=txt;ta.setAttribute("readonly","");ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();ta.setSelectionRange(0,txt.length);var r=false;try{r=document.execCommand("copy");}catch(x){}document.body.removeChild(ta);if(r)ok();else btn.textContent="Ging nicht – Text im Feld markieren";}
+try{if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(ok,fb);return;}}catch(x){}fb();}
+/* ---------- Menü ---------- */
 var set=document.getElementById("set"),gear=document.getElementById("gear"),tab="k",t0=new Date(),vy=t0.getFullYear(),vm=t0.getMonth(),sel=ds(t0);
 function paneK(){
 var s0=ds(new Date()),first=new Date(vy,vm,1),off=(first.getDay()+6)%7,n=new Date(vy,vm+1,0).getDate();
@@ -206,11 +303,14 @@ h+='</div><div class="s-act"><button id="todaybtn">Heute</button></div>';
 var sd=pd(sel),wd=sd.getDay(),l=(wd>=1&&wd<=5)?evFor(sd):[];
 h+='<h3>'+DN[wd]+', '+dmy(sd)+'</h3><div class="c-room">KW '+isoWeek(sd)+' · '+(parOf(sd)==="g"?"gerade":"ungerade")+' Woche</div>';
 if(!l.length)h+='<div class="c-room" style="margin-top:8px">An diesem Tag finden keine Termine statt.</div>';
-for(var k=0;k<l.length;k++){var i=l[k],e=E[i],c=cxIdx(i,sel)>-1,o=isOff(i);
-h+='<label class="s-row" style="margin-top:6px"><span class="s-dot" style="background:'+e[4]+'"></span><span style="flex:1"><b>'+e[3]+'</b> '+e[5]+'<br><small>'+fmt(e[1])+'–'+fmt(e[2])+(e[7]?' · '+e[7]:'')+(o?' · dauerhaft abgewählt':'')+'</small></span><span class="s-lab">fällt aus</span><input type="checkbox" class="cxc" data-cx="'+i+'"'+(c?' checked':'')+(o?' disabled':'')+'></label>';}
-var sorted=st.cx.slice().sort(function(a,b){return a.d<b.d?-1:a.d>b.d?1:E[a.i][1]-E[b.i][1];}),up="",past=0;
-for(var m=0;m<sorted.length;m++){var cc=sorted[m];if(cc.d<s0){past++;continue;}var ee=E[cc.i],d2=pd(cc.d);up+='<div class="s-cx"><span><b>'+DS[d2.getDay()]+', '+dmy(d2)+'</b><br>'+fmt(ee[1])+' '+ee[3]+' – '+ee[5]+'</span><button data-del="'+st.cx.indexOf(cc)+'">Löschen</button></div>';}
-h+='<h3>Eingetragene Ausfälle</h3>'+(up||'<div class="c-room">Keine anstehenden Ausfälle.</div>');
+for(var k=0;k<l.length;k++){var i=l[k],e=E[i],g=gcx(i,sel),c=isCx(i,sel),o=isOff(i);
+h+='<label class="s-row" style="margin-top:6px"><span class="s-dot" style="background:'+e[4]+'"></span><span style="flex:1"><b>'+e[3]+'</b> '+e[5]+(g?'<span class="gh">GitHub</span>':'')+'<br><small>'+fmt(e[1])+'–'+fmt(e[2])+(e[7]?' · '+e[7]:'')+(o?' · abgewählt':'')+(g&&g.g?' · '+esc(g.g):'')+'</small></span><span class="s-lab">fällt aus</span><input type="checkbox" class="cxc" data-cx="'+i+'"'+(c?' checked':'')+(o||g?' disabled':'')+'></label>';}
+var all=[],past=0;
+GCX.forEach(function(c){if(c.d>=s0)all.push({i:c.i,d:c.d,g:true,why:c.g});});
+st.cx.forEach(function(c,ix){if(c.d<s0){past++;return;}if(!gcx(c.i,c.d))all.push({i:c.i,d:c.d,ix:ix});});
+all.sort(function(a,b){return a.d<b.d?-1:a.d>b.d?1:E[a.i][1]-E[b.i][1];});
+var up="";all.forEach(function(c){var e=E[c.i],d2=pd(c.d);up+='<div class="s-cx"><span><b>'+DS[d2.getDay()]+', '+dmy(d2)+'</b>'+(c.g?'<span class="gh">GitHub</span>':'')+'<br>'+fmt(e[1])+' '+e[3]+' – '+e[5]+(c.why?' · '+esc(c.why):'')+'</span>'+(c.g?'':'<button data-del="'+c.ix+'">Löschen</button>')+'</div>';});
+h+='<h3>Anstehende Ausfälle</h3>'+(up||'<div class="c-room">Keine anstehenden Ausfälle.</div>');
 if(past)h+='<div class="s-act"><button id="pastd">Vergangene Ausfälle löschen ('+past+')</button></div>';
 return h;}
 function paneW(){
@@ -218,13 +318,26 @@ var h='<div class="c-room">Abgewählte Termine sind dauerhaft grau und zählen n
 for(var i=0;i<E.length;i++){var nm=E[i][3];if(seen.indexOf(nm)>-1)continue;seen.push(nm);
 var all=[],act=true;for(var j=0;j<E.length;j++)if(E[j][3]===nm){all.push(j);if(isOff(j))act=false;}
 h+='<label class="s-sub"><span class="s-dot" style="background:'+E[i][4]+'"></span><b>'+nm+'</b><input type="checkbox" data-sub="'+nm+'"'+(act?' checked':'')+'></label>';
-for(var k=0;k<all.length;k++){var q=all[k],e=E[q],par=e[8].indexOf("g")>-1?" · gerade KW":e[8].indexOf("u")>-1?" · ungerade KW":"";
-h+='<label class="s-row"><input type="checkbox" data-k="'+q+'"'+(isOff(q)?'':' checked')+'><span><b>'+e[5]+'</b><br><small>'+DS[e[0]]+' '+fmt(e[1])+'–'+fmt(e[2])+(e[7]?' · '+e[7]:'')+par+'</small></span></label>';}}
+for(var k=0;k<all.length;k++){var q=all[k],e=E[q],G=isOffG(q),par=e[8].indexOf("g")>-1?" · gerade KW":e[8].indexOf("u")>-1?" · ungerade KW":"";
+h+='<label class="s-row"><input type="checkbox" data-k="'+q+'"'+(isOff(q)?'':' checked')+(G?' disabled':'')+'><span><b>'+e[5]+'</b>'+(G?'<span class="gh">GitHub</span>':'')+'<br><small>'+DS[e[0]]+' '+fmt(e[1])+'–'+fmt(e[2])+(e[7]?' · '+e[7]:'')+par+'</small></span></label>';}}
 h+='<div class="s-act"><button id="allon">Alle aktivieren</button></div>';
 return h;}
+function paneG(){
+var s0=ds(new Date()),lc=st.cx.filter(function(c){return c.d>=s0&&!gcx(c.i,c.d);}).length,lo=st.off.filter(function(i){return !isOffG(i);}).length;
+var gc=GCX.filter(function(c){return c.d>=s0;}).length;
+var h='<div class="c-room">Was du hier zu GitHub überträgst, gilt auf allen Geräten.</div>';
+h+='<div class="g-box"><b>Auf GitHub gespeichert:</b> '+gc+' anstehende Ausfälle, '+GOFF.length+' abgewählte Termine<br><b>Nur auf diesem Gerät:</b> '+lc+' Ausfälle, '+lo+' Abwahlen</div>';
+if(WARN.length)h+='<div class="g-box g-warn"><b>Probleme in den GitHub-Einstellungen</b><ul style="margin:6px 0 0;padding-left:18px">'+WARN.map(function(w){return '<li>'+esc(w)+'</li>';}).join("")+'</ul></div>';
+h+='<h3>So überträgst du deine Änderungen</h3><ol class="g-steps"><li>Ausfälle im Reiter <b>Kalender</b> und Abwahlen unter <b>Wiederkehrend</b> eintragen.</li><li>Unten auf <b>Ganze Datei kopieren</b> tippen.</li><li>Auf GitHub dein Repository öffnen, auf <b>index.html</b> tippen, dann auf das <b>Stift-Symbol</b>.</li><li>Im Editor lange drücken, <b>Alles auswählen</b> und den kopierten Text einfügen.</li><li><b>Commit changes</b> tippen. Nach 1–2 Minuten ist es auf allen Geräten da, notfalls neu laden.</li><li>Zurück hier auf <b>Lokale Einträge löschen</b> tippen, damit nichts doppelt ist.</li></ol>';
+h+='<div class="s-act"><button class="g-main" id="cpfull"'+(SRC?'':' disabled')+'>Ganze Datei kopieren</button><button id="cpblock">Nur Einstellungsblock kopieren</button></div>';
+if(!SRC)h+='<div class="c-room" style="margin-top:6px">„Ganze Datei kopieren“ funktioniert nur auf deiner GitHub-Seite. Hier kannst du den Einstellungsblock kopieren und in der index.html alles von ▼ AB HIER ERSETZEN bis ▲ BIS HIER ERSETZEN damit ersetzen.</div>';
+h+='<textarea id="gcode" readonly>'+esc(genBlock())+'</textarea>';
+h+='<div class="s-act"><button id="clrl">Lokale Einträge löschen</button></div>';
+h+='<h3>Von Hand eintragen</h3><div class="c-room">Ganz oben in der index.html stehen Beispiele. Fächer schreibst du einfach aus, zum Beispiel Mathe, Physik oder Werkstoffkunde. Datum als TT.MM.JJJJ, Uhrzeit als 08:00.</div>';
+return h;}
 function buildSet(){var y0=window.pageYOffset||0;
-var h='<div class="seg"><button data-seg="k" aria-pressed="'+(tab==="k")+'">Kalender</button><button data-seg="w" aria-pressed="'+(tab==="w")+'">Wiederkehrend</button></div><div id="pk">'+paneK()+'</div><div id="pw">'+paneW()+'</div><div class="s-act" style="margin-top:22px"><button id="rst">Alles zurücksetzen</button></div>';
-set.className=tab==="k"?"t1":"t2";set.innerHTML=h;window.scrollTo(0,y0);}
+var h='<div class="seg"><button data-seg="k" aria-pressed="'+(tab==="k")+'">Kalender</button><button data-seg="w" aria-pressed="'+(tab==="w")+'">Wiederkehrend</button><button data-seg="g" aria-pressed="'+(tab==="g")+'">GitHub</button></div><div id="pk">'+paneK()+'</div><div id="pw">'+paneW()+'</div><div id="pg">'+paneG()+'</div><div class="s-act" style="margin-top:22px"><button id="rst">Alles auf diesem Gerät zurücksetzen</button></div>';
+set.className=tab==="k"?"t1":tab==="w"?"t2":"t3";set.innerHTML=h;window.scrollTo(0,y0);}
 function refresh(){save();applyDom();render();buildSet();}
 set.addEventListener("change",function(ev){var t=ev.target;
 if(t.getAttribute("data-k")!==null){var i=parseInt(t.getAttribute("data-k"),10),x=st.off.indexOf(i);if(t.checked&&x>-1)st.off.splice(x,1);else if(!t.checked&&x<0)st.off.push(i);refresh();}
@@ -238,7 +351,10 @@ else if(t.id==="todaybtn"){var n=new Date();vy=n.getFullYear();vm=n.getMonth();s
 else if(t.getAttribute("data-del")!==null){st.cx.splice(parseInt(t.getAttribute("data-del"),10),1);refresh();}
 else if(t.id==="allon"){st.off=[];refresh();}
 else if(t.id==="pastd"){var s0=ds(new Date());st.cx=st.cx.filter(function(c){return c.d>=s0;});refresh();}
-else if(t.id==="rst"){if(window.confirm("Alle Einstellungen und Ausfälle zurücksetzen?")){st={off:[],cx:[]};refresh();}}});
+else if(t.id==="cpfull"){var f=fullFile();if(f)copyText(f,t);}
+else if(t.id==="cpblock"){copyText(genBlock(),t);}
+else if(t.id==="clrl"){if(window.confirm("Einträge, die nur auf diesem Gerät gespeichert sind, löschen? Mach das erst, wenn du sie zu GitHub übertragen hast.")){st={off:[],cx:[]};refresh();}}
+else if(t.id==="rst"){if(window.confirm("Alle Einstellungen auf diesem Gerät zurücksetzen? Die Einträge auf GitHub bleiben erhalten.")){st={off:[],cx:[]};refresh();}}});
 gear.style.display="flex";
 gear.addEventListener("click",function(){var o=document.body.classList.toggle("so");gear.classList.toggle("x",o);window.scrollTo(0,0);});
 document.getElementById("va").checked=true;
