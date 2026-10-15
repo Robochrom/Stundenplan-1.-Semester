@@ -1,4 +1,6 @@
 <!DOCTYPE html><html lang="de"><head><meta charset="utf-8">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data:; connect-src 'self' https://api.github.com; base-uri 'none'; form-action 'none'; object-src 'none'">
+<meta name="referrer" content="no-referrer">
 <script>
 /* ================================================================
    DEINE EINSTELLUNGEN – gelten auf ALLEN Geräten
@@ -17,7 +19,7 @@
    Am einfachsten: Menü ☰ -> GitHub -> Veröffentlichen.
    ================================================================ */
 // ▼▼▼ AB HIER ERSETZEN ▼▼▼
-var PIN_SCHUTZ = "pbkdf2$200000$ac27a000726af42418170db014e49077$970a3f42706cca8926cb93902225f32bae750d2e18499286844e13e50afbcfba"; // wird automatisch gesetzt – nicht ändern
+var PIN_SCHUTZ = ""; // bleibt leer (PIN liegt nur auf deinen Geräten)
 var AUSFAELLE = [
 ];
 var ABGEWAEHLT = [
@@ -260,6 +262,9 @@ body.so #set{animation:fi .3s cubic-bezier(.2,.8,.2,1)}
 .spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.45);border-top-color:#fff;border-radius:50%;animation:sp .8s linear infinite;vertical-align:-2px;margin-right:8px}
 @keyframes sp{to{transform:rotate(360deg)}}
 .g-box{transition:background .25s,border-color .25s}
+#toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translate(-50%,16px);background:#16a34a;color:#fff;padding:9px 16px;border-radius:999px;font-size:.88rem;font-weight:600;box-shadow:0 6px 18px rgba(0,0,0,.2);opacity:0;pointer-events:none;transition:opacity .25s,transform .3s cubic-bezier(.2,.8,.2,1);z-index:60}
+#toast.show{opacity:1;transform:translate(-50%,0)}
+.g-list{margin:4px 0 0;padding-left:18px;font-size:.88rem;color:var(--mute)}.g-list li{margin:5px 0}
 </style></head><body><main>
 <div class="top"><div><h1>Mein Stundenplan</h1><p class="sub">Maschinenbau · BMB1 Zug 2 · Winter 26/27 · Stand 30.09.2026</p></div><button id="gear" aria-label="Einstellungen"><span></span><span></span><span></span></button></div><div id="cfgwarn"></div><div id="testbar"></div>
 <input type="radio" name="m" id="ra" checked><input type="radio" name="m" id="rg"><input type="radio" name="m" id="ru">
@@ -273,6 +278,7 @@ body.so #set{animation:fi .3s cubic-bezier(.2,.8,.2,1)}
 <div class="box extra"><h3>Kürzel</h3><p><b>SU</b> Vorlesung · <b>Ue</b> Übung in deiner Gruppe</p><p>Gestrichelte Karten sind freiwillig. Die Mathe-Übung am Montag wählst du frei (4.3 um 8:00 oder 4.4 um 9:45). Die andere kannst du im Menü unter „Wiederkehrend“ abwählen.</p></div>
 </main><script>
 (function(){
+var BUILD="14";
 var E=[[1, 480, 570, "Ingenieurmathematik 1", "#2a6fdb", "Übung 4.3", "Khayat", "KA.107", "x"], [1, 585, 675, "Ingenieurmathematik 1", "#2a6fdb", "Übung 4.4", "Khayat", "KA.104", "x"], [1, 735, 825, "Ingenieurmathematik 1", "#2a6fdb", "Vorlesung", "Basting", "KA.034", ""], [1, 840, 930, "Werkstoffkunde", "#2a9d8f", "Vorlesung", "Frick", "WD.001", "u"], [1, 1050, 1140, "Physik", "#d6456b", "Tutorium", "Tutor", "", "f"], [2, 480, 570, "Konstruktion 1", "#d9822b", "Vorlesung", "Koch", "KA.034", ""], [2, 690, 780, "Technische Mechanik 1", "#7b4fd1", "Vorlesung", "Adrian", "KA.213", ""], [2, 840, 930, "Technische Mechanik 1", "#7b4fd1", "Vorlesung", "Adrian", "KA.213", ""], [2, 1050, 1140, "CAD 1", "#8a6d1f", "Vorlesung", "Koch", "online", "go"], [3, 480, 570, "Werkstoffkunde", "#2a9d8f", "Vorlesung", "Frick", "WD.001", ""], [3, 585, 675, "Werkstoffkunde", "#2a9d8f", "Vorlesung", "Frick", "WD.001", ""], [3, 690, 780, "Technische Mechanik 1", "#7b4fd1", "Vorlesung", "Adrian", "KA.002", ""], [3, 840, 930, "Informatik", "#3d8a3d", "Vorlesung", "Gölzer", "KA.034", "h"], [4, 585, 675, "Physik", "#d6456b", "Vorlesung", "Kottcke", "KA.215", ""], [4, 690, 780, "Ingenieurmathematik 1", "#2a6fdb", "Vorlesung", "Basting", "KA.213", ""], [4, 945, 1035, "Konstruktion 1", "#d9822b", "Übung 6.4", "Frey", "KA.336", "gm"], [4, 1050, 1140, "CAD 1", "#8a6d1f", "Tutorium", "Tutor", "online", "fo"], [5, 480, 570, "Konstruktion 1", "#d9822b", "Vorlesung", "Koch", "KA.002", "u"], [5, 585, 675, "Physik", "#d6456b", "Vorlesung", "Kottcke", "KA.213", "u"], [5, 945, 1035, "Informatik", "#3d8a3d", "Übung 7.4", "Wagner", "KI.203", "m"]];
 var DN=["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"],DS=["So","Mo","Di","Mi","Do","Fr","Sa"],MN=["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
 var ALIAS={"Ingenieurmathematik 1":["inma","inma1","mathe","mathe1","mathematik","ingenieurmathematik"],"Konstruktion 1":["k1","konstruktion","kon"],"Werkstoffkunde":["wsk","werkstoff","werkstoffe"],"Technische Mechanik 1":["tm","tm1","mechanik","technischemechanik"],"Physik":["phys"],"Informatik":["info","cs"],"CAD 1":["cad","cad1"]};
@@ -358,15 +364,25 @@ RAW_W.forEach(function(o){if(!o||typeof o!=="object")return;var r=resW(o);if(r.e
 st.off.forEach(function(i){if(!isOffG(i))W.push(specW(i));});
 return{A:A,W:W};}
 function blockText(d,pin){return START+"\nvar PIN_SCHUTZ = "+qv(pin||"")+"; // wird automatisch gesetzt – nicht ändern\nvar AUSFAELLE = [\n"+d.A.map(function(o){return ser(o,["datum","start","fach","art","grund"]);}).join("\n")+(d.A.length?"\n":"")+"];\nvar ABGEWAEHLT = [\n"+d.W.map(function(o){return ser(o,["tag","start","fach","art"]);}).join("\n")+(d.W.length?"\n":"")+"];\n"+END;}
-function genBlock(){return blockText(genData(),PINH);}
+function genBlock(){return blockText(genData(),"");}
 var SRC=null;
-try{if(/^https?:/.test(location.protocol)&&window.fetch)fetch(location.href,{cache:"no-store"}).then(function(r){return r.ok?r.text():null;}).then(function(t){if(t&&t.indexOf(START)>-1&&t.indexOf(END)>-1){SRC=t;if(L1==="gh")buildSet(true);}}).catch(function(){});}catch(x){}
+var lastChk=0,PEND=null,RX=new RegExp("var "+"BUILD=\"(\\d+)\"");
+function toast(t){var el=document.getElementById("toast");if(!el){el=document.createElement("div");el.id="toast";document.body.appendChild(el);}el.textContent=t;el.classList.add("show");clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove("show");},2200);}
+function doReload(v){try{if(sessionStorage.getItem("sp_rl")===v)return;sessionStorage.setItem("sp_rl",v);}catch(x){}location.replace(location.pathname+"?v="+v);}
+function checkUpdate(force){if(!/^https?:/.test(location.protocol)||!window.fetch||document.hidden)return;var n=Date.now();if(!force&&n-lastChk<30000)return;lastChk=n;
+fetch(location.pathname,{cache:"no-cache"}).then(function(r){return r.ok?r.text():null;}).then(function(t){if(!t)return;var a=t.indexOf(START),b=t.indexOf(END,a);if(a<0||b<0)return;SRC=t;
+var m=t.match(RX);if(m&&m[1]!==BUILD){PEND=m[1];if(!document.body.classList.contains("so"))doReload(PEND);return;}
+var cfg=null;try{cfg=new Function(t.slice(a,b)+";return{a:AUSFAELLE,w:ABGEWAEHLT};")();}catch(x){}
+if(cfg&&Array.isArray(cfg.a)&&Array.isArray(cfg.w)&&JSON.stringify({a:cfg.a,w:cfg.w})!==JSON.stringify({a:RAW_A,w:RAW_W})){loadCfg(cfg.a,cfg.w);applyDom();render();if(document.body.classList.contains("so"))buildSet(true);toast("Stundenplan aktualisiert ✓");}
+else if(L1==="gh"&&document.body.classList.contains("so"))buildSet(true);}).catch(function(){});}
 function fullFile(){if(!SRC)return null;var a=SRC.indexOf(START),b=SRC.indexOf(END,a);if(a<0||b<0)return null;return SRC.slice(0,a)+genBlock()+SRC.slice(b+END.length);}
 function copyText(txt,btn){var old=btn.textContent;function ok(){btn.textContent="Kopiert ✓";btn.classList.add("ok");setTimeout(function(){btn.textContent=old;btn.classList.remove("ok");},2000);}
 function fb(){var ta=document.createElement("textarea");ta.value=txt;ta.setAttribute("readonly","");ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();ta.setSelectionRange(0,txt.length);var r=false;try{r=document.execCommand("copy");}catch(x){}document.body.removeChild(ta);if(r)ok();else btn.textContent="Ging nicht – Text im Feld markieren";}
 try{if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(ok,fb);return;}}catch(x){}fb();}
 /* ---------- PIN, Token-Verschlüsselung, GitHub-Schnittstelle ---------- */
-var GK="sp_gh_v1",UNL=false,PIN=null,TOKEN=null,TOKFAIL=false,FORM={},MSG=null,BUSY=false,fails=0,lockUntil=0,SHAKE=false;
+var GK="sp_gh_v1",UNL=false,PIN=null,TOKEN=null,TOKFAIL=false,FORM={},MSG=null,BUSY=false,SHAKE=false,SETUP=false,lastAct=Date.now();
+var LK="sp_lock",LO={f:0,u:0};try{LO=JSON.parse(LS(LK))||LO;}catch(x){}
+function saveLO(){LSset(LK,JSON.stringify(LO));}
 var TE=new TextEncoder(),TD=new TextDecoder();
 function hex(buf){return Array.prototype.map.call(new Uint8Array(buf),function(b){return("0"+b.toString(16)).slice(-2);}).join("");}
 function unhex(h){var a=new Uint8Array(h.length/2);for(var i=0;i<a.length;i++)a[i]=parseInt(h.substr(i*2,2),16);return a;}
@@ -374,11 +390,10 @@ function b64e(bytes){var s="",c=0x8000;for(var i=0;i<bytes.length;i+=c)s+=String
 function b64d(str){var s=atob(String(str).replace(/\s/g,"")),a=new Uint8Array(s.length);for(var i=0;i<s.length;i++)a[i]=s.charCodeAt(i);return a;}
 async function pbkdf(pin,salt,it,bits){var base=await crypto.subtle.importKey("raw",TE.encode(pin),"PBKDF2",false,["deriveBits","deriveKey"]);var alg={name:"PBKDF2",salt:salt,iterations:it,hash:"SHA-256"};
 return bits?crypto.subtle.deriveBits(alg,base,256):crypto.subtle.deriveKey(alg,base,{name:"AES-GCM",length:256},false,["encrypt","decrypt"]);}
-async function makePinHash(pin){var salt=crypto.getRandomValues(new Uint8Array(16));return "pbkdf2$200000$"+hex(salt)+"$"+hex(await pbkdf(pin,salt,200000,true));}
-async function checkPin(pin,h){var p=String(h).split("$");if(p.length!==4)return false;return hex(await pbkdf(pin,unhex(p[2]),+p[1],true))===p[3];}
-async function encToken(pin,tok){var salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12)),key=await pbkdf(pin,salt,200000,false);
-return{salt:hex(salt),iv:hex(iv),ct:b64e(new Uint8Array(await crypto.subtle.encrypt({name:"AES-GCM",iv:iv},key,TE.encode(tok))))};}
-async function decToken(pin,r){var key=await pbkdf(pin,unhex(r.salt),200000,false);return TD.decode(await crypto.subtle.decrypt({name:"AES-GCM",iv:unhex(r.iv)},key,b64d(r.ct)));}
+var IT=600000;
+async function encToken(pin,tok){var salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12)),key=await pbkdf(pin,salt,IT,false);
+return{salt:hex(salt),iv:hex(iv),it:IT,ct:b64e(new Uint8Array(await crypto.subtle.encrypt({name:"AES-GCM",iv:iv},key,TE.encode(tok))))};}
+async function decToken(pin,r){var key=await pbkdf(pin,unhex(r.salt),r.it||200000,false);return TD.decode(await crypto.subtle.decrypt({name:"AES-GCM",iv:unhex(r.iv)},key,b64d(r.ct)));}
 function ghRec(){try{return JSON.parse(LS(GK));}catch(x){return null;}}
 function guessRepo(){var hn=location.hostname||"",m=hn.match(/^([^.]+)\.github\.io$/i),seg=(location.pathname||"/").split("/").filter(Boolean);if(!m)return{owner:"",repo:""};return{owner:m[1],repo:seg.length&&!/\.html?$/i.test(seg[0])?seg[0]:m[1]+".github.io"};}
 async function ghReq(rec,tok,method,body){var url="https://api.github.com/repos/"+encodeURIComponent(rec.owner)+"/"+encodeURIComponent(rec.repo)+"/contents/"+rec.path.split("/").map(encodeURIComponent).join("/")+(method==="GET"?"?ref="+encodeURIComponent(rec.branch):"");
@@ -392,9 +407,9 @@ if(a<0||b<0)throw ownErr("In der Datei auf GitHub fehlt der Einstellungsblock.")
 if((txt.slice(0,a)+txt.slice(b)).indexOf("typeof PIN_SCHUTZ")<0)throw ownErr("Auf GitHub liegt noch eine ältere Version des Stundenplans. Lade einmal die neue Datei von Hand hoch, danach klappt das Veröffentlichen.");
 var remote=null;try{remote=new Function(txt.slice(a,b)+";return{a:AUSFAELLE,w:ABGEWAEHLT,p:typeof PIN_SCHUTZ==='string'?PIN_SCHUTZ:''};")();}catch(x){}
 var oldA=RAW_A,oldW=RAW_W;if(remote&&Array.isArray(remote.a)&&Array.isArray(remote.w))loadCfg(remote.a,remote.w);
-var data=genData(),pin=newPin||(remote&&remote.p)||PINH,out=txt.slice(0,a)+blockText(data,pin)+txt.slice(b+END.length);
+var data=genData(),out=txt.slice(0,a)+blockText(data,"")+txt.slice(b+END.length);
 try{await ghReq(rec,TOKEN,"PUT",{message:"Stundenplan aktualisiert",content:b64e(TE.encode(out)),sha:cur.sha,branch:rec.branch});}catch(x){loadCfg(oldA,oldW);throw x;}
-loadCfg(data.A,data.W);PINH=pin;SRC=out;st={off:[],cx:[],on:[],uncx:[]};save();}
+loadCfg(data.A,data.W);SRC=out;st={off:[],cx:[],on:[],uncx:[]};save();}
 /* ---------- Ansicht „Aktuell“ ---------- */
 function tags(f){var t=[];if(f.indexOf("m")>-1)t.push("Deine Gruppe");if(f.indexOf("x")>-1)t.push("Freie Wahl (4.3 oder 4.4)");if(f.indexOf("o")>-1)t.push("Online");if(f.indexOf("f")>-1)t.push("Freiwillig");return t;}
 function card(lab,e,chip,prog){var tg=tags(e[8]);
@@ -475,7 +490,7 @@ function dayHtml(){var sd=pd(sel),wd=sd.getDay(),l=(wd>=1&&wd<=5)?evFor(sd):[];
 var h='<h3>'+DN[wd]+', '+dmy(sd)+'</h3><div class="c-room">KW '+isoWeek(sd)+' · '+(parOf(sd)==="g"?"gerade":"ungerade")+' Woche</div>';
 if(!l.length)return h+'<div class="empty">An diesem Tag finden keine Termine statt.</div>';
 l.forEach(function(i){var e=E[i],g=gcx(i,sel),gu=g&&uncxIdx(i,sel)>-1,ci=cxInfo(i,sel),o=isOff(i),extra="";
-if(ci&&ci.src==="l")extra='<input type="text" class="gr" data-lgr="'+i+'" value="'+esc(ci.g)+'" placeholder="Grund (optional), z. B. Prof krank">';
+if(ci&&ci.src==="l")extra='<input type="text" class="gr" data-lgr="'+i+'" value="'+esc(ci.g)+'" placeholder="Grund (optional) – wird beim Veröffentlichen öffentlich">';
 else if(ci&&ci.src==="g"&&ci.g)extra='<div class="gr-ro">Grund: '+esc(ci.g)+'</div>';
 h+='<div class="s-item'+(ci?' on':'')+'"><label class="s-row"><span class="s-dot" style="background:'+e[4]+'"></span><span class="s-tx"><b>'+e[3]+'</b> '+e[5]+(g?'<span class="gh">GitHub</span>':'')+'<br><small>'+fmt(e[1])+'–'+fmt(e[2])+(e[7]?' · '+e[7]:'')+(o?' · abgewählt':'')+(gu?' · GitHub-Ausfall hier aufgehoben':'')+'</small></span><span class="s-lab">fällt aus</span>'+sw("data-lcx",i,!!ci,o,true)+'</label>'+extra+'</div>';});
 return h;}
@@ -508,15 +523,14 @@ function repoFields(){var g=guessRepo();if(FORM.owner==null)FORM.owner=g.owner;i
 return fld("owner","GitHub-Benutzername","text","z. B. maxmuster")+fld("repo","Repository","text","z. B. stundenplan")+'<details class="t-exact"><summary>Erweitert</summary>'+fld("branch","Branch","text","main")+fld("path","Datei","text","index.html")+'</details>';}
 function tokHelp(){return '<details class="t-exact"><summary>Wie bekomme ich einen Token?</summary><ol class="g-steps"><li>Auf github.com: Profilbild → <b>Settings</b> → <b>Developer settings</b> → <b>Personal access tokens</b> → <b>Fine-grained tokens</b> → <b>Generate new token</b>.</li><li>Namen und Ablaufdatum wählen.</li><li><b>Repository access:</b> „Only select repositories“ und nur dein Stundenplan-Repository.</li><li><b>Permissions → Repository permissions → Contents:</b> „Read and write“.</li><li>Token erzeugen, kopieren und hier einfügen. GitHub zeigt ihn nur einmal an.</li></ol></details>';}
 function btn(id,label,busyLabel,dis,cls){return '<button id="'+id+'" class="'+(cls||"")+'"'+(dis||BUSY?' disabled':'')+'>'+(BUSY&&busyLabel?'<span class="spin"></span>'+busyLabel:label)+'</button>';}
-function wizHtml(){return '<h3>Ersteinrichtung</h3>'+fld("tok","GitHub-Token","password","github_pat_…")+tokHelp()+repoFields()+fld("np1","PIN festlegen (mind. 4 Zeichen)","password",""," inputmode=\"numeric\"")+fld("np2","PIN wiederholen","password",""," inputmode=\"numeric\"")+'<div class="s-act">'+btn("wsetup","Einrichten & veröffentlichen","Richte ein…",false,"g-main big")+'</div>'+msgHtml()+'<p class="hint">In die Datei kommt nur ein verschlüsselter Prüfwert des PINs, nie der PIN selbst. Der Token bleibt verschlüsselt auf diesem Gerät.</p>';}
-function lockHtml(){if(!PINH)return '<div class="lock"><div class="lk-ic">🔒</div><h3>Noch nicht eingerichtet</h3><p class="hint">Das Bearbeiten wird mit einem PIN geschützt. Die Einrichtung braucht einen GitHub-Token und ist nur für den Betreiber gedacht.</p></div>'+wizHtml();
-var wait=lockUntil>Date.now();
-return '<div class="lock"><div class="lk-ic">🔒</div><h3>Bearbeiten ist geschützt</h3><p class="hint">Gib den PIN ein, um Einträge zu ändern oder zu veröffentlichen.</p><input type="password" inputmode="numeric" class="pin'+(SHAKE?' shake':'')+'" data-f="pin" placeholder="PIN" autocomplete="off"><div class="s-act" style="justify-content:center">'+btn("unlock","Entsperren","Prüfe…",wait,"g-main")+'</div>'+(wait?'<p class="hint">Zu viele Versuche. Bitte kurz warten.</p>':'')+msgHtml()+'</div>';}
+function wizHtml(){return '<h3>Gerät einrichten</h3><p class="hint">Nur für den Betreiber. Du brauchst einen GitHub-Token mit Schreibrechten für dein Stundenplan-Repository.</p>'+fld("tok","GitHub-Token","password","github_pat_…")+tokHelp()+repoFields()+fld("np1","PIN für dieses Gerät (mind. 6 Zeichen)","password",""," inputmode=\"numeric\"")+fld("np2","PIN wiederholen","password",""," inputmode=\"numeric\"")+'<div class="s-act">'+btn("wsetup","Prüfen & einrichten","Prüfe…",false,"g-main big")+'</div>'+msgHtml()+'<p class="hint">Der Token wird verschlüsselt nur auf diesem Gerät gespeichert. In der öffentlichen Datei steht weder Token noch PIN.</p>';}
+function lockHtml(){var rec=ghRec(),wait=LO.u>Date.now();
+if(!rec)return '<div class="lock"><div class="lk-ic">🔒</div><h3>Nur für den Betreiber</h3><p class="hint">Bearbeiten ist nur auf eingerichteten Geräten möglich.</p>'+(SETUP?'':'<div class="s-act" style="justify-content:center"><button id="showsetup">Dieses Gerät einrichten</button></div>')+'</div>'+(SETUP?wizHtml():'');
+return '<div class="lock"><div class="lk-ic">🔒</div><h3>Bearbeiten ist geschützt</h3><p class="hint">Gib den PIN dieses Geräts ein.</p><input type="password" inputmode="numeric" class="pin'+(SHAKE?' shake':'')+'" data-f="pin" placeholder="PIN" autocomplete="off"><div class="s-act" style="justify-content:center">'+btn("unlock","Entsperren","Prüfe…",wait,"g-main")+'</div>'+(wait?'<p class="hint">Zu viele Fehlversuche. Bitte '+Math.ceil((LO.u-Date.now())/60000)+' Minute(n) warten.</p>':'')+msgHtml()+'<details class="t-exact"><summary>PIN vergessen?</summary><p class="hint">Entferne die Einrichtung dieses Geräts und richte es mit deinem Token neu ein.</p><div class="s-act" style="justify-content:center"><button id="forget" class="danger">Einrichtung entfernen</button></div></details></div>';}
 function accHtml(){var rec=ghRec(),h='';
-if(TOKEN&&rec)h+='<div class="g-box g-ok">✓ Token hinterlegt für <b>'+esc(rec.owner)+'/'+esc(rec.repo)+'</b> ('+esc(rec.branch)+', '+esc(rec.path)+')</div><div class="s-act">'+btn("tktest","Verbindung testen","Teste…")+btn("tkdel","Token entfernen","",false,"danger")+'</div>';
-else h+='<h3>Token hinterlegen</h3><p class="hint">Einmal pro Gerät. Der Token wird mit deinem PIN verschlüsselt gespeichert.'+(TOKFAIL?' Der bisher gespeicherte Token passt nicht mehr zum PIN.':'')+'</p>'+fld("tok","GitHub-Token","password","github_pat_…")+tokHelp()+repoFields()+'<div class="s-act">'+btn("tksave","Prüfen & speichern","Prüfe…",false,"g-main")+'</div>';
-h+=msgHtml()+'<h3>PIN ändern</h3>'+fld("cp1","Neuer PIN","password",""," inputmode=\"numeric\"")+fld("cp2","Neuen PIN wiederholen","password",""," inputmode=\"numeric\"")+'<div class="s-act">'+btn("pinchg","PIN ändern & veröffentlichen","Veröffentliche…",!TOKEN)+'</div><p class="hint">Der neue PIN gilt nach dem Veröffentlichen auf allen Geräten. Auf deinen anderen Geräten hinterlegst du den Token danach einmal neu.</p>';
-return h;}
+h+='<div class="g-box g-ok">✓ Token hinterlegt für <b>'+esc(rec.owner)+'/'+esc(rec.repo)+'</b> ('+esc(rec.branch)+', '+esc(rec.path)+')</div><div class="s-act">'+btn("tktest","Verbindung testen","Teste…")+btn("forget","Token entfernen","",false,"danger")+'</div>'+msgHtml();
+h+='<h3>PIN ändern</h3>'+fld("cp1","Neuer PIN (mind. 6 Zeichen)","password",""," inputmode=\"numeric\"")+fld("cp2","Neuen PIN wiederholen","password",""," inputmode=\"numeric\"")+'<div class="s-act">'+btn("pinchg","PIN ändern","Speichere…")+'</div>';
+h+='<h3>Sicherheit</h3><ul class="g-list"><li>Die Einstellungen sperren sich automatisch, sobald du die App verlässt, und nach 10 Minuten ohne Eingabe.</li><li>Der Token liegt nur verschlüsselt auf diesem Gerät. Ohne PIN ist er nicht lesbar.</li><li>Ausfall-Gründe werden beim Veröffentlichen öffentlich. Bitte keine persönlichen Daten eintragen.</li></ul>';return h;}
 function pubHtml(){var s0=ds(NOW()),gc=GCX.filter(function(c){return c.d>=s0;}).length,pn=pending();
 var h='<div class="g-box"><b>Auf GitHub:</b> '+gc+' anstehende Ausfälle, '+GOFF.length+' abgewählte Termine</div>';
 h+='<div class="g-box '+(pn?'g-dirty':'g-clean')+'">'+(pn?'<b>'+pn+(pn===1?' Änderung':' Änderungen')+'</b> noch nicht veröffentlicht.':'Alles ist veröffentlicht.')+'</div>';
@@ -576,38 +590,44 @@ else if(t.id==="wsetup")doSetup();
 else if(t.id==="publish")doPublish();
 else if(t.id==="tksave")doTokSave();
 else if(t.id==="tktest")doTokTest();
-else if(t.id==="tkdel"){if(window.confirm("Token von diesem Gerät entfernen?")){LSset(GK,null);TOKEN=null;MSG=null;buildSet(true);}}
+else if(t.id==="forget"){if(window.confirm("Einrichtung und Token von diesem Gerät entfernen?")){LSset(GK,null);lock();buildSet(true);}}
+else if(t.id==="showsetup"){SETUP=true;buildSet();}
 else if(t.id==="pinchg")doPinChange();
-else if(t.id==="lockbtn"){UNL=false;PIN=null;TOKEN=null;MSG=null;FORM={};buildSet();}});
-set.addEventListener("input",function(ev){var t=ev.target,f=t.getAttribute&&t.getAttribute("data-f");if(f)FORM[f]=t.value;});
+else if(t.id==="lockbtn"){lock();buildSet();}});
+set.addEventListener("pointerdown",function(){lastAct=Date.now();});
+set.addEventListener("input",function(ev){lastAct=Date.now();var t=ev.target,f=t.getAttribute&&t.getAttribute("data-f");if(f)FORM[f]=t.value;});
 set.addEventListener("keydown",function(ev){var t=ev.target;if(ev.key==="Enter"&&t.getAttribute&&t.getAttribute("data-f")==="pin"){ev.preventDefault();doUnlock();}});
 function recFromForm(){return{owner:(FORM.owner||"").trim(),repo:(FORM.repo||"").trim(),branch:(FORM.branch||"main").trim()||"main",path:(FORM.path||"index.html").trim().replace(/^\/+/,"")||"index.html"};}
-function pinOk(p1,p2){if(String(p1).length<4){MSG={ok:false,t:"Der PIN braucht mindestens 4 Zeichen."};return false;}if(p1!==p2){MSG={ok:false,t:"Die beiden PINs stimmen nicht überein."};return false;}return true;}
+function pinOk(p1,p2){if(String(p1).length<6){MSG={ok:false,t:"Der PIN braucht mindestens 6 Zeichen."};return false;}if(p1!==p2){MSG={ok:false,t:"Die beiden PINs stimmen nicht überein."};return false;}return true;}
 async function run(fn){BUSY=true;MSG=null;buildSet(true);try{await fn();}catch(x){MSG={ok:false,t:netErr(x)};}BUSY=false;applyDom();render();buildSet(true);}
-async function doUnlock(){if(BUSY||lockUntil>Date.now())return;var pin=FORM.pin||"";FORM.pin="";if(!pin)return;BUSY=true;MSG=null;buildSet(true);var ok=false;
-try{ok=await checkPin(pin,PINH);}catch(x){MSG={ok:false,t:"Dein Browser unterstützt die Verschlüsselung hier nicht."};}BUSY=false;
-if(ok){fails=0;UNL=true;PIN=pin;TOKEN=null;TOKFAIL=false;var rec=ghRec();if(rec){try{TOKEN=await decToken(pin,rec);}catch(x){TOKFAIL=true;}}buildSet();return;}
-if(!MSG){fails++;MSG={ok:false,t:"Falscher PIN."};if(fails>=5){fails=0;lockUntil=Date.now()+30000;setTimeout(function(){MSG=null;buildSet(true);},30200);}}
-SHAKE=true;buildSet(true);SHAKE=false;}
+function lock(){UNL=false;PIN=null;TOKEN=null;FORM={};MSG=null;SETUP=false;if(document.body.classList.contains("so"))buildSet(true);}
+async function doUnlock(){if(BUSY||LO.u>Date.now())return;var pin=FORM.pin||"",rec=ghRec();FORM.pin="";if(!pin||!rec)return;BUSY=true;MSG=null;buildSet(true);var tok=null;
+try{tok=await decToken(pin,rec);}catch(x){}BUSY=false;
+if(tok){LO={f:0,u:0};saveLO();UNL=true;PIN=pin;TOKEN=tok;lastAct=Date.now();if(!rec.it||rec.it<IT){try{LSset(GK,JSON.stringify(Object.assign({},rec,await encToken(pin,tok))));}catch(x){}}buildSet();return;}
+LO.f++;if(LO.f%5===0)LO.u=Date.now()+(LO.f>=10?300000:30000);saveLO();MSG={ok:false,t:"Falscher PIN."};SHAKE=true;buildSet(true);SHAKE=false;}
 function doSetup(){var tok=(FORM.tok||"").trim(),rec=recFromForm();
 if(!tok||!rec.owner||!rec.repo){MSG={ok:false,t:"Bitte Token, Benutzername und Repository angeben."};return buildSet(true);}
 if(!pinOk(FORM.np1||"",FORM.np2||""))return buildSet(true);var p1=FORM.np1;
-run(async function(){var e=await encToken(p1,tok);LSset(GK,JSON.stringify(Object.assign({},rec,e)));TOKEN=tok;
-try{await publish(await makePinHash(p1));}catch(x){LSset(GK,null);TOKEN=null;throw x;}
-UNL=true;PIN=p1;FORM={};L1="gh";L2.gh="pub";MSG={ok:true,t:"Eingerichtet ✓ Der PIN-Schutz ist veröffentlicht. Auf allen Geräten gilt er nach dem Neuladen, meist nach 1–2 Minuten, manchmal bis zu 10."};});}
+run(async function(){var r=await fetch("https://api.github.com/repos/"+encodeURIComponent(rec.owner)+"/"+encodeURIComponent(rec.repo),{cache:"no-store",headers:{"Authorization":"Bearer "+tok,"Accept":"application/vnd.github+json"}});
+if(r.status===401)throw ownErr("Der Token ist ungültig oder abgelaufen.");if(!r.ok)throw ownErr("Repository nicht gefunden. Stimmen Benutzername und Repository?");
+var j=await r.json();if(!j.permissions||!j.permissions.push)throw ownErr("Dieser Token hat keine Schreibrechte für "+esc(rec.owner)+"/"+esc(rec.repo)+".");
+await ghReq(rec,tok,"GET");LSset(GK,JSON.stringify(Object.assign({},rec,await encToken(p1,tok))));
+UNL=true;PIN=p1;TOKEN=tok;FORM={};SETUP=false;lastAct=Date.now();L1="gh";L2.gh="pub";MSG={ok:true,t:"Gerät eingerichtet ✓ Ab jetzt kannst du hier bearbeiten und veröffentlichen."};});}
 function doPublish(){run(async function(){await publish();MSG={ok:true,t:"Veröffentlicht ✓ Auf allen Geräten nach dem Neuladen sichtbar, meist nach 1–2 Minuten, manchmal bis zu 10."};});}
 function doTokSave(){var tok=(FORM.tok||"").trim(),rec=recFromForm();if(!tok||!rec.owner||!rec.repo){MSG={ok:false,t:"Bitte Token, Benutzername und Repository angeben."};return buildSet(true);}
 run(async function(){await ghReq(rec,tok,"GET");var e=await encToken(PIN,tok);LSset(GK,JSON.stringify(Object.assign({},rec,e)));TOKEN=tok;TOKFAIL=false;FORM.tok="";MSG={ok:true,t:"Token gespeichert ✓ Verbindung zu "+esc(rec.owner)+"/"+esc(rec.repo)+" klappt."};});}
 function doTokTest(){run(async function(){await ghReq(ghRec(),TOKEN,"GET");MSG={ok:true,t:"Verbindung klappt ✓"};});}
 function doPinChange(){if(!pinOk(FORM.cp1||"",FORM.cp2||""))return buildSet(true);var p1=FORM.cp1;
-run(async function(){await publish(await makePinHash(p1));var rec=ghRec(),e=await encToken(p1,TOKEN);LSset(GK,JSON.stringify(Object.assign({},rec,e)));PIN=p1;FORM.cp1=FORM.cp2="";MSG={ok:true,t:"PIN geändert ✓ Er gilt nach dem Neuladen auf allen Geräten."};});}
-
+run(async function(){LSset(GK,JSON.stringify(Object.assign({},ghRec(),await encToken(p1,TOKEN))));PIN=p1;FORM.cp1=FORM.cp2="";MSG={ok:true,t:"PIN geändert ✓"};});}
 gear.style.display="flex";
 var tbar=document.getElementById("testbar");if(tbar)tbar.addEventListener("click",function(ev){if(ev.target&&ev.target.id==="tbend"){endTest();testChanged();}});
-gear.addEventListener("click",function(){var o=document.body.classList.toggle("so");gear.classList.toggle("x",o);if(o){MSG=null;buildSet();}window.scrollTo(0,0);});
+gear.addEventListener("click",function(){var o=document.body.classList.toggle("so");gear.classList.toggle("x",o);if(o){MSG=null;SETUP=false;buildSet();}else if(PEND)doReload(PEND);window.scrollTo(0,0);});
 document.getElementById("va").checked=true;
 applyDom();render();buildSet();
-setInterval(function(){applyDom();render();},30000);
+setInterval(function(){applyDom();render();if(UNL&&Date.now()-lastAct>600000)lock();},30000);
+document.addEventListener("visibilitychange",function(){if(document.hidden){if(UNL)lock();}else{applyDom();render();checkUpdate(false);}});
+window.addEventListener("pageshow",function(ev){if(ev.persisted)checkUpdate(true);});
+checkUpdate(true);
 })();
 
 </script><script>
