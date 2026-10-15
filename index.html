@@ -14,18 +14,13 @@
    Fächer: Mathe, Konstruktion, Werkstoffkunde, Mechanik,
            Physik, Informatik, CAD
    Jeder Eintrag steht in { } und endet mit einem Komma.
-   Am einfachsten: Menü ☰ -> Reiter "GitHub" -> Code kopieren.
+   Am einfachsten: Menü ☰ -> GitHub -> Veröffentlichen.
    ================================================================ */
 // ▼▼▼ AB HIER ERSETZEN ▼▼▼
+var PIN_SCHUTZ = ""; // wird automatisch gesetzt – nicht ändern
 var AUSFAELLE = [
-  { datum: "20.10.2026", start: "11:30", fach: "Technische Mechanik 1" },
 ];
 var ABGEWAEHLT = [
-  { tag: "Di", start: "08:00", fach: "Konstruktion 1", grund: "Erstsemester-Begrüßung" },
-  { tag: "Do", start: "15:45", fach: "Konstruktion 1" },
-  { tag: "Fr", start: "08:00", fach: "Konstruktion 1" },
-  { tag: "Di", start: "17:30", fach: "CAD 1" },
-  { tag: "Do", start: "17:30", fach: "CAD 1" },
 ];
 // ▲▲▲ BIS HIER ERSETZEN ▲▲▲
 </script>
@@ -170,8 +165,103 @@ body.so .bar,body.so #days,body.so #wk,body.so #cur,body.so .extra,body.so #nowb
 @keyframes lv{50%{box-shadow:0 0 0 2px #16a34a,0 0 0 7px rgba(22,163,74,.12)}}
 .t-row.now{outline:2px solid #16a34a}.t-row.now .t-st{color:#16a34a}
 .c-lab.live{color:#16a34a}
+
+#pt{display:none}#set.t4 #pt{display:block}
+#set .seg button{font-size:.82rem;padding:10px 4px!important}
+#set input[type=time]{font:inherit;font-size:.95rem;padding:8px 10px;border-radius:10px;border:1px solid var(--line);background:var(--card);color:var(--ink)}
+#testbar{display:flex;align-items:center;justify-content:space-between;gap:8px;flex-wrap:wrap;background:#fff4d6;color:#6b4a00;border:1px solid #f0d58a;border-radius:10px;padding:8px 12px;font-size:.88rem;margin-bottom:12px}
+#testbar:empty{display:none}
+#testbar button{font:inherit;font-size:.85rem;border:1px solid currentColor;background:transparent;color:inherit;padding:4px 12px;border-radius:999px;position:static;opacity:1}
+.g-box.t-on{background:#fff4d6;border-color:#f0d58a;color:#6b4a00}
+@media (prefers-color-scheme:dark){#testbar,.g-box.t-on{background:#3a2f12;color:#ffe2a0;border-color:#6b5520}}
+/* ===== v11: Einstellungen, Detailansicht, Animationen ===== */
+.c-stat{display:inline-block;margin-top:8px;padding:5px 12px;border-radius:999px;background:var(--chip);font-size:.85rem;font-weight:600}
+.t-prog{height:4px;background:var(--chip);border-radius:9px;margin-top:7px;overflow:hidden}.t-prog i{display:block;height:100%;background:#16a34a;border-radius:9px;transition:width .6s ease}
+.t-row.now .t-st{line-height:1.25;text-align:right}
+#set .s-head h2{font-size:1.3rem;margin:0 0 12px}
+.lv1,.lv2{display:flex;gap:6px;padding:4px;background:var(--chip);border-radius:14px;margin-bottom:12px}
+#set .lv1 button,#set .lv2 button{flex:1;border:0;background:transparent;color:var(--mute);padding:10px 6px;border-radius:10px;font-size:.88rem;font-weight:600;transition:background .2s,color .2s,box-shadow .2s}
+#set .lv1 button[aria-pressed=true],#set .lv2 button[aria-pressed=true]{background:var(--card);color:var(--ink);box-shadow:0 1px 4px rgba(0,0,0,.12)}
+#set .lv1 button{font-size:.92rem;padding:12px 6px}
+.lv2{background:transparent;padding:0;border-bottom:1px solid var(--line);border-radius:0;gap:0}
+#set .lv2 button{border-radius:0;border-bottom:2px solid transparent;padding:10px 4px}
+#set .lv2 button[aria-pressed=true]{background:transparent;box-shadow:none;border-bottom-color:var(--accent);color:var(--accent)}
+.intro{font-size:.86rem;color:var(--mute);margin:0 0 12px;line-height:1.45}
+.gh-intro{background:var(--card);border:1px solid var(--line);border-radius:10px;padding:10px 12px;color:var(--ink)}
+.hint{font-size:.82rem;color:var(--mute);margin:10px 0}
+.empty{font-size:.88rem;color:var(--mute);padding:10px 0}
+.s-item{background:var(--card);border:1px solid var(--line);border-radius:12px;margin-top:6px;overflow:hidden;transition:border-color .2s}
+.s-item.on{border-color:#e11d1d}
+.s-item .s-row{border:0;margin:0;border-radius:0;background:transparent}
+.s-tx{flex:1;min-width:0}
+.s-code{font-size:.72rem;color:var(--mute);font-weight:700;margin-left:2px}
+.gr{display:block;width:calc(100% - 24px);margin:0 12px 10px;font:inherit;font-size:.9rem;padding:8px 10px;border:1px solid var(--line);border-radius:8px;background:var(--bg);color:var(--ink);position:static!important;opacity:1!important;pointer-events:auto!important;animation:fi .2s ease}
+.gr-ro{font-size:.85rem;color:var(--mute);margin:0 12px 10px}
+.s-grp{background:var(--card);border:1px solid var(--line);border-radius:12px;padding:2px 12px 4px;margin-top:10px}
+.s-grp .s-sub{margin:10px 0 6px}
+.s-grp .s-row.sm{background:transparent;border:0;border-top:1px solid var(--line);border-radius:0;padding:9px 0;margin:0}
+.s-cx.dim{opacity:.55}
+.bad{color:#e11d1d}
+.s-foot{margin-top:24px;padding-top:14px;border-top:1px solid var(--line)}
+#set button.danger{color:#e11d1d;border-color:#e11d1d}
+#set button.ok{background:#16a34a!important;color:#fff!important;border-color:#16a34a!important}
+#set input.sw{-webkit-appearance:none;appearance:none;position:relative!important;opacity:1!important;pointer-events:auto!important;width:46px;height:28px;border-radius:999px;background:var(--line);flex:none;cursor:pointer;margin:0 0 0 auto;transition:background .2s ease}
+#set input.sw::before{content:"";position:absolute;top:3px;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 1px 3px rgba(0,0,0,.3);transition:transform .22s cubic-bezier(.2,.8,.2,1)}
+#set input.sw:checked{background:#16a34a}#set input.sw.red:checked{background:#e11d1d}
+#set input.sw:checked::before{transform:translateX(18px)}
+#set input.sw:disabled{opacity:.35!important;cursor:default}
+.g-clean{color:var(--mute)}.g-dirty{background:#fff4d6;border-color:#f0d58a;color:#6b4a00}
+@media (prefers-color-scheme:dark){.g-dirty{background:#3a2f12;color:#ffe2a0;border-color:#6b5520}}
+.g-warn ul{margin:6px 0 0;padding-left:18px}
+.t-disp{text-align:center;background:var(--card);border:1px solid var(--line);border-radius:14px;padding:14px;transition:background .25s,border-color .25s}
+.t-disp.on{background:#fff4d6;border-color:#f0d58a;color:#6b4a00}
+@media (prefers-color-scheme:dark){.t-disp.on{background:#3a2f12;color:#ffe2a0;border-color:#6b5520}}
+.t-lab{font-size:.75rem;font-weight:700;letter-spacing:.05em;opacity:.8}.t-date{font-size:1.1rem;font-weight:650;margin-top:4px}.t-time{font-size:2rem;font-weight:700;font-variant-numeric:tabular-nums;line-height:1.15}
+.t-nav{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;margin-top:10px}
+.t-sec{font-size:.75rem;font-weight:700;color:var(--mute);letter-spacing:.05em;margin:14px 0 6px;text-transform:uppercase}
+.chips,.jog{display:flex;flex-wrap:wrap;gap:6px}
+#set .chips button{font-variant-numeric:tabular-nums;padding:7px 12px}
+#set .chips button.cur{background:var(--accent);color:#fff;border-color:var(--accent)}
+.jog{display:grid;grid-template-columns:repeat(3,1fr)}
+.t-exact{margin-top:14px}.t-exact summary{cursor:pointer;font-size:.9rem;color:var(--accent);font-weight:600;padding:4px 0}
+#set button{transition:transform .12s ease,background .2s,color .2s}#set button:active{transform:scale(.96)}
+/* Detailansicht */
+#wk .b{cursor:pointer;transition:transform .15s ease,filter .15s}#wk .b:active{transform:scale(.97)}
+.sheet{position:fixed;inset:0;z-index:50;pointer-events:none}
+.sh-bg{position:absolute;inset:0;background:rgba(8,12,16,.45);opacity:0;transition:opacity .25s ease}
+.sh-card{position:absolute;left:0;right:0;bottom:0;margin:0 auto;max-width:640px;max-height:85vh;overflow:auto;background:var(--card);color:var(--ink);border-radius:20px 20px 0 0;border-top:6px solid var(--c,#888);padding:8px 20px calc(22px + env(safe-area-inset-bottom,0px));transform:translateY(105%);transition:transform .34s cubic-bezier(.2,.8,.2,1);box-shadow:0 -12px 32px rgba(0,0,0,.22)}
+.sheet.open{pointer-events:auto}.sheet.open .sh-bg{opacity:1}.sheet.open .sh-card{transform:none}
+.sh-grab{width:42px;height:4px;border-radius:2px;background:var(--line);margin:4px auto 8px}
+.sh-x{position:absolute;top:12px;right:14px;width:34px;height:34px;border-radius:50%;border:1px solid var(--line);background:var(--chip);color:var(--ink);font-size:.95rem;cursor:pointer}
+.sh-code{font-size:.78rem;font-weight:800;letter-spacing:.08em}
+.sh-t{font-size:1.35rem;margin:2px 40px 2px 0}.sh-sub{color:var(--mute);font-size:.92rem}
+.sh-st{display:inline-block;margin-top:10px;padding:5px 12px;border-radius:999px;font-size:.85rem;font-weight:600;background:var(--chip)}
+.sh-st.cx{background:#fdecec;color:#b91c1c}.sh-st.off{color:var(--mute)}
+@media (prefers-color-scheme:dark){.sh-st.cx{background:#3a1a1c;color:#ffc9c9}}
+.sh-dl{display:grid;grid-template-columns:auto 1fr;gap:9px 16px;margin:16px 0 0;font-size:.93rem}.sh-dl dt{color:var(--mute)}.sh-dl dd{margin:0}
+/* sanfte Übergänge */
+@keyframes fi{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+#days,#wk,#cur,#set .pane{animation:fi .28s ease}
+body.so #set{animation:fi .3s cubic-bezier(.2,.8,.2,1)}
+.c-card,.t-row{transition:opacity .3s,box-shadow .3s}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+#set.quiet .pane,#set.quiet .gr{animation:none}
+.s-head{display:flex;justify-content:space-between;align-items:center;gap:10px;margin-bottom:12px}#set .s-head h2{margin:0}
+#set .lockb{font-size:.82rem;padding:6px 12px}
+.lock{text-align:center;padding:8px 0 4px}.lk-ic{font-size:2.2rem;line-height:1}.lock h3{margin:8px 0 4px}
+#set input.pin{display:block;margin:14px auto 4px;width:190px;text-align:center;font:inherit;font-size:1.5rem;letter-spacing:.35em;padding:10px;border:1px solid var(--line);border-radius:12px;background:var(--card);color:var(--ink);position:static!important;opacity:1!important;pointer-events:auto!important}
+.shake{animation:shk .36s ease}@keyframes shk{20%,60%{transform:translateX(-7px)}40%,80%{transform:translateX(7px)}}
+.f{display:block;margin-top:10px;font-size:.85rem;color:var(--mute)}
+#set .f input{display:block;width:100%;margin-top:4px;font:inherit;font-size:.95rem;padding:9px 11px;border:1px solid var(--line);border-radius:10px;background:var(--card);color:var(--ink);position:static!important;opacity:1!important;pointer-events:auto!important}
+.g-ok{background:#e8f7ee;border-color:#a7dcb9;color:#14532d}
+@media (prefers-color-scheme:dark){.g-ok{background:#12301f;border-color:#2c6b45;color:#bdf0cf}}
+#set button.big{width:100%;padding:13px;font-size:1rem}
+#set button:disabled{opacity:.5;cursor:default}
+.spin{display:inline-block;width:14px;height:14px;border:2px solid rgba(255,255,255,.45);border-top-color:#fff;border-radius:50%;animation:sp .8s linear infinite;vertical-align:-2px;margin-right:8px}
+@keyframes sp{to{transform:rotate(360deg)}}
+.g-box{transition:background .25s,border-color .25s}
 </style></head><body><main>
-<div class="top"><div><h1>Mein Stundenplan</h1><p class="sub">Maschinenbau · BMB1 Zug 2 · Winter 26/27 · Stand 30.09.2026</p></div><button id="gear" aria-label="Einstellungen"><span></span><span></span><span></span></button></div><div id="cfgwarn"></div>
+<div class="top"><div><h1>Mein Stundenplan</h1><p class="sub">Maschinenbau · BMB1 Zug 2 · Winter 26/27 · Stand 30.09.2026</p></div><button id="gear" aria-label="Einstellungen"><span></span><span></span><span></span></button></div><div id="cfgwarn"></div><div id="testbar"></div>
 <input type="radio" name="m" id="ra" checked><input type="radio" name="m" id="rg"><input type="radio" name="m" id="ru">
 <input type="radio" name="v" id="vl" checked><input type="radio" name="v" id="vw"><input type="radio" name="v" id="va"><div id="nowbar"></div>
 <div class="bar"><label for="vl">Liste</label><label for="vw">Woche</label><label for="va">Aktuell</label></div>
@@ -186,10 +276,21 @@ body.so .bar,body.so #days,body.so #wk,body.so #cur,body.so .extra,body.so #nowb
 var E=[[1, 480, 570, "Ingenieurmathematik 1", "#2a6fdb", "Übung 4.3", "Khayat", "KA.107", "x"], [1, 585, 675, "Ingenieurmathematik 1", "#2a6fdb", "Übung 4.4", "Khayat", "KA.104", "x"], [1, 735, 825, "Ingenieurmathematik 1", "#2a6fdb", "Vorlesung", "Basting", "KA.034", ""], [1, 840, 930, "Werkstoffkunde", "#2a9d8f", "Vorlesung", "Frick", "WD.001", "u"], [1, 1050, 1140, "Physik", "#d6456b", "Tutorium", "Tutor", "", "f"], [2, 480, 570, "Konstruktion 1", "#d9822b", "Vorlesung", "Koch", "KA.034", ""], [2, 690, 780, "Technische Mechanik 1", "#7b4fd1", "Vorlesung", "Adrian", "KA.213", ""], [2, 840, 930, "Technische Mechanik 1", "#7b4fd1", "Vorlesung", "Adrian", "KA.213", ""], [2, 1050, 1140, "CAD 1", "#8a6d1f", "Vorlesung", "Koch", "online", "go"], [3, 480, 570, "Werkstoffkunde", "#2a9d8f", "Vorlesung", "Frick", "WD.001", ""], [3, 585, 675, "Werkstoffkunde", "#2a9d8f", "Vorlesung", "Frick", "WD.001", ""], [3, 690, 780, "Technische Mechanik 1", "#7b4fd1", "Vorlesung", "Adrian", "KA.002", ""], [3, 840, 930, "Informatik", "#3d8a3d", "Vorlesung", "Gölzer", "KA.034", "h"], [4, 585, 675, "Physik", "#d6456b", "Vorlesung", "Kottcke", "KA.215", ""], [4, 690, 780, "Ingenieurmathematik 1", "#2a6fdb", "Vorlesung", "Basting", "KA.213", ""], [4, 945, 1035, "Konstruktion 1", "#d9822b", "Übung 6.4", "Frey", "KA.336", "gm"], [4, 1050, 1140, "CAD 1", "#8a6d1f", "Tutorium", "Tutor", "online", "fo"], [5, 480, 570, "Konstruktion 1", "#d9822b", "Vorlesung", "Koch", "KA.002", "u"], [5, 585, 675, "Physik", "#d6456b", "Vorlesung", "Kottcke", "KA.213", "u"], [5, 945, 1035, "Informatik", "#3d8a3d", "Übung 7.4", "Wagner", "KI.203", "m"]];
 var DN=["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"],DS=["So","Mo","Di","Mi","Do","Fr","Sa"],MN=["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
 var ALIAS={"Ingenieurmathematik 1":["inma","inma1","mathe","mathe1","mathematik","ingenieurmathematik"],"Konstruktion 1":["k1","konstruktion","kon"],"Werkstoffkunde":["wsk","werkstoff","werkstoffe"],"Technische Mechanik 1":["tm","tm1","mechanik","technischemechanik"],"Physik":["phys"],"Informatik":["info","cs"],"CAD 1":["cad","cad1"]};
+var CODE={"Ingenieurmathematik 1":"INMA1","Konstruktion 1":"K1","Werkstoffkunde":"WSK","Technische Mechanik 1":"TM1","Physik":"PHYS","Informatik":"INFO","CAD 1":"CAD1"};
+var PROF={"Khayat":"Qimaz Izadin Khayat","Basting":"Steffen Basting","Frick":"Thomas Frick","Koch":"Michael Koch","Adrian":"Jörg Adrian","Gölzer":"Philipp Gölzer","Kottcke":"Manfred Kottcke","Frey":"Philipp Frey","Wagner":"Maximilian Wagner","Tutor":"Tutor/in der Fakultät MBVS"};
 var START="// ▼▼▼ AB HIER ERSETZEN ▼▼▼",END="// ▲▲▲ BIS HIER ERSETZEN ▲▲▲";
-var K="sp_state_v1",st={off:[],cx:[]};
-try{var raw=localStorage.getItem(K);if(raw){var o=JSON.parse(raw);if(o&&o.off&&o.cx)st=o;}}catch(x){}
-function save(){try{localStorage.setItem(K,JSON.stringify(st));}catch(x){}}
+function LS(k){try{return localStorage.getItem(k);}catch(x){return null;}}
+function LSset(k,v){try{if(v===null)localStorage.removeItem(k);else localStorage.setItem(k,v);}catch(x){}}
+/* ---------- lokaler Zustand ---------- */
+var K="sp_state_v1",st={off:[],cx:[],on:[],uncx:[]};
+try{var o0=JSON.parse(LS(K));if(o0&&o0.off&&o0.cx)st={off:o0.off,cx:o0.cx,on:o0.on||[],uncx:o0.uncx||[]};}catch(x){}
+function save(){LSset(K,JSON.stringify(st));}
+var TK="sp_test_v1",TM=null;try{TM=JSON.parse(LS(TK));}catch(x){}
+function NOW(){return TM&&TM.on?new Date(TM.t+(Date.now()-TM.a)):new Date(Date.now());}
+window.__spNow=NOW;
+function setTest(ms){TM={on:true,t:ms,a:Date.now()};LSset(TK,JSON.stringify(TM));}
+function endTest(){TM=null;LSset(TK,null);}
+/* ---------- Hilfen ---------- */
 function isoWeek(d){var t=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));var n=t.getUTCDay()||7;t.setUTCDate(t.getUTCDate()+4-n);return Math.ceil(((t-Date.UTC(t.getUTCFullYear(),0,1))/864e5+1)/7);}
 function p(n){return n<10?"0"+n:""+n;}
 function fmt(m){return p(Math.floor(m/60))+":"+p(m%60);}
@@ -197,10 +298,14 @@ function dur(m){m=Math.max(1,Math.round(m));var h=Math.floor(m/60),r=m%60;return
 function ds(d){return d.getFullYear()+"-"+p(d.getMonth()+1)+"-"+p(d.getDate());}
 function pd(s){var a=s.split("-");return new Date(+a[0],+a[1]-1,+a[2]);}
 function dmy(d){return p(d.getDate())+"."+p(d.getMonth()+1)+"."+d.getFullYear();}
+function dm(d){return p(d.getDate())+"."+p(d.getMonth()+1)+".";}
 function parOf(d){return isoWeek(d)%2===0?"g":"u";}
-function evFor(d){var wd=d.getDay(),par=parOf(d),l=[];for(var i=0;i<E.length;i++){var e=E[i],f=e[8];if(e[0]!==wd)continue;if(f.indexOf("g")>-1&&par!=="g")continue;if(f.indexOf("u")>-1&&par!=="u")continue;l.push(i);}l.sort(function(a,b){return E[a][1]-E[b][1];});return l;}
 function esc(s){return String(s).replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;").replace(/"/g,"&quot;");}
-/* ---------- GitHub-Einstellungen einlesen ---------- */
+function evFor(d){var wd=d.getDay(),par=parOf(d),l=[];for(var i=0;i<E.length;i++){var e=E[i],f=e[8];if(e[0]!==wd)continue;if(f.indexOf("g")>-1&&par!=="g")continue;if(f.indexOf("u")>-1&&par!=="u")continue;l.push(i);}l.sort(function(a,b){return E[a][1]-E[b][1];});return l;}
+function mondayOf(d){var t=d.getDay()||7;return new Date(d.getFullYear(),d.getMonth(),d.getDate()-t+1);}
+function rmv(a,v){var x=a.indexOf(v);if(x>-1)a.splice(x,1);}
+function room(e){return [e[6]==="Tutor"?"Tutor":e[6],e[7]].filter(function(x){return x;}).join(" · ");}
+/* ---------- GitHub-Einstellungen lesen ---------- */
 function norm(s){return String(s==null?"":s).toLowerCase().replace(/ä/g,"ae").replace(/ö/g,"oe").replace(/ü/g,"ue").replace(/ß/g,"ss").replace(/[^a-z0-9]/g,"");}
 function matchFach(i,f){var n=norm(f);if(!n)return true;var nm=E[i][3];if((ALIAS[nm]||[]).indexOf(n)>-1)return true;return n.length>=3&&norm(nm).indexOf(n)===0;}
 function matchArt(i,a){var n=norm(a);if(!n)return true;var t=norm(E[i][5]);return t.indexOf(n)===0||(n==="su"&&t.indexOf("vorlesung")===0)||(n==="ue"&&t.indexOf("uebung")===0);}
@@ -208,42 +313,101 @@ function parseStart(s){if(s==null||s==="")return null;var m=String(s).trim().mat
 function parseD(s){s=String(s==null?"":s).trim();var m=s.match(/^(\d{1,2})\.(\d{1,2})\.(\d{4})$/),y,mo,d;if(m){d=+m[1];mo=+m[2];y=+m[3];}else{m=s.match(/^(\d{4})-(\d{1,2})-(\d{1,2})$/);if(!m)return null;y=+m[1];mo=+m[2];d=+m[3];}var r=new Date(y,mo-1,d);return(r.getDate()===d&&r.getMonth()===mo-1)?r:null;}
 function parseTag(s){var n=norm(s);if(!n)return null;return["so","mo","di","mi","do","fr","sa"].indexOf(n.slice(0,2));}
 function desc(o){var a=[];["datum","tag","start","fach","art"].forEach(function(k){if(o[k])a.push(o[k]);});return "„"+(a.join(" ")||"leerer Eintrag")+"“";}
-var CFG_OK=(typeof AUSFAELLE!=="undefined"&&typeof ABGEWAEHLT!=="undefined"),RAW_A=[],RAW_W=[],GOFF=[],GCX=[],WARN=[];
-if(!CFG_OK)WARN.push("Die Einstellungen auf GitHub enthalten einen Tippfehler (meist ein fehlendes Komma oder Anführungszeichen) und werden gerade ignoriert. Mit „Ganze Datei kopieren“ erzeugst du einen sauberen Stand.");
-else{RAW_A=Array.isArray(AUSFAELLE)?AUSFAELLE:[];RAW_W=Array.isArray(ABGEWAEHLT)?ABGEWAEHLT:[];
-RAW_A.forEach(function(o){if(!o||typeof o!=="object")return;var d=parseD(o.datum);if(!d){WARN.push("Ausfall ohne gültiges Datum: "+desc(o)+". Format: TT.MM.JJJJ");return;}
-var sm=parseStart(o.start);if(sm!==null&&isNaN(sm)){WARN.push("Ungültige Uhrzeit bei "+desc(o)+". Format: 08:00");return;}
+function resA(o){if(!o||typeof o!=="object")return{list:[],err:"Ungültiger Eintrag"};var d=parseD(o.datum);if(!d)return{list:[],err:"Ausfall ohne gültiges Datum: "+desc(o)+". Format: TT.MM.JJJJ"};
+var sm=parseStart(o.start);if(sm!==null&&isNaN(sm))return{list:[],err:"Ungültige Uhrzeit bei "+desc(o)+". Format: 08:00"};
 var l=evFor(d).filter(function(i){return matchFach(i,o.fach)&&matchArt(i,o.art)&&(sm===null||E[i][1]===sm);});
-if(!l.length){WARN.push("Kein passender Termin für "+desc(o)+". Stimmen Datum, Uhrzeit und Fach?");return;}
-l.forEach(function(i){GCX.push({i:i,d:ds(d),g:o.grund?String(o.grund):""});});});
-RAW_W.forEach(function(o){if(!o||typeof o!=="object")return;if(!norm(o.fach)){WARN.push("Abwahl ohne Fach: "+desc(o));return;}
-var td=parseTag(o.tag);if(td===-1){WARN.push("Unbekannter Tag bei "+desc(o)+". Nutze Mo, Di, Mi, Do oder Fr");return;}
-var sm=parseStart(o.start);if(sm!==null&&isNaN(sm)){WARN.push("Ungültige Uhrzeit bei "+desc(o));return;}
+if(!l.length)return{list:[],err:"Kein passender Termin für "+desc(o)+". Stimmen Datum, Uhrzeit und Fach?"};
+return{list:l.map(function(i){return{i:i,d:ds(d)};}),err:null};}
+function resW(o){if(!o||typeof o!=="object")return{list:[],err:"Ungültiger Eintrag"};if(!norm(o.fach))return{list:[],err:"Abwahl ohne Fach: "+desc(o)};
+var td=parseTag(o.tag);if(td===-1)return{list:[],err:"Unbekannter Tag bei "+desc(o)+". Nutze Mo, Di, Mi, Do oder Fr"};
+var sm=parseStart(o.start);if(sm!==null&&isNaN(sm))return{list:[],err:"Ungültige Uhrzeit bei "+desc(o)};
 var l=[];for(var i=0;i<E.length;i++)if(matchFach(i,o.fach)&&matchArt(i,o.art)&&(td===null||E[i][0]===td)&&(sm===null||E[i][1]===sm))l.push(i);
-if(!l.length){WARN.push("Kein passender Termin für Abwahl "+desc(o));return;}
-l.forEach(function(i){if(GOFF.indexOf(i)<0)GOFF.push(i);});});}
-/* ---------- Status ---------- */
+if(!l.length)return{list:[],err:"Kein passender Termin für Abwahl "+desc(o)};return{list:l,err:null};}
+var CFG_OK=(typeof AUSFAELLE!=="undefined"&&typeof ABGEWAEHLT!=="undefined"),RAW_A=[],RAW_W=[],GOFF=[],GCX=[],WARN=[];
+var PINH=(typeof PIN_SCHUTZ==="string")?PIN_SCHUTZ:"";
+function loadCfg(A,W){RAW_A=A;RAW_W=W;GOFF=[];GCX=[];WARN=[];
+RAW_A.forEach(function(o){var r=resA(o);if(r.err)WARN.push(r.err);r.list.forEach(function(c){GCX.push({i:c.i,d:c.d,g:o&&o.grund?String(o.grund):""});});});
+RAW_W.forEach(function(o){var r=resW(o);if(r.err)WARN.push(r.err);r.list.forEach(function(i){if(GOFF.indexOf(i)<0)GOFF.push(i);});});}
+if(!CFG_OK)WARN.push("Die Einstellungen auf GitHub enthalten einen Tippfehler (meist ein fehlendes Komma oder Anführungszeichen) und werden gerade ignoriert.");
+else loadCfg(Array.isArray(AUSFAELLE)?AUSFAELLE:[],Array.isArray(ABGEWAEHLT)?ABGEWAEHLT:[]);
+/* ---------- wirksamer Status (GitHub + Gerät) ---------- */
 function isOffG(i){return GOFF.indexOf(i)>-1;}
-function isOff(i){return st.off.indexOf(i)>-1||isOffG(i);}
+function isOn(i){return st.on.indexOf(i)>-1;}
+function isOff(i){return st.off.indexOf(i)>-1||(isOffG(i)&&!isOn(i));}
 function cxIdx(i,s){for(var k=0;k<st.cx.length;k++)if(st.cx[k].i===i&&st.cx[k].d===s)return k;return -1;}
 function gcx(i,s){for(var k=0;k<GCX.length;k++)if(GCX[k].i===i&&GCX[k].d===s)return GCX[k];return null;}
-function isCx(i,s){return cxIdx(i,s)>-1||!!gcx(i,s);}
-function hasCx(s){var k;for(k=0;k<st.cx.length;k++)if(st.cx[k].d===s)return true;for(k=0;k<GCX.length;k++)if(GCX[k].d===s)return true;return false;}
+function uncxIdx(i,s){for(var k=0;k<st.uncx.length;k++)if(st.uncx[k].i===i&&st.uncx[k].d===s)return k;return -1;}
+function gcxEff(i,s){var g=gcx(i,s);return g&&uncxIdx(i,s)<0?g:null;}
+function cxInfo(i,s){var z=cxIdx(i,s);if(z>-1)return{src:"l",g:st.cx[z].g||""};var g=gcxEff(i,s);return g?{src:"g",g:g.g}:null;}
+function isCx(i,s){return !!cxInfo(i,s);}
+function hasCx(s){var k;for(k=0;k<st.cx.length;k++)if(st.cx[k].d===s)return true;for(k=0;k<GCX.length;k++)if(GCX[k].d===s&&uncxIdx(GCX[k].i,s)<0)return true;return false;}
 function good(i,s){return !isOff(i)&&!isCx(i,s);}
-function tags(f){var t=[];if(f.indexOf("m")>-1)t.push("Deine Gruppe");if(f.indexOf("x")>-1)t.push("Freie Wahl (4.3 oder 4.4)");if(f.indexOf("o")>-1)t.push("Online");if(f.indexOf("f")>-1)t.push("Freiwillig");return t.length?'<div class="c-room" style="margin-top:6px">'+t.join(" · ")+'</div>':"";}
-function card(lab,e,chip,prog){var r=[e[6],e[7]].filter(function(x){return x;}).join(" · ");
-return '<div class="c-card" style="--c:'+e[4]+'"><div class="c-lab'+(lab==="JETZT"?' live':'')+'">'+(lab==="JETZT"?'● ':'')+lab+'</div><div class="c-big">'+e[3]+'</div><div class="c-sub">'+e[5]+'</div><div class="c-time">'+fmt(e[1])+' – '+fmt(e[2])+'</div><div class="c-room">'+r+'</div>'+tags(e[8])+(chip?'<div class="c-chip">'+chip+'</div>':"")+(prog!=null?'<div class="c-bar"><i style="width:'+Math.round(prog*100)+'%"></i></div>':"")+'</div>';}
+function setActive(i,on){if(on){rmv(st.off,i);if(isOffG(i)&&!isOn(i))st.on.push(i);}else{rmv(st.on,i);if(!isOffG(i)&&st.off.indexOf(i)<0)st.off.push(i);}}
+function setCx(i,s,on){var z=cxIdx(i,s),u=uncxIdx(i,s),g=gcx(i,s);if(on){if(u>-1)st.uncx.splice(u,1);if(!g&&z<0)st.cx.push({i:i,d:s,g:""});}else{if(z>-1)st.cx.splice(z,1);if(g&&u<0)st.uncx.push({i:i,d:s});}}
+/* ---------- Code für GitHub (GitHub-Stand + Einträge dieses Geräts) ---------- */
+function spec(i,s,g){var e=E[i],o={datum:dmy(pd(s)),start:fmt(e[1]),fach:e[3]};if(g)o.grund=g;return o;}
+function specW(i){var e=E[i];return{tag:DS[e[0]],start:fmt(e[1]),fach:e[3]};}
+function qv(v){return '"'+String(v).replace(/\\/g,"\\\\").replace(/"/g,'\\"')+'"';}
+function ser(o,keys){var a=[];keys.forEach(function(k){if(o[k]!=null&&o[k]!=="")a.push(k+": "+qv(o[k]));});return "  { "+a.join(", ")+" },";}
+function pending(){var s0=ds(NOW());return st.cx.filter(function(c){return c.d>=s0&&!gcx(c.i,c.d);}).length+st.off.filter(function(i){return !isOffG(i);}).length+st.on.length+st.uncx.filter(function(c){return c.d>=s0;}).length;}
+function genData(){var s0=ds(NOW()),A=[],W=[];
+RAW_A.forEach(function(o){if(!o||typeof o!=="object")return;var d=parseD(o.datum);if(d&&ds(d)<s0)return;var r=resA(o);if(r.err){A.push(o);return;}var rem=r.list.filter(function(c){return uncxIdx(c.i,c.d)<0;});if(rem.length===r.list.length){A.push(o);return;}rem.forEach(function(c){A.push(spec(c.i,c.d,o.grund));});});
+st.cx.forEach(function(c){if(c.d<s0||gcx(c.i,c.d))return;A.push(spec(c.i,c.d,c.g));});
+A.sort(function(x,y){var a=parseD(x.datum),b=parseD(y.datum);if(!a&&!b)return 0;if(!a)return 1;if(!b)return -1;return a-b||((parseStart(x.start)||0)-(parseStart(y.start)||0));});
+RAW_W.forEach(function(o){if(!o||typeof o!=="object")return;var r=resW(o);if(r.err){W.push(o);return;}var rem=r.list.filter(function(i){return !isOn(i);});if(rem.length===r.list.length){W.push(o);return;}rem.forEach(function(i){W.push(specW(i));});});
+st.off.forEach(function(i){if(!isOffG(i))W.push(specW(i));});
+return{A:A,W:W};}
+function blockText(d,pin){return START+"\nvar PIN_SCHUTZ = "+qv(pin||"")+"; // wird automatisch gesetzt – nicht ändern\nvar AUSFAELLE = [\n"+d.A.map(function(o){return ser(o,["datum","start","fach","art","grund"]);}).join("\n")+(d.A.length?"\n":"")+"];\nvar ABGEWAEHLT = [\n"+d.W.map(function(o){return ser(o,["tag","start","fach","art"]);}).join("\n")+(d.W.length?"\n":"")+"];\n"+END;}
+function genBlock(){return blockText(genData(),PINH);}
+var SRC=null;
+try{if(/^https?:/.test(location.protocol)&&window.fetch)fetch(location.href,{cache:"no-store"}).then(function(r){return r.ok?r.text():null;}).then(function(t){if(t&&t.indexOf(START)>-1&&t.indexOf(END)>-1){SRC=t;if(L1==="gh")buildSet(true);}}).catch(function(){});}catch(x){}
+function fullFile(){if(!SRC)return null;var a=SRC.indexOf(START),b=SRC.indexOf(END,a);if(a<0||b<0)return null;return SRC.slice(0,a)+genBlock()+SRC.slice(b+END.length);}
+function copyText(txt,btn){var old=btn.textContent;function ok(){btn.textContent="Kopiert ✓";btn.classList.add("ok");setTimeout(function(){btn.textContent=old;btn.classList.remove("ok");},2000);}
+function fb(){var ta=document.createElement("textarea");ta.value=txt;ta.setAttribute("readonly","");ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();ta.setSelectionRange(0,txt.length);var r=false;try{r=document.execCommand("copy");}catch(x){}document.body.removeChild(ta);if(r)ok();else btn.textContent="Ging nicht – Text im Feld markieren";}
+try{if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(ok,fb);return;}}catch(x){}fb();}
+/* ---------- PIN, Token-Verschlüsselung, GitHub-Schnittstelle ---------- */
+var GK="sp_gh_v1",UNL=false,PIN=null,TOKEN=null,TOKFAIL=false,FORM={},MSG=null,BUSY=false,fails=0,lockUntil=0,SHAKE=false;
+var TE=new TextEncoder(),TD=new TextDecoder();
+function hex(buf){return Array.prototype.map.call(new Uint8Array(buf),function(b){return("0"+b.toString(16)).slice(-2);}).join("");}
+function unhex(h){var a=new Uint8Array(h.length/2);for(var i=0;i<a.length;i++)a[i]=parseInt(h.substr(i*2,2),16);return a;}
+function b64e(bytes){var s="",c=0x8000;for(var i=0;i<bytes.length;i+=c)s+=String.fromCharCode.apply(null,bytes.subarray(i,i+c));return btoa(s);}
+function b64d(str){var s=atob(String(str).replace(/\s/g,"")),a=new Uint8Array(s.length);for(var i=0;i<s.length;i++)a[i]=s.charCodeAt(i);return a;}
+async function pbkdf(pin,salt,it,bits){var base=await crypto.subtle.importKey("raw",TE.encode(pin),"PBKDF2",false,["deriveBits","deriveKey"]);var alg={name:"PBKDF2",salt:salt,iterations:it,hash:"SHA-256"};
+return bits?crypto.subtle.deriveBits(alg,base,256):crypto.subtle.deriveKey(alg,base,{name:"AES-GCM",length:256},false,["encrypt","decrypt"]);}
+async function makePinHash(pin){var salt=crypto.getRandomValues(new Uint8Array(16));return "pbkdf2$200000$"+hex(salt)+"$"+hex(await pbkdf(pin,salt,200000,true));}
+async function checkPin(pin,h){var p=String(h).split("$");if(p.length!==4)return false;return hex(await pbkdf(pin,unhex(p[2]),+p[1],true))===p[3];}
+async function encToken(pin,tok){var salt=crypto.getRandomValues(new Uint8Array(16)),iv=crypto.getRandomValues(new Uint8Array(12)),key=await pbkdf(pin,salt,200000,false);
+return{salt:hex(salt),iv:hex(iv),ct:b64e(new Uint8Array(await crypto.subtle.encrypt({name:"AES-GCM",iv:iv},key,TE.encode(tok))))};}
+async function decToken(pin,r){var key=await pbkdf(pin,unhex(r.salt),200000,false);return TD.decode(await crypto.subtle.decrypt({name:"AES-GCM",iv:unhex(r.iv)},key,b64d(r.ct)));}
+function ghRec(){try{return JSON.parse(LS(GK));}catch(x){return null;}}
+function guessRepo(){var hn=location.hostname||"",m=hn.match(/^([^.]+)\.github\.io$/i),seg=(location.pathname||"/").split("/").filter(Boolean);if(!m)return{owner:"",repo:""};return{owner:m[1],repo:seg.length&&!/\.html?$/i.test(seg[0])?seg[0]:m[1]+".github.io"};}
+async function ghReq(rec,tok,method,body){var url="https://api.github.com/repos/"+encodeURIComponent(rec.owner)+"/"+encodeURIComponent(rec.repo)+"/contents/"+rec.path.split("/").map(encodeURIComponent).join("/")+(method==="GET"?"?ref="+encodeURIComponent(rec.branch):"");
+var r=await fetch(url,{method:method,cache:"no-store",headers:{"Authorization":"Bearer "+tok,"Accept":"application/vnd.github+json"},body:body?JSON.stringify(body):undefined});var j=null;try{j=await r.json();}catch(x){}
+if(!r.ok){var e=new Error(r.status===401?"Der Token ist ungültig oder abgelaufen.":r.status===403?"Der Token darf dieses Repository nicht ändern. Prüfe „Contents: Read and write“.":r.status===404?"Repository oder Datei nicht gefunden. Stimmen Benutzername, Repository, Branch und Dateiname?":(r.status===409||r.status===422)?"Die Datei wurde gerade woanders geändert. Bitte nochmal tippen.":"GitHub meldet Fehler "+r.status+".");e.status=r.status;throw e;}return j;}
+function netErr(x){return x&&x.status?x.message:(x&&x.own?x.message:"Keine Verbindung zu GitHub. Veröffentlichen funktioniert nur auf deiner GitHub-Seite, nicht über den Claude-Link.");}
+function ownErr(t){var e=new Error(t);e.own=true;return e;}
+async function publish(newPin){var rec=ghRec();if(!TOKEN||!rec)throw ownErr("Auf diesem Gerät ist kein Token hinterlegt.");
+var cur=await ghReq(rec,TOKEN,"GET"),txt=TD.decode(b64d(cur.content)),a=txt.indexOf(START),b=txt.indexOf(END,a);
+if(a<0||b<0)throw ownErr("In der Datei auf GitHub fehlt der Einstellungsblock.");
+if((txt.slice(0,a)+txt.slice(b)).indexOf("typeof PIN_SCHUTZ")<0)throw ownErr("Auf GitHub liegt noch eine ältere Version des Stundenplans. Lade einmal die neue Datei von Hand hoch, danach klappt das Veröffentlichen.");
+var remote=null;try{remote=new Function(txt.slice(a,b)+";return{a:AUSFAELLE,w:ABGEWAEHLT,p:typeof PIN_SCHUTZ==='string'?PIN_SCHUTZ:''};")();}catch(x){}
+var oldA=RAW_A,oldW=RAW_W;if(remote&&Array.isArray(remote.a)&&Array.isArray(remote.w))loadCfg(remote.a,remote.w);
+var data=genData(),pin=newPin||(remote&&remote.p)||PINH,out=txt.slice(0,a)+blockText(data,pin)+txt.slice(b+END.length);
+try{await ghReq(rec,TOKEN,"PUT",{message:"Stundenplan aktualisiert",content:b64e(TE.encode(out)),sha:cur.sha,branch:rec.branch});}catch(x){loadCfg(oldA,oldW);throw x;}
+loadCfg(data.A,data.W);PINH=pin;SRC=out;st={off:[],cx:[],on:[],uncx:[]};save();}
+/* ---------- Ansicht „Aktuell“ ---------- */
+function tags(f){var t=[];if(f.indexOf("m")>-1)t.push("Deine Gruppe");if(f.indexOf("x")>-1)t.push("Freie Wahl (4.3 oder 4.4)");if(f.indexOf("o")>-1)t.push("Online");if(f.indexOf("f")>-1)t.push("Freiwillig");return t;}
+function card(lab,e,chip,prog){var tg=tags(e[8]);
+return '<div class="c-card" style="--c:'+e[4]+'">'+(lab?'<div class="c-lab">'+lab+'</div>':'')+'<div class="c-big">'+e[3]+'</div><div class="c-sub">'+e[5]+'</div><div class="c-time">'+fmt(e[1])+' – '+fmt(e[2])+'</div><div class="c-room">'+room(e)+'</div>'+(tg.length?'<div class="c-room" style="margin-top:6px">'+tg.join(" · ")+'</div>':'')+(chip?'<div class="c-chip">'+chip+'</div>':"")+(prog!=null?'<div class="c-bar"><i style="width:'+Math.round(prog*100)+'%"></i></div>':"")+'</div>';}
 function empty(lab,big,sub){return '<div class="c-card c-empty" style="--c:var(--line)"><div class="c-lab">'+lab+'</div><div class="c-big">'+big+'</div><div class="c-sub">'+sub+'</div></div>';}
 function render(){
-var now=new Date(),wd=now.getDay(),min=now.getHours()*60+now.getMinutes(),s0=ds(now),par=parOf(now),wk=(wd>=1&&wd<=5);
+var now=NOW(),wd=now.getDay(),min=now.getHours()*60+now.getMinutes(),s0=ds(now),par=parOf(now),wk=(wd>=1&&wd<=5);
 var ids=wk?evFor(now):[],act=ids.filter(function(i){return good(i,s0);});
 var out='<div class="c-head"><div class="c-day">'+DN[wd]+', '+now.getDate()+'. '+MN[now.getMonth()]+'</div><div class="c-kw">KW '+isoWeek(now)+' · '+(par==="g"?"gerade":"ungerade")+' Woche</div></div>';
 if(wk){var s='<div class="strip">';for(var i=0;i<act.length;i++){var e=E[act[i]];s+='<i style="left:'+((e[1]-480)/660*100)+'%;width:'+((e[2]-e[1])/660*100)+'%;background:'+e[4]+'"></i>';}
-if(min>=480&&min<=1140)s+='<u style="left:'+((min-480)/660*100)+'%"></u>';
-out+=s+'</div><div class="slab"><span>8:00</span><span>13:30</span><span>19:00</span></div>';}
-var cur=null,nxt=null;
-for(var j=0;j<act.length;j++){var q=E[act[j]];if(!cur&&q[1]<=min&&min<q[2])cur=q;if(!nxt&&q[1]>min)nxt=q;}
-if(cur)out+=card("JETZT",cur,"endet in "+dur(cur[2]-min),(min-cur[1])/(cur[2]-cur[1]));
+if(min>=480&&min<=1140)s+='<u style="left:'+((min-480)/660*100)+'%"></u>';out+=s+'</div><div class="slab"><span>8:00</span><span>13:30</span><span>19:00</span></div>';}
+var cur=null,nxt=null;for(var j=0;j<act.length;j++){var q=E[act[j]];if(!cur&&q[1]<=min&&min<q[2])cur=q;if(!nxt&&q[1]>min)nxt=q;}
+if(cur)out+=card("",cur,"endet in "+dur(cur[2]-min),(min-cur[1])/(cur[2]-cur[1]));
 else if(!wk)out+=empty("JETZT","Wochenende","Keine Termine.");
 else if(!ids.length)out+=empty("JETZT","Heute frei","Keine Termine heute.");
 else if(!act.length)out+=empty("JETZT","Heute frei","Alle Termine fallen aus oder sind abgewählt.");
@@ -253,127 +417,206 @@ else out+=empty("JETZT","Feierabend","Für heute ist alles geschafft.");
 if(nxt)out+=card("DANACH",nxt,"startet in "+dur(nxt[1]-min),null);
 else out+=empty("DANACH","Heute nichts mehr","Keine weiteren Termine heute.");
 if(ids.length){out+='<div class="c-lab" style="margin:20px 0 8px">HEUTE IM ÜBERBLICK</div>';
-for(var k=0;k<ids.length;k++){var i2=ids[k],r=E[i2],cls,sl,g;
-if(isOff(i2)){cls="off";sl="abgewählt";}else if(isCx(i2,s0)){cls="cxl";g=gcx(i2,s0);sl="fällt aus"+(g&&g.g?"<br>"+esc(g.g):"");}else if(r[2]<=min){cls="done";sl="vorbei";}else if(r[1]<=min){cls="now";sl="● läuft";}else{cls="later";sl="";}
-var rm=[r[6],r[7]].filter(function(x){return x;}).join(" · ");
-out+='<div class="t-row '+cls+'" style="--c:'+r[4]+'"><div class="t-tm">'+fmt(r[1])+'<br>'+fmt(r[2])+'</div><div class="t-nm"><b>'+r[3]+'</b> <small>'+r[5]+'</small><div class="c-room">'+rm+'</div></div><div class="t-st">'+sl+'</div></div>';}}
+for(var k=0;k<ids.length;k++){var i2=ids[k],r=E[i2],cls,sl,ci=cxInfo(i2,s0);
+if(isOff(i2)){cls="off";sl="abgewählt";}else if(ci){cls="cxl";sl="fällt aus"+(ci.g?"<br>"+esc(ci.g):"");}else if(r[2]<=min){cls="done";sl="vorbei";}else if(r[1]<=min){cls="now";sl="● läuft";}else{cls="later";sl="";}
+out+='<div class="t-row '+cls+'" style="--c:'+r[4]+'"><div class="t-tm">'+fmt(r[1])+'<br>'+fmt(r[2])+'</div><div class="t-nm"><b>'+r[3]+'</b> <small>'+r[5]+'</small><div class="c-room">'+room(r)+'</div></div><div class="t-st">'+sl+'</div></div>';}}
 document.getElementById("cur").innerHTML=out;}
+/* ---------- Liste & Woche ---------- */
 function enhance(){
-var now=new Date(),td=now.getDay(),wd7=td||7,mon=new Date(now.getFullYear(),now.getMonth(),now.getDate()-wd7+1),min=now.getHours()*60+now.getMinutes(),s0=ds(now);
+var now=NOW(),td=now.getDay(),mon=mondayOf(now),min=now.getHours()*60+now.getMinutes(),s0=ds(now);
 var secs=document.querySelectorAll("#days .day"),hds=document.querySelectorAll("#wk .hd"),cols=document.querySelectorAll("#wk .col"),tot=0,mins=0,cx=0;
 for(var d=1;d<=5;d++){var dt=new Date(mon.getFullYear(),mon.getMonth(),mon.getDate()+d-1),s=ds(dt),l=evFor(dt),a=l.filter(function(i){return good(i,s);});
 cx+=l.filter(function(i){return !isOff(i)&&isCx(i,s);}).length;tot+=a.length;for(var k=0;k<a.length;k++)mins+=E[a[k]][2]-E[a[k]][1];
-var dm=p(dt.getDate())+"."+p(dt.getMonth()+1)+".",info=a.length?(a.length+(a.length===1?" Termin":" Termine")+" · "+fmt(E[a[0]][1])+"–"+fmt(E[a[a.length-1]][2])):"frei";
-var sec=secs[d-1];if(sec){var h2=sec.querySelector("h2");if(!h2.getAttribute("data-n"))h2.setAttribute("data-n",h2.textContent);h2.innerHTML=h2.getAttribute("data-n")+' <span class="dmeta">'+dm+' · '+info+'</span>';sec.classList.toggle("today",d===td);}
-var hd=hds[d-1];if(hd){if(!hd.getAttribute("data-n"))hd.setAttribute("data-n",hd.textContent);hd.innerHTML=hd.getAttribute("data-n")+'<small>'+dm+'</small>';hd.classList.toggle("today",d===td);}
+var info=a.length?(a.length+(a.length===1?" Termin":" Termine")+" · "+fmt(E[a[0]][1])+"–"+fmt(E[a[a.length-1]][2])):"frei";
+var sec=secs[d-1];if(sec){var h2=sec.querySelector("h2");if(!h2.getAttribute("data-n"))h2.setAttribute("data-n",h2.textContent);h2.innerHTML=h2.getAttribute("data-n")+' <span class="dmeta">'+dm(dt)+' · '+info+'</span>';sec.classList.toggle("today",d===td);}
+var hd=hds[d-1];if(hd){if(!hd.getAttribute("data-n"))hd.setAttribute("data-n",hd.textContent);hd.innerHTML=hd.getAttribute("data-n")+'<small>'+dm(dt)+'</small>';hd.classList.toggle("today",d===td);}
 if(cols[d-1])cols[d-1].classList.toggle("today",d===td);}
 var ws=document.getElementById("wsum");if(ws){var par=parOf(now);ws.innerHTML='<b>KW '+isoWeek(now)+' · '+(par==="g"?"gerade":"ungerade")+' Woche</b><span>'+tot+' Termine · '+String(Math.round(mins/6)/10).replace(".",",")+' Std'+(cx?' · <em>'+cx+(cx>1?' Ausfälle':' Ausfall')+'</em>':'')+'</span>';}
 var todayIds=(td>=1&&td<=5)?evFor(now):[],els=document.querySelectorAll("[data-i]");
 for(var n=0;n<els.length;n++){var el=els[n],i=parseInt(el.getAttribute("data-i"),10),e=E[i];el.classList.remove("live");el.classList.remove("past");
-if(todayIds.indexOf(i)<0||!good(i,s0))continue;
-if(e[1]<=min&&min<e[2])el.classList.add("live");else if(e[2]<=min)el.classList.add("past");}}
+if(todayIds.indexOf(i)<0||!good(i,s0))continue;if(e[1]<=min&&min<e[2])el.classList.add("live");else if(e[2]<=min)el.classList.add("past");}}
 function applyDom(){enhance();
-var now=new Date(),td=now.getDay()||7,mon=new Date(now.getFullYear(),now.getMonth(),now.getDate()-td+1),s0=ds(now);
-var els=document.querySelectorAll("[data-i]");
+var now=NOW(),mon=mondayOf(now),s0=ds(now),els=document.querySelectorAll("[data-i]");
 for(var n=0;n<els.length;n++){var el=els[n],i=parseInt(el.getAttribute("data-i"),10),e=E[i];
-el.classList.remove("off");el.classList.remove("cxw");el.classList.remove("skip");el.removeAttribute("data-note");el.removeAttribute("title");
-var d=new Date(mon.getFullYear(),mon.getMonth(),mon.getDate()+e[0]-1),dss=ds(d);
+el.classList.remove("off");el.classList.remove("cxw");el.classList.remove("skip");el.removeAttribute("data-note");
+var d=new Date(mon.getFullYear(),mon.getMonth(),mon.getDate()+e[0]-1),dss=ds(d),ci=cxInfo(i,dss);
 if(isOff(i)){el.classList.add("off");el.setAttribute("data-note","abgewählt");el.classList.add("skip");}
-else if(isCx(i,dss)){var g=gcx(i,dss),nt="Fällt aus am "+p(d.getDate())+"."+p(d.getMonth()+1)+"."+(g&&g.g?" · "+g.g:"");el.classList.add("cxw");el.setAttribute("data-note",nt);el.setAttribute("title",nt);if(dss===s0)el.classList.add("skip");}}
-var w=document.getElementById("cfgwarn");if(w)w.innerHTML=WARN.length?"⚠ "+(WARN.length===1?"Ein Eintrag":WARN.length+" Einträge")+" aus den GitHub-Einstellungen konnte"+(WARN.length===1?"":"n")+" nicht übernommen werden. Details im Menü ☰ unter „GitHub“.":"";}
-/* ---------- Code für GitHub ---------- */
-function qv(v){return '"'+String(v).replace(/\\/g,"\\\\").replace(/"/g,'\\"')+'"';}
-function ser(o,keys){var a=[];keys.forEach(function(k){if(o[k]!=null&&o[k]!=="")a.push(k+": "+qv(o[k]));});return "  { "+a.join(", ")+" },";}
-function genBlock(){var s0=ds(new Date()),A=[],W=[];
-RAW_A.forEach(function(o){if(!o||typeof o!=="object")return;var d=parseD(o.datum);if(d&&ds(d)<s0)return;A.push(o);});
-st.cx.forEach(function(c){if(c.d<s0||gcx(c.i,c.d))return;var e=E[c.i];A.push({datum:dmy(pd(c.d)),start:fmt(e[1]),fach:e[3]});});
-A.sort(function(x,y){var a=parseD(x.datum),b=parseD(y.datum);if(!a&&!b)return 0;if(!a)return 1;if(!b)return -1;return a-b||((parseStart(x.start)||0)-(parseStart(y.start)||0));});
-RAW_W.forEach(function(o){if(o&&typeof o==="object")W.push(o);});
-st.off.forEach(function(i){if(isOffG(i))return;var e=E[i];W.push({tag:DS[e[0]],start:fmt(e[1]),fach:e[3]});});
-return START+"\nvar AUSFAELLE = [\n"+A.map(function(o){return ser(o,["datum","start","fach","art","grund"]);}).join("\n")+(A.length?"\n":"")+"];\nvar ABGEWAEHLT = [\n"+W.map(function(o){return ser(o,["tag","start","fach","art"]);}).join("\n")+(W.length?"\n":"")+"];\n"+END;}
-var SRC=null;
-try{if(/^https?:/.test(location.protocol)&&window.fetch)fetch(location.href,{cache:"no-store"}).then(function(r){return r.ok?r.text():null;}).then(function(t){if(t&&t.indexOf(START)>-1&&t.indexOf(END)>-1){SRC=t;if(tab==="g")buildSet();}}).catch(function(){});}catch(x){}
-function fullFile(){if(!SRC)return null;var a=SRC.indexOf(START),b=SRC.indexOf(END,a);if(a<0||b<0)return null;return SRC.slice(0,a)+genBlock()+SRC.slice(b+END.length);}
-function copyText(txt,btn){var old=btn.textContent;function ok(){btn.textContent="Kopiert ✓";setTimeout(function(){btn.textContent=old;},2000);}
-function fb(){var ta=document.createElement("textarea");ta.value=txt;ta.setAttribute("readonly","");ta.style.position="fixed";ta.style.opacity="0";document.body.appendChild(ta);ta.select();ta.setSelectionRange(0,txt.length);var r=false;try{r=document.execCommand("copy");}catch(x){}document.body.removeChild(ta);if(r)ok();else btn.textContent="Ging nicht – Text im Feld markieren";}
-try{if(navigator.clipboard&&navigator.clipboard.writeText){navigator.clipboard.writeText(txt).then(ok,fb);return;}}catch(x){}fb();}
-/* ---------- Menü ---------- */
-var set=document.getElementById("set"),gear=document.getElementById("gear"),tab="k",t0=new Date(),vy=t0.getFullYear(),vm=t0.getMonth(),sel=ds(t0);
-function paneK(){
-var s0=ds(new Date()),first=new Date(vy,vm,1),off=(first.getDay()+6)%7,n=new Date(vy,vm+1,0).getDate();
+else if(ci){el.classList.add("cxw");el.setAttribute("data-note","Fällt aus am "+dm(d)+(ci.g?" · "+ci.g:""));if(dss===s0)el.classList.add("skip");}}
+var w=document.getElementById("cfgwarn");if(w)w.innerHTML=WARN.length?"⚠ "+(WARN.length===1?"Ein Eintrag":WARN.length+" Einträge")+" in den GitHub-Einstellungen "+(WARN.length===1?"passt":"passen")+" zu keinem Termin. Details im Menü ☰ unter „GitHub“.":"";
+var tb=document.getElementById("testbar");if(tb){if(TM&&TM.on){var tn=NOW();tb.innerHTML='<span>🧪 <b>Testmodus</b> · '+DS[tn.getDay()]+', '+dmy(tn)+' · '+fmt(tn.getHours()*60+tn.getMinutes())+' Uhr</span><button id="tbend">Beenden</button>';}else tb.innerHTML="";}}
+/* ---------- Detailansicht (Woche) ---------- */
+var sheet=document.createElement("div");sheet.className="sheet";sheet.innerHTML='<div class="sh-bg"></div><div class="sh-card" role="dialog" aria-modal="true"><div class="sh-grab"></div><button class="sh-x" aria-label="Schließen">✕</button><div class="sh-body"></div></div>';document.body.appendChild(sheet);
+function typeFull(t){if(t==="Vorlesung")return "Vorlesung (seminaristischer Unterricht, SU)";if(t.indexOf("Übung")===0)return "Übung (Ue) · Gruppe "+t.slice(6);if(t==="Tutorium")return "Tutorium (freiwillig)";return t;}
+function openSheet(i){var e=E[i],f=e[8],now=NOW(),min=now.getHours()*60+now.getMinutes(),mon=mondayOf(now),d=new Date(mon.getFullYear(),mon.getMonth(),mon.getDate()+e[0]-1),s=ds(d);
+var rh=f.indexOf("g")>-1?"nur in geraden Kalenderwochen":f.indexOf("u")>-1?"nur in ungeraden Kalenderwochen":f.indexOf("h")>-1?"jede Woche, nur 1. Semesterhälfte":"jede Woche";
+var stt="",ci=cxInfo(i,s);
+if(isOff(i))stt='<div class="sh-st off">Abgewählt'+(isOffG(i)&&!isOn(i)?' <span class="gh">GitHub</span>':'')+'</div>';
+else if(evFor(d).indexOf(i)<0)stt='<div class="sh-st">Findet diese Woche nicht statt</div>';
+else if(ci)stt='<div class="sh-st cx">Fällt am '+dm(d)+' aus'+(ci.g?' · '+esc(ci.g):'')+(ci.src==="g"?' <span class="gh">GitHub</span>':'')+'</div>';
+var nx="";if(!isOff(i))for(var k=0;k<28;k++){var dd=new Date(now.getFullYear(),now.getMonth(),now.getDate()+k),s2=ds(dd);if(dd.getDay()!==e[0]||evFor(dd).indexOf(i)<0||!good(i,s2))continue;if(k===0&&e[2]<=min)continue;nx=(k===0?"Heute":k===1?"Morgen":DS[dd.getDay()]+", "+dm(dd))+" · "+fmt(e[1])+"–"+fmt(e[2]);break;}
+var tg=tags(f);
+var h='<div class="sh-code" style="color:'+e[4]+'">'+(CODE[e[3]]||"")+'</div><h3 class="sh-t">'+e[3]+'</h3><div class="sh-sub">'+typeFull(e[5])+'</div>'+stt+
+'<dl class="sh-dl"><dt>Zeit</dt><dd>'+DN[e[0]]+' · '+fmt(e[1])+'–'+fmt(e[2])+' ('+(e[2]-e[1])+' min)</dd><dt>Raum</dt><dd>'+(e[7]==="online"?"Online (synchron)":esc(e[7]||"–"))+'</dd><dt>Dozent/in</dt><dd>'+esc(PROF[e[6]]||e[6])+'</dd><dt>Rhythmus</dt><dd>'+rh+'</dd>'+(nx?'<dt>Nächster Termin</dt><dd>'+nx+'</dd>':'')+(tg.length?'<dt>Hinweis</dt><dd>'+tg.join(" · ")+'</dd>':'')+'</dl>';
+sheet.querySelector(".sh-body").innerHTML=h;sheet.querySelector(".sh-card").style.setProperty("--c",e[4]);sheet.classList.add("open");}
+function closeSheet(){sheet.classList.remove("open");}
+sheet.addEventListener("click",function(ev){var t=ev.target;if(t.classList.contains("sh-bg")||t.classList.contains("sh-x"))closeSheet();});
+document.addEventListener("keydown",function(ev){if(ev.key==="Escape")closeSheet();});
+var wkEl=document.getElementById("wk");if(wkEl)wkEl.addEventListener("click",function(ev){var b=ev.target.closest?ev.target.closest(".b"):null;if(b&&b.getAttribute("data-i")!==null)openSheet(parseInt(b.getAttribute("data-i"),10));});
+/* ---------- Einstellungen ---------- */
+var set=document.getElementById("set"),gear=document.getElementById("gear"),L1="ein",L2={ein:"aus",gh:"pub"},t0=NOW(),vy=t0.getFullYear(),vm=t0.getMonth(),sel=ds(t0);
+function sw(attr,val,on,dis,red){return '<input type="checkbox" class="sw'+(red?' red':'')+'" '+attr+'="'+val+'"'+(on?' checked':'')+(dis?' disabled':'')+'>';}
+function seg(attr,items,cur,cls){return '<div class="'+cls+'">'+items.map(function(x){return '<button '+attr+'="'+x[0]+'" aria-pressed="'+(x[0]===cur)+'">'+x[1]+'</button>';}).join("")+'</div>';}
+function calHtml(){var s0=ds(NOW()),first=new Date(vy,vm,1),off=(first.getDay()+6)%7,n=new Date(vy,vm+1,0).getDate();
 var h='<div class="cal-h"><button data-nav="-1" aria-label="Vorheriger Monat">‹</button><span>'+MN[vm]+' '+vy+'</span><button data-nav="1" aria-label="Nächster Monat">›</button></div><div class="cal">';
-var W=["Mo","Di","Mi","Do","Fr","Sa","So"];for(var a=0;a<7;a++)h+='<div class="wd">'+W[a]+'</div>';
-for(var b=0;b<off;b++)h+='<div></div>';
+var W=["Mo","Di","Mi","Do","Fr","Sa","So"];for(var a=0;a<7;a++)h+='<div class="wd">'+W[a]+'</div>';for(var b=0;b<off;b++)h+='<div></div>';
 for(var d=1;d<=n;d++){var dd=new Date(vy,vm,d),s=ds(dd),w=dd.getDay();h+='<button class="dd'+(w===0||w===6?' we':'')+(s===s0?' today':'')+(s===sel?' sel':'')+(hasCx(s)?' cx':'')+'" data-cd="'+s+'">'+d+'</button>';}
-h+='</div><div class="s-act"><button id="todaybtn">Heute</button></div>';
-var sd=pd(sel),wd=sd.getDay(),l=(wd>=1&&wd<=5)?evFor(sd):[];
-h+='<h3>'+DN[wd]+', '+dmy(sd)+'</h3><div class="c-room">KW '+isoWeek(sd)+' · '+(parOf(sd)==="g"?"gerade":"ungerade")+' Woche</div>';
-if(!l.length)h+='<div class="c-room" style="margin-top:8px">An diesem Tag finden keine Termine statt.</div>';
-for(var k=0;k<l.length;k++){var i=l[k],e=E[i],g=gcx(i,sel),c=isCx(i,sel),o=isOff(i);
-h+='<label class="s-row" style="margin-top:6px"><span class="s-dot" style="background:'+e[4]+'"></span><span style="flex:1"><b>'+e[3]+'</b> '+e[5]+(g?'<span class="gh">GitHub</span>':'')+'<br><small>'+fmt(e[1])+'–'+fmt(e[2])+(e[7]?' · '+e[7]:'')+(o?' · abgewählt':'')+(g&&g.g?' · '+esc(g.g):'')+'</small></span><span class="s-lab">fällt aus</span><input type="checkbox" class="cxc" data-cx="'+i+'"'+(c?' checked':'')+(o||g?' disabled':'')+'></label>';}
-var all=[],past=0;
-GCX.forEach(function(c){if(c.d>=s0)all.push({i:c.i,d:c.d,g:true,why:c.g});});
-st.cx.forEach(function(c,ix){if(c.d<s0){past++;return;}if(!gcx(c.i,c.d))all.push({i:c.i,d:c.d,ix:ix});});
+return h+'</div><div class="s-act"><button id="todaybtn">Heute</button></div>';}
+function dayHtml(){var sd=pd(sel),wd=sd.getDay(),l=(wd>=1&&wd<=5)?evFor(sd):[];
+var h='<h3>'+DN[wd]+', '+dmy(sd)+'</h3><div class="c-room">KW '+isoWeek(sd)+' · '+(parOf(sd)==="g"?"gerade":"ungerade")+' Woche</div>';
+if(!l.length)return h+'<div class="empty">An diesem Tag finden keine Termine statt.</div>';
+l.forEach(function(i){var e=E[i],g=gcx(i,sel),gu=g&&uncxIdx(i,sel)>-1,ci=cxInfo(i,sel),o=isOff(i),extra="";
+if(ci&&ci.src==="l")extra='<input type="text" class="gr" data-lgr="'+i+'" value="'+esc(ci.g)+'" placeholder="Grund (optional), z. B. Prof krank">';
+else if(ci&&ci.src==="g"&&ci.g)extra='<div class="gr-ro">Grund: '+esc(ci.g)+'</div>';
+h+='<div class="s-item'+(ci?' on':'')+'"><label class="s-row"><span class="s-dot" style="background:'+e[4]+'"></span><span class="s-tx"><b>'+e[3]+'</b> '+e[5]+(g?'<span class="gh">GitHub</span>':'')+'<br><small>'+fmt(e[1])+'–'+fmt(e[2])+(e[7]?' · '+e[7]:'')+(o?' · abgewählt':'')+(gu?' · GitHub-Ausfall hier aufgehoben':'')+'</small></span><span class="s-lab">fällt aus</span>'+sw("data-lcx",i,!!ci,o,true)+'</label>'+extra+'</div>';});
+return h;}
+function listLocal(){var s0=ds(NOW()),all=[],past=0;
+GCX.forEach(function(c){if(c.d>=s0)all.push({i:c.i,d:c.d,src:"g",g:c.g,u:uncxIdx(c.i,c.d)>-1});});
+st.cx.forEach(function(c,ix){if(c.d<s0){past++;return;}if(!gcx(c.i,c.d))all.push({i:c.i,d:c.d,src:"l",g:c.g,ix:ix});});
 all.sort(function(a,b){return a.d<b.d?-1:a.d>b.d?1:E[a.i][1]-E[b.i][1];});
-var up="";all.forEach(function(c){var e=E[c.i],d2=pd(c.d);up+='<div class="s-cx"><span><b>'+DS[d2.getDay()]+', '+dmy(d2)+'</b>'+(c.g?'<span class="gh">GitHub</span>':'')+'<br>'+fmt(e[1])+' '+e[3]+' – '+e[5]+(c.why?' · '+esc(c.why):'')+'</span>'+(c.g?'':'<button data-del="'+c.ix+'">Löschen</button>')+'</div>';});
-h+='<h3>Anstehende Ausfälle</h3>'+(up||'<div class="c-room">Keine anstehenden Ausfälle.</div>');
-if(past)h+='<div class="s-act"><button id="pastd">Vergangene Ausfälle löschen ('+past+')</button></div>';
+var h='<h3>Anstehende Ausfälle</h3>';if(!all.length)h+='<div class="empty">Keine anstehenden Ausfälle.</div>';
+all.forEach(function(c){var e=E[c.i],d2=pd(c.d);h+='<div class="s-cx'+(c.u?' dim':'')+'"><span><b>'+DS[d2.getDay()]+', '+dmy(d2)+'</b>'+(c.src==="g"?'<span class="gh">GitHub</span>':'')+'<br>'+fmt(e[1])+' '+e[3]+(c.g?' · '+esc(c.g):'')+(c.u?' · hier aufgehoben':'')+'</span>'+(c.src==="g"?(c.u?'<button data-reun="'+c.i+'|'+c.d+'">Wiederherstellen</button>':'<button data-un="'+c.i+'|'+c.d+'">Hier aufheben</button>'):'<button data-del="'+c.ix+'">Löschen</button>')+'</div>';});
+if(past)h+='<div class="s-act"><button id="pastd">Vergangene löschen ('+past+')</button></div>';return h;}
+function subjHtml(){var h='<p class="hint">Abgewählte Termine werden grau angezeigt und zählen nicht in die Zeitanzeige.</p>',seen=[];
+for(var i=0;i<E.length;i++){var nm=E[i][3];if(seen.indexOf(nm)>-1)continue;seen.push(nm);var all=[],act=true;
+for(var j=0;j<E.length;j++)if(E[j][3]===nm){all.push(j);if(isOff(j))act=false;}
+h+='<div class="s-grp"><label class="s-sub"><span class="s-dot" style="background:'+E[i][4]+'"></span><b>'+nm+'</b><span class="s-code">'+CODE[nm]+'</span>'+sw("data-lsub",nm,act,false,false)+'</label>';
+all.forEach(function(q){var e=E[q],par=e[8].indexOf("g")>-1?" · gerade KW":e[8].indexOf("u")>-1?" · ungerade KW":"",badge="",note="";
+if(isOffG(q)){badge='<span class="gh">GitHub</span>';note=isOn(q)?' · auf GitHub abgewählt, hier aktiv':' · auf GitHub abgewählt';}
+h+='<label class="s-row sm"><span class="s-tx"><b>'+e[5]+'</b>'+badge+'<br><small>'+DS[e[0]]+' '+fmt(e[1])+'–'+fmt(e[2])+(e[7]?' · '+e[7]:'')+par+note+'</small></span>'+sw("data-lk",q,!isOff(q),false,false)+'</label>';});h+='</div>';}
+return h+'<div class="s-act"><button id="allon">Alle aktivieren</button></div>';}
+function testHtml(){var n=NOW(),on=!!(TM&&TM.on),tm=fmt(n.getHours()*60+n.getMinutes());
+var h='<div class="t-disp'+(on?' on':'')+'"><div class="t-lab">'+(on?'🧪 Testmodus aktiv':'Echte Zeit')+'</div><div class="t-date">'+DN[n.getDay()]+', '+dmy(n)+'</div><div class="t-time">'+tm+' Uhr</div></div>';
+h+='<div class="t-nav"><button data-tj="-1440" aria-label="Einen Tag zurück">‹ Tag</button><button id="ttoday">Heute</button><button data-tj="1440" aria-label="Einen Tag vor">Tag ›</button></div>';
+h+='<div class="t-sec">Uhrzeit</div><div class="chips">'+["08:00","09:45","11:30","12:15","14:00","15:45","17:30","19:30"].map(function(x){return '<button data-tt="'+x+'"'+(on&&x===tm?' class="cur"':'')+'>'+x+'</button>';}).join("")+'</div>';
+h+='<div class="t-sec">Spulen</div><div class="jog"><button data-tj="-10080">−1 Wo</button><button data-tj="-60">−1 Std</button><button data-tj="-15">−15 min</button><button data-tj="15">+15 min</button><button data-tj="60">+1 Std</button><button data-tj="10080">+1 Wo</button></div>';
+h+='<details class="t-exact"><summary>Genau einstellen</summary><div class="s-form"><input type="date" id="tdate" value="'+ds(n)+'"><input type="time" id="ttime" value="'+tm+'"><button class="g-main" id="tstart">Übernehmen</button></div></details>';
+if(on)h+='<div class="s-act"><button id="tend" class="danger">Testmodus beenden</button></div>';
+return h+'<p class="hint">Simuliert Datum und Uhrzeit nur auf diesem Gerät. Deine echte Uhr bleibt unverändert, die simulierte Zeit läuft normal weiter.</p>';}
+function fld(n,label,type,ph,extra){return '<label class="f"><span>'+label+'</span><input type="'+type+'" data-f="'+n+'" value="'+esc(FORM[n]||"")+'" placeholder="'+esc(ph||"")+'" autocomplete="off" autocapitalize="off" spellcheck="false"'+(extra||"")+'></label>';}
+function msgHtml(){return MSG?'<div class="g-box '+(MSG.ok?'g-ok':'g-warn')+'">'+MSG.t+'</div>':'';}
+function repoFields(){var g=guessRepo();if(FORM.owner==null)FORM.owner=g.owner;if(FORM.repo==null)FORM.repo=g.repo;if(FORM.branch==null)FORM.branch="main";if(FORM.path==null)FORM.path="index.html";
+return fld("owner","GitHub-Benutzername","text","z. B. maxmuster")+fld("repo","Repository","text","z. B. stundenplan")+'<details class="t-exact"><summary>Erweitert</summary>'+fld("branch","Branch","text","main")+fld("path","Datei","text","index.html")+'</details>';}
+function tokHelp(){return '<details class="t-exact"><summary>Wie bekomme ich einen Token?</summary><ol class="g-steps"><li>Auf github.com: Profilbild → <b>Settings</b> → <b>Developer settings</b> → <b>Personal access tokens</b> → <b>Fine-grained tokens</b> → <b>Generate new token</b>.</li><li>Namen und Ablaufdatum wählen.</li><li><b>Repository access:</b> „Only select repositories“ und nur dein Stundenplan-Repository.</li><li><b>Permissions → Repository permissions → Contents:</b> „Read and write“.</li><li>Token erzeugen, kopieren und hier einfügen. GitHub zeigt ihn nur einmal an.</li></ol></details>';}
+function btn(id,label,busyLabel,dis,cls){return '<button id="'+id+'" class="'+(cls||"")+'"'+(dis||BUSY?' disabled':'')+'>'+(BUSY&&busyLabel?'<span class="spin"></span>'+busyLabel:label)+'</button>';}
+function wizHtml(){return '<h3>Ersteinrichtung</h3>'+fld("tok","GitHub-Token","password","github_pat_…")+tokHelp()+repoFields()+fld("np1","PIN festlegen (mind. 4 Zeichen)","password",""," inputmode=\"numeric\"")+fld("np2","PIN wiederholen","password",""," inputmode=\"numeric\"")+'<div class="s-act">'+btn("wsetup","Einrichten & veröffentlichen","Richte ein…",false,"g-main big")+'</div>'+msgHtml()+'<p class="hint">In die Datei kommt nur ein verschlüsselter Prüfwert des PINs, nie der PIN selbst. Der Token bleibt verschlüsselt auf diesem Gerät.</p>';}
+function lockHtml(){if(!PINH)return '<div class="lock"><div class="lk-ic">🔒</div><h3>Noch nicht eingerichtet</h3><p class="hint">Das Bearbeiten wird mit einem PIN geschützt. Die Einrichtung braucht einen GitHub-Token und ist nur für den Betreiber gedacht.</p></div>'+wizHtml();
+var wait=lockUntil>Date.now();
+return '<div class="lock"><div class="lk-ic">🔒</div><h3>Bearbeiten ist geschützt</h3><p class="hint">Gib den PIN ein, um Einträge zu ändern oder zu veröffentlichen.</p><input type="password" inputmode="numeric" class="pin'+(SHAKE?' shake':'')+'" data-f="pin" placeholder="PIN" autocomplete="off"><div class="s-act" style="justify-content:center">'+btn("unlock","Entsperren","Prüfe…",wait,"g-main")+'</div>'+(wait?'<p class="hint">Zu viele Versuche. Bitte kurz warten.</p>':'')+msgHtml()+'</div>';}
+function accHtml(){var rec=ghRec(),h='';
+if(TOKEN&&rec)h+='<div class="g-box g-ok">✓ Token hinterlegt für <b>'+esc(rec.owner)+'/'+esc(rec.repo)+'</b> ('+esc(rec.branch)+', '+esc(rec.path)+')</div><div class="s-act">'+btn("tktest","Verbindung testen","Teste…")+btn("tkdel","Token entfernen","",false,"danger")+'</div>';
+else h+='<h3>Token hinterlegen</h3><p class="hint">Einmal pro Gerät. Der Token wird mit deinem PIN verschlüsselt gespeichert.'+(TOKFAIL?' Der bisher gespeicherte Token passt nicht mehr zum PIN.':'')+'</p>'+fld("tok","GitHub-Token","password","github_pat_…")+tokHelp()+repoFields()+'<div class="s-act">'+btn("tksave","Prüfen & speichern","Prüfe…",false,"g-main")+'</div>';
+h+=msgHtml()+'<h3>PIN ändern</h3>'+fld("cp1","Neuer PIN","password",""," inputmode=\"numeric\"")+fld("cp2","Neuen PIN wiederholen","password",""," inputmode=\"numeric\"")+'<div class="s-act">'+btn("pinchg","PIN ändern & veröffentlichen","Veröffentliche…",!TOKEN)+'</div><p class="hint">Der neue PIN gilt nach dem Veröffentlichen auf allen Geräten. Auf deinen anderen Geräten hinterlegst du den Token danach einmal neu.</p>';
 return h;}
-function paneW(){
-var h='<div class="c-room">Abgewählte Termine sind dauerhaft grau und zählen nirgends mit. Gilt für jede Woche.</div>',seen=[];
-for(var i=0;i<E.length;i++){var nm=E[i][3];if(seen.indexOf(nm)>-1)continue;seen.push(nm);
-var all=[],act=true;for(var j=0;j<E.length;j++)if(E[j][3]===nm){all.push(j);if(isOff(j))act=false;}
-h+='<label class="s-sub"><span class="s-dot" style="background:'+E[i][4]+'"></span><b>'+nm+'</b><input type="checkbox" data-sub="'+nm+'"'+(act?' checked':'')+'></label>';
-for(var k=0;k<all.length;k++){var q=all[k],e=E[q],G=isOffG(q),par=e[8].indexOf("g")>-1?" · gerade KW":e[8].indexOf("u")>-1?" · ungerade KW":"";
-h+='<label class="s-row"><input type="checkbox" data-k="'+q+'"'+(isOff(q)?'':' checked')+(G?' disabled':'')+'><span><b>'+e[5]+'</b>'+(G?'<span class="gh">GitHub</span>':'')+'<br><small>'+DS[e[0]]+' '+fmt(e[1])+'–'+fmt(e[2])+(e[7]?' · '+e[7]:'')+par+'</small></span></label>';}}
-h+='<div class="s-act"><button id="allon">Alle aktivieren</button></div>';
-return h;}
-function paneG(){
-var s0=ds(new Date()),lc=st.cx.filter(function(c){return c.d>=s0&&!gcx(c.i,c.d);}).length,lo=st.off.filter(function(i){return !isOffG(i);}).length;
-var gc=GCX.filter(function(c){return c.d>=s0;}).length;
-var h='<div class="c-room">Was du hier zu GitHub überträgst, gilt auf allen Geräten.</div>';
-h+='<div class="g-box"><b>Auf GitHub gespeichert:</b> '+gc+' anstehende Ausfälle, '+GOFF.length+' abgewählte Termine<br><b>Nur auf diesem Gerät:</b> '+lc+' Ausfälle, '+lo+' Abwahlen</div>';
-if(WARN.length)h+='<div class="g-box g-warn"><b>Probleme in den GitHub-Einstellungen</b><ul style="margin:6px 0 0;padding-left:18px">'+WARN.map(function(w){return '<li>'+esc(w)+'</li>';}).join("")+'</ul></div>';
-h+='<h3>So überträgst du deine Änderungen</h3><ol class="g-steps"><li>Ausfälle im Reiter <b>Kalender</b> und Abwahlen unter <b>Wiederkehrend</b> eintragen.</li><li>Unten auf <b>Ganze Datei kopieren</b> tippen.</li><li>Auf GitHub dein Repository öffnen, auf <b>index.html</b> tippen, dann auf das <b>Stift-Symbol</b>.</li><li>Im Editor lange drücken, <b>Alles auswählen</b> und den kopierten Text einfügen.</li><li><b>Commit changes</b> tippen. Nach 1–2 Minuten ist es auf allen Geräten da, notfalls neu laden.</li><li>Zurück hier auf <b>Lokale Einträge löschen</b> tippen, damit nichts doppelt ist.</li></ol>';
-h+='<div class="s-act"><button class="g-main" id="cpfull"'+(SRC?'':' disabled')+'>Ganze Datei kopieren</button><button id="cpblock">Nur Einstellungsblock kopieren</button></div>';
-if(!SRC)h+='<div class="c-room" style="margin-top:6px">„Ganze Datei kopieren“ funktioniert nur auf deiner GitHub-Seite. Hier kannst du den Einstellungsblock kopieren und in der index.html alles von ▼ AB HIER ERSETZEN bis ▲ BIS HIER ERSETZEN damit ersetzen.</div>';
-h+='<textarea id="gcode" readonly>'+esc(genBlock())+'</textarea>';
-h+='<div class="s-act"><button id="clrl">Lokale Einträge löschen</button></div>';
-h+='<h3>Von Hand eintragen</h3><div class="c-room">Ganz oben in der index.html stehen Beispiele. Fächer schreibst du einfach aus, zum Beispiel Mathe, Physik oder Werkstoffkunde. Datum als TT.MM.JJJJ, Uhrzeit als 08:00.</div>';
-return h;}
-function buildSet(){var y0=window.pageYOffset||0;
-var h='<div class="seg"><button data-seg="k" aria-pressed="'+(tab==="k")+'">Kalender</button><button data-seg="w" aria-pressed="'+(tab==="w")+'">Wiederkehrend</button><button data-seg="g" aria-pressed="'+(tab==="g")+'">GitHub</button></div><div id="pk">'+paneK()+'</div><div id="pw">'+paneW()+'</div><div id="pg">'+paneG()+'</div><div class="s-act" style="margin-top:22px"><button id="rst">Alles auf diesem Gerät zurücksetzen</button></div>';
-set.className=tab==="k"?"t1":tab==="w"?"t2":"t3";set.innerHTML=h;window.scrollTo(0,y0);}
-function refresh(){save();applyDom();render();buildSet();}
-set.addEventListener("change",function(ev){var t=ev.target;
-if(t.getAttribute("data-k")!==null){var i=parseInt(t.getAttribute("data-k"),10),x=st.off.indexOf(i);if(t.checked&&x>-1)st.off.splice(x,1);else if(!t.checked&&x<0)st.off.push(i);refresh();}
-else if(t.getAttribute("data-sub")!==null){var nm=t.getAttribute("data-sub");for(var j=0;j<E.length;j++)if(E[j][3]===nm){var y=st.off.indexOf(j);if(t.checked&&y>-1)st.off.splice(y,1);else if(!t.checked&&y<0)st.off.push(j);}refresh();}
-else if(t.getAttribute("data-cx")!==null){var c=parseInt(t.getAttribute("data-cx"),10),z=cxIdx(c,sel);if(t.checked&&z<0)st.cx.push({i:c,d:sel});else if(!t.checked&&z>-1)st.cx.splice(z,1);refresh();}});
-set.addEventListener("click",function(ev){var t=ev.target;if(t.closest){var bt=t.closest("button");if(bt)t=bt;}
-if(t.getAttribute("data-seg")!==null){tab=t.getAttribute("data-seg");buildSet();}
-else if(t.getAttribute("data-nav")!==null){vm+=parseInt(t.getAttribute("data-nav"),10);if(vm<0){vm=11;vy--;}if(vm>11){vm=0;vy++;}buildSet();}
-else if(t.getAttribute("data-cd")!==null){sel=t.getAttribute("data-cd");buildSet();}
-else if(t.id==="todaybtn"){var n=new Date();vy=n.getFullYear();vm=n.getMonth();sel=ds(n);buildSet();}
-else if(t.getAttribute("data-del")!==null){st.cx.splice(parseInt(t.getAttribute("data-del"),10),1);refresh();}
-else if(t.id==="allon"){st.off=[];refresh();}
-else if(t.id==="pastd"){var s0=ds(new Date());st.cx=st.cx.filter(function(c){return c.d>=s0;});refresh();}
+function pubHtml(){var s0=ds(NOW()),gc=GCX.filter(function(c){return c.d>=s0;}).length,pn=pending();
+var h='<div class="g-box"><b>Auf GitHub:</b> '+gc+' anstehende Ausfälle, '+GOFF.length+' abgewählte Termine</div>';
+h+='<div class="g-box '+(pn?'g-dirty':'g-clean')+'">'+(pn?'<b>'+pn+(pn===1?' Änderung':' Änderungen')+'</b> noch nicht veröffentlicht.':'Alles ist veröffentlicht.')+'</div>';
+if(WARN.length)h+='<div class="g-box g-warn"><b>Probleme in der Datei auf GitHub</b><ul>'+WARN.map(function(w){return '<li>'+esc(w)+'</li>';}).join("")+'</ul></div>';
+if(!TOKEN)h+='<div class="g-box g-dirty">Auf diesem Gerät ist noch kein Token hinterlegt. Das machst du einmalig im Reiter <b>Zugang</b>.</div>';
+h+='<div class="s-act">'+btn("publish","Jetzt veröffentlichen","Wird veröffentlicht…",!TOKEN||!pn,"g-main big")+'</div>'+msgHtml();
+return h+'<details class="t-exact"><summary>Manuell hochladen</summary>'+upHtml()+'</details>';}
+function upHtml(){var s0=ds(NOW()),gc=GCX.filter(function(c){return c.d>=s0;}).length,pn=pending();
+var h='<div class="g-box"><b>Auf GitHub:</b> '+gc+' anstehende Ausfälle, '+GOFF.length+' abgewählte Termine</div>';
+h+='<div class="g-box '+(pn?'g-dirty':'g-clean')+'">'+(pn?'<b>'+pn+(pn===1?' Änderung':' Änderungen')+' auf diesem Gerät</b> sind noch nicht auf GitHub.':'Alle Einträge dieses Geräts sind bereits auf GitHub.')+'</div>';
+if(WARN.length)h+='<div class="g-box g-warn"><b>Probleme in der Datei auf GitHub</b><ul>'+WARN.map(function(w){return '<li>'+esc(w)+'</li>';}).join("")+'</ul></div>';
+h+='<h3>So lädst du hoch</h3><ol class="g-steps"><li><b>Ganze Datei kopieren</b> tippen.</li><li>Auf GitHub <b>index.html</b> öffnen, dann das <b>Stift-Symbol</b>.</li><li>Im Editor lange drücken, <b>Alles auswählen</b>, einfügen.</li><li><b>Commit changes</b> tippen. Nach 1–2 Minuten gilt es auf allen Geräten.</li><li>Hier auf <b>Lokale Einträge löschen</b> tippen.</li></ol>';
+h+='<div class="s-act"><button class="g-main" id="cpfull"'+(SRC?'':' disabled')+'>Ganze Datei kopieren</button><button id="cpblock">Nur Einstellungsblock</button></div>';
+if(!SRC)h+='<p class="hint">„Ganze Datei kopieren“ geht nur auf deiner GitHub-Seite. Mit „Nur Einstellungsblock“ ersetzt du in der index.html alles von ▼ AB HIER ERSETZEN bis ▲ BIS HIER ERSETZEN.</p>';
+h+='<details class="t-exact"><summary>Code ansehen</summary><textarea id="gcode" readonly>'+esc(genBlock())+'</textarea></details>';
+h+='<div class="s-act"><button id="clrl" class="danger">Lokale Einträge löschen</button></div>';return h;}
+function buildSet(quiet){var y0=window.pageYOffset||0,pn=pending();set.classList.toggle("quiet",!!quiet);
+if(!UNL){set.innerHTML='<div class="s-head"><h2>Einstellungen</h2></div><div class="pane">'+lockHtml()+'</div>';window.scrollTo(0,y0);return;}
+var h='<div class="s-head"><h2>Einstellungen</h2><button id="lockbtn" class="lockb">🔒 Sperren</button></div>';
+h+=seg("data-l1",[["ein","Einträge"],["gh","GitHub"+(pn?" •":"")]],L1,"lv1");
+if(L1==="ein"){h+='<p class="intro">Deine Einträge gelten zunächst nur auf diesem Gerät. Einträge mit <span class="gh">GitHub</span>-Schild gelten für alle und lassen sich hier für dich aufheben.</p>';
+h+=seg("data-l2",[["aus","Ausfälle"],["fach","Fächer"]],L2.ein,"lv2");
+h+='<div class="pane">'+(L2.ein==="aus"?calHtml()+dayHtml()+listLocal():subjHtml())+'</div><div class="s-foot"><button id="rst">Alles auf diesem Gerät zurücksetzen</button></div>';}
+else{h+=seg("data-l2",[["pub","Veröffentlichen"],["test","Testmodus"],["acc","Zugang"]],L2.gh,"lv2");
+h+='<div class="pane">'+(L2.gh==="pub"?pubHtml():L2.gh==="acc"?accHtml():testHtml())+'</div>';}
+set.innerHTML=h;window.scrollTo(0,y0);}
+function refresh(){save();applyDom();render();buildSet(true);}
+function afterSwitch(){save();applyDom();render();setTimeout(function(){buildSet(true);},260);}
+function testChanged(){var n=NOW();vy=n.getFullYear();vm=n.getMonth();sel=ds(n);var r=document.getElementById(parOf(n)==="g"?"rg":"ru");if(r)r.checked=true;if(window.__spTick)window.__spTick();refresh();}
+set.addEventListener("change",function(ev){var t=ev.target,a=function(n){return t.getAttribute(n);};
+if(a("data-lk")!==null){setActive(+a("data-lk"),t.checked);afterSwitch();}
+else if(a("data-lsub")!==null){for(var j=0;j<E.length;j++)if(E[j][3]===a("data-lsub"))setActive(j,t.checked);afterSwitch();}
+else if(a("data-lcx")!==null){setCx(+a("data-lcx"),sel,t.checked);afterSwitch();}
+else if(a("data-lgr")!==null){var z=cxIdx(+a("data-lgr"),sel);if(z>-1){st.cx[z].g=t.value.trim();save();applyDom();render();}}});
+set.addEventListener("click",function(ev){var t=ev.target;if(t.closest){var bt=t.closest("button");if(bt)t=bt;else return;}if(t.tagName!=="BUTTON")return;var a=function(n){return t.getAttribute(n);};
+if(a("data-l1")!==null){L1=a("data-l1");MSG=null;buildSet();}
+else if(a("data-l2")!==null){L2[L1]=a("data-l2");MSG=null;buildSet();}
+else if(a("data-nav")!==null){vm+=+a("data-nav");if(vm<0){vm=11;vy--;}if(vm>11){vm=0;vy++;}buildSet(true);}
+else if(a("data-cd")!==null){sel=a("data-cd");buildSet(true);}
+else if(t.id==="todaybtn"){var n=NOW();vy=n.getFullYear();vm=n.getMonth();sel=ds(n);buildSet(true);}
+else if(a("data-del")!==null){st.cx.splice(+a("data-del"),1);refresh();}
+else if(a("data-un")!==null){var u1=a("data-un").split("|");setCx(+u1[0],u1[1],false);refresh();}
+else if(a("data-reun")!==null){var u2=a("data-reun").split("|");setCx(+u2[0],u2[1],true);refresh();}
+else if(t.id==="allon"){st.off=[];st.on=GOFF.slice();refresh();}
+else if(t.id==="pastd"){var s0=ds(NOW());st.cx=st.cx.filter(function(c){return c.d>=s0;});st.uncx=st.uncx.filter(function(c){return c.d>=s0;});refresh();}
+else if(t.id==="rst"){if(window.confirm("Alle Einstellungen auf diesem Gerät zurücksetzen? Die Einträge auf GitHub bleiben erhalten.")){st={off:[],cx:[],on:[],uncx:[]};endTest();testChanged();}}
+else if(t.id==="clrl"){if(window.confirm("Einträge dieses Geräts löschen? Mach das erst, wenn du sie auf GitHub hochgeladen hast.")){st={off:[],cx:[],on:[],uncx:[]};refresh();}}
+else if(a("data-tj")!==null){setTest(NOW().getTime()+(+a("data-tj"))*60000);testChanged();}
+else if(a("data-tt")!==null){var n2=NOW(),hm=a("data-tt").split(":");setTest(new Date(n2.getFullYear(),n2.getMonth(),n2.getDate(),+hm[0],+hm[1]).getTime());testChanged();}
+else if(t.id==="ttoday"){var r=new Date(Date.now()),n3=NOW();setTest(new Date(r.getFullYear(),r.getMonth(),r.getDate(),n3.getHours(),n3.getMinutes()).getTime());testChanged();}
+else if(t.id==="tstart"){var dv=document.getElementById("tdate").value,tv=document.getElementById("ttime").value||"08:00";if(dv){var pp=dv.split("-"),tt=tv.split(":");setTest(new Date(+pp[0],+pp[1]-1,+pp[2],+tt[0],+tt[1]).getTime());testChanged();}}
+else if(t.id==="tend"){endTest();testChanged();}
 else if(t.id==="cpfull"){var f=fullFile();if(f)copyText(f,t);}
 else if(t.id==="cpblock"){copyText(genBlock(),t);}
-else if(t.id==="clrl"){if(window.confirm("Einträge, die nur auf diesem Gerät gespeichert sind, löschen? Mach das erst, wenn du sie zu GitHub übertragen hast.")){st={off:[],cx:[]};refresh();}}
-else if(t.id==="rst"){if(window.confirm("Alle Einstellungen auf diesem Gerät zurücksetzen? Die Einträge auf GitHub bleiben erhalten.")){st={off:[],cx:[]};refresh();}}});
+else if(t.id==="unlock")doUnlock();
+else if(t.id==="wsetup")doSetup();
+else if(t.id==="publish")doPublish();
+else if(t.id==="tksave")doTokSave();
+else if(t.id==="tktest")doTokTest();
+else if(t.id==="tkdel"){if(window.confirm("Token von diesem Gerät entfernen?")){LSset(GK,null);TOKEN=null;MSG=null;buildSet(true);}}
+else if(t.id==="pinchg")doPinChange();
+else if(t.id==="lockbtn"){UNL=false;PIN=null;TOKEN=null;MSG=null;FORM={};buildSet();}});
+set.addEventListener("input",function(ev){var t=ev.target,f=t.getAttribute&&t.getAttribute("data-f");if(f)FORM[f]=t.value;});
+set.addEventListener("keydown",function(ev){var t=ev.target;if(ev.key==="Enter"&&t.getAttribute&&t.getAttribute("data-f")==="pin"){ev.preventDefault();doUnlock();}});
+function recFromForm(){return{owner:(FORM.owner||"").trim(),repo:(FORM.repo||"").trim(),branch:(FORM.branch||"main").trim()||"main",path:(FORM.path||"index.html").trim().replace(/^\/+/,"")||"index.html"};}
+function pinOk(p1,p2){if(String(p1).length<4){MSG={ok:false,t:"Der PIN braucht mindestens 4 Zeichen."};return false;}if(p1!==p2){MSG={ok:false,t:"Die beiden PINs stimmen nicht überein."};return false;}return true;}
+async function run(fn){BUSY=true;MSG=null;buildSet(true);try{await fn();}catch(x){MSG={ok:false,t:netErr(x)};}BUSY=false;applyDom();render();buildSet(true);}
+async function doUnlock(){if(BUSY||lockUntil>Date.now())return;var pin=FORM.pin||"";FORM.pin="";if(!pin)return;BUSY=true;MSG=null;buildSet(true);var ok=false;
+try{ok=await checkPin(pin,PINH);}catch(x){MSG={ok:false,t:"Dein Browser unterstützt die Verschlüsselung hier nicht."};}BUSY=false;
+if(ok){fails=0;UNL=true;PIN=pin;TOKEN=null;TOKFAIL=false;var rec=ghRec();if(rec){try{TOKEN=await decToken(pin,rec);}catch(x){TOKFAIL=true;}}buildSet();return;}
+if(!MSG){fails++;MSG={ok:false,t:"Falscher PIN."};if(fails>=5){fails=0;lockUntil=Date.now()+30000;setTimeout(function(){MSG=null;buildSet(true);},30200);}}
+SHAKE=true;buildSet(true);SHAKE=false;}
+function doSetup(){var tok=(FORM.tok||"").trim(),rec=recFromForm();
+if(!tok||!rec.owner||!rec.repo){MSG={ok:false,t:"Bitte Token, Benutzername und Repository angeben."};return buildSet(true);}
+if(!pinOk(FORM.np1||"",FORM.np2||""))return buildSet(true);var p1=FORM.np1;
+run(async function(){var e=await encToken(p1,tok);LSset(GK,JSON.stringify(Object.assign({},rec,e)));TOKEN=tok;
+try{await publish(await makePinHash(p1));}catch(x){LSset(GK,null);TOKEN=null;throw x;}
+UNL=true;PIN=p1;FORM={};L1="gh";L2.gh="pub";MSG={ok:true,t:"Eingerichtet ✓ Der PIN-Schutz ist veröffentlicht. Auf allen Geräten gilt er nach dem Neuladen, meist nach 1–2 Minuten, manchmal bis zu 10."};});}
+function doPublish(){run(async function(){await publish();MSG={ok:true,t:"Veröffentlicht ✓ Auf allen Geräten nach dem Neuladen sichtbar, meist nach 1–2 Minuten, manchmal bis zu 10."};});}
+function doTokSave(){var tok=(FORM.tok||"").trim(),rec=recFromForm();if(!tok||!rec.owner||!rec.repo){MSG={ok:false,t:"Bitte Token, Benutzername und Repository angeben."};return buildSet(true);}
+run(async function(){await ghReq(rec,tok,"GET");var e=await encToken(PIN,tok);LSset(GK,JSON.stringify(Object.assign({},rec,e)));TOKEN=tok;TOKFAIL=false;FORM.tok="";MSG={ok:true,t:"Token gespeichert ✓ Verbindung zu "+esc(rec.owner)+"/"+esc(rec.repo)+" klappt."};});}
+function doTokTest(){run(async function(){await ghReq(ghRec(),TOKEN,"GET");MSG={ok:true,t:"Verbindung klappt ✓"};});}
+function doPinChange(){if(!pinOk(FORM.cp1||"",FORM.cp2||""))return buildSet(true);var p1=FORM.cp1;
+run(async function(){await publish(await makePinHash(p1));var rec=ghRec(),e=await encToken(p1,TOKEN);LSset(GK,JSON.stringify(Object.assign({},rec,e)));PIN=p1;FORM.cp1=FORM.cp2="";MSG={ok:true,t:"PIN geändert ✓ Er gilt nach dem Neuladen auf allen Geräten."};});}
+
 gear.style.display="flex";
-gear.addEventListener("click",function(){var o=document.body.classList.toggle("so");gear.classList.toggle("x",o);window.scrollTo(0,0);});
+var tbar=document.getElementById("testbar");if(tbar)tbar.addEventListener("click",function(ev){if(ev.target&&ev.target.id==="tbend"){endTest();testChanged();}});
+gear.addEventListener("click",function(){var o=document.body.classList.toggle("so");gear.classList.toggle("x",o);if(o){MSG=null;buildSet();}window.scrollTo(0,0);});
 document.getElementById("va").checked=true;
 applyDom();render();buildSet();
 setInterval(function(){applyDom();render();},30000);
 })();
+
 </script><script>
 (function(){
 function isoWeek(d){var t=new Date(Date.UTC(d.getFullYear(),d.getMonth(),d.getDate()));var n=t.getUTCDay()||7;t.setUTCDate(t.getUTCDate()+4-n);return Math.ceil(((t-Date.UTC(t.getUTCFullYear(),0,1))/864e5+1)/7);}
 function dur(m){m=Math.max(1,Math.round(m));var h=Math.floor(m/60),r=m%60;return h?(h+" Std"+(r?" "+r+" min":"")):(r+" min");}
 var first=true;
 function tick(){
-var now=new Date(),wd=now.getDay(),min=now.getHours()*60+now.getMinutes(),par=isoWeek(now)%2===0?"g":"u";
+var now=(window.__spNow?window.__spNow():new Date()),wd=now.getDay(),min=now.getHours()*60+now.getMinutes(),par=isoWeek(now)%2===0?"g":"u";
 if(first){first=false;var r=document.getElementById(par==="g"?"rg":"ru");if(r)r.checked=true;}
 var old=document.querySelectorAll(".now");for(var i=0;i<old.length;i++)old[i].parentNode.removeChild(old[i]);
 var bar=document.getElementById("nowbar"),cols=document.querySelectorAll("#wk .col");
@@ -393,6 +636,6 @@ else if(nxt)t="Als Nächstes: "+nxt.n+(nxt.o?" (freiwillig)":"")+" · startet in
 else t="Heute keine Termine mehr.";
 bar.style.display="block";bar.textContent=t;
 }
-tick();setInterval(tick,30000);
+tick();setInterval(tick,30000);window.__spTick=tick;
 })();
 </script></body></html>
