@@ -19,9 +19,8 @@
    Am einfachsten: Menü ☰ -> GitHub -> Veröffentlichen.
    ================================================================ */
 // ▼▼▼ AB HIER ERSETZEN ▼▼▼
-var PIN_SCHUTZ = ""; // wird automatisch gesetzt – nicht ändern
+var PIN_SCHUTZ = ""; // bleibt leer (PIN liegt nur auf deinen Geräten)
 var AUSFAELLE = [
-  { datum: "16.10.2026", start: "15:45", fach: "Informatik", grund: "TEST" },
 ];
 var ABGEWAEHLT = [
 ];
@@ -266,6 +265,34 @@ body.so #set{animation:fi .3s cubic-bezier(.2,.8,.2,1)}
 #toast{position:fixed;left:50%;bottom:calc(18px + env(safe-area-inset-bottom,0px));transform:translate(-50%,16px);background:#16a34a;color:#fff;padding:9px 16px;border-radius:999px;font-size:.88rem;font-weight:600;box-shadow:0 6px 18px rgba(0,0,0,.2);opacity:0;pointer-events:none;transition:opacity .25s,transform .3s cubic-bezier(.2,.8,.2,1);z-index:60}
 #toast.show{opacity:1;transform:translate(-50%,0)}
 .g-list{margin:4px 0 0;padding-left:18px;font-size:.88rem;color:var(--mute)}.g-list li{margin:5px 0}
+
+/* ===== v16: Hinweis & Tagesüberblick ===== */
+#toast{top:calc(12px + env(safe-area-inset-top,0px));bottom:auto;left:50%;display:flex;align-items:center;gap:11px;min-width:230px;max-width:calc(100% - 32px);padding:10px 18px 10px 10px;border-radius:18px;background:rgba(255,255,255,.86);-webkit-backdrop-filter:saturate(180%) blur(18px);backdrop-filter:saturate(180%) blur(18px);color:var(--ink);border:1px solid rgba(0,0,0,.06);box-shadow:0 12px 32px rgba(15,23,42,.16);font-size:.9rem;font-weight:400;transform:translate(-50%,calc(-100% - 24px));opacity:0;transition:transform .5s cubic-bezier(.2,.9,.2,1),opacity .3s ease}
+#toast.show{transform:translate(-50%,0);opacity:1}
+@media (prefers-color-scheme:dark){#toast{background:rgba(30,40,50,.82);border-color:rgba(255,255,255,.08);box-shadow:0 12px 32px rgba(0,0,0,.45)}}
+.tz-ic{flex:none;display:grid;place-items:center;width:30px;height:30px;border-radius:50%;background:linear-gradient(180deg,#22c55e,#16a34a);color:#fff;font-size:.95rem;font-weight:800;box-shadow:0 2px 6px rgba(22,163,74,.35)}
+.tz-tx b{display:block;font-weight:650;line-height:1.25}.tz-tx small{display:block;color:var(--mute);font-size:.78rem;margin-top:1px}
+.t-row{border-radius:12px;padding:10px 12px;transition:opacity .3s,box-shadow .3s,background .3s}
+.t-st{align-self:center;text-align:right}
+.pl{display:inline-flex;align-items:center;gap:6px;font-size:.72rem;font-weight:700;padding:4px 10px;border-radius:999px;white-space:nowrap;letter-spacing:.01em}
+.pl-cx{background:#fdecec;color:#b91c1c}
+.pl-now{background:#e7f6ec;color:#15803d}.pl-now i{width:7px;height:7px;border-radius:50%;background:#16a34a}
+.pl-done{color:var(--mute);font-weight:600;padding:4px 2px}
+.pl-off{background:var(--chip);color:var(--mute)}
+.pl-soon{background:var(--chip);color:var(--ink);font-weight:600}
+@media (prefers-color-scheme:dark){.pl-cx{background:rgba(239,68,68,.16);color:#fca5a5}.pl-now{background:rgba(34,197,94,.16);color:#86efac}}
+@media (prefers-reduced-motion:no-preference){.pl-now i{animation:dotp 1.8s ease-in-out infinite}}
+@keyframes dotp{50%{opacity:.35;transform:scale(.8)}}
+.t-row.now{outline:none;box-shadow:0 0 0 1.5px #16a34a,0 6px 18px rgba(22,163,74,.14)}
+.t-row.done{opacity:.55}
+.t-row.cxl{opacity:1;filter:none;border-left-color:rgba(225,29,29,.55);background:linear-gradient(rgba(225,29,29,.035),rgba(225,29,29,.035)),var(--card)}
+.t-row.cxl .t-nm,.t-row.cxl .t-tm{text-decoration:none}
+.t-row.cxl .t-tm,.t-row.cxl .t-nm>b,.t-row.cxl .t-nm>small{color:var(--mute);text-decoration:line-through;text-decoration-color:rgba(225,29,29,.6);text-decoration-thickness:1.5px}
+.t-row.cxl .t-nm>small{color:var(--mute)}
+.t-why{display:inline-flex;align-items:baseline;gap:7px;margin-top:7px;padding:4px 10px;border-radius:8px;background:rgba(225,29,29,.07);color:#991b1b;font-size:.82rem;line-height:1.35}
+.t-why span{font-size:.66rem;font-weight:800;letter-spacing:.06em;text-transform:uppercase;opacity:.75}
+@media (prefers-color-scheme:dark){.t-why{background:rgba(239,68,68,.12);color:#fecaca}}
+.strip i.sx{background:repeating-linear-gradient(135deg,rgba(225,29,29,.45) 0 3px,transparent 3px 6px);opacity:1}
 </style></head><body><main>
 <div class="top"><div><h1>Mein Stundenplan</h1><p class="sub">Maschinenbau · BMB1 Zug 2 · Winter 26/27 · Stand 30.09.2026</p></div><button id="gear" aria-label="Einstellungen"><span></span><span></span><span></span></button></div><div id="cfgwarn"></div><div id="testbar"></div>
 <input type="radio" name="m" id="ra" checked><input type="radio" name="m" id="rg"><input type="radio" name="m" id="ru">
@@ -279,7 +306,7 @@ body.so #set{animation:fi .3s cubic-bezier(.2,.8,.2,1)}
 <div class="box extra"><h3>Kürzel</h3><p><b>SU</b> Vorlesung · <b>Ue</b> Übung in deiner Gruppe</p><p>Gestrichelte Karten sind freiwillig. Die Mathe-Übung am Montag wählst du frei (4.3 um 8:00 oder 4.4 um 9:45). Die andere kannst du im Menü unter „Wiederkehrend“ abwählen.</p></div>
 </main><script>
 (function(){
-var BUILD="15";
+var BUILD="16";
 var E=[[1, 480, 570, "Ingenieurmathematik 1", "#2a6fdb", "Übung 4.3", "Khayat", "KA.107", "x"], [1, 585, 675, "Ingenieurmathematik 1", "#2a6fdb", "Übung 4.4", "Khayat", "KA.104", "x"], [1, 735, 825, "Ingenieurmathematik 1", "#2a6fdb", "Vorlesung", "Basting", "KA.034", ""], [1, 840, 930, "Werkstoffkunde", "#2a9d8f", "Vorlesung", "Frick", "WD.001", "u"], [1, 1050, 1140, "Physik", "#d6456b", "Tutorium", "Tutor", "", "f"], [2, 480, 570, "Konstruktion 1", "#d9822b", "Vorlesung", "Koch", "KA.034", ""], [2, 690, 780, "Technische Mechanik 1", "#7b4fd1", "Vorlesung", "Adrian", "KA.213", ""], [2, 840, 930, "Technische Mechanik 1", "#7b4fd1", "Vorlesung", "Adrian", "KA.213", ""], [2, 1050, 1140, "CAD 1", "#8a6d1f", "Vorlesung", "Koch", "online", "go"], [3, 480, 570, "Werkstoffkunde", "#2a9d8f", "Vorlesung", "Frick", "WD.001", ""], [3, 585, 675, "Werkstoffkunde", "#2a9d8f", "Vorlesung", "Frick", "WD.001", ""], [3, 690, 780, "Technische Mechanik 1", "#7b4fd1", "Vorlesung", "Adrian", "KA.002", ""], [3, 840, 930, "Informatik", "#3d8a3d", "Vorlesung", "Gölzer", "KA.034", "h"], [4, 585, 675, "Physik", "#d6456b", "Vorlesung", "Kottcke", "KA.215", ""], [4, 690, 780, "Ingenieurmathematik 1", "#2a6fdb", "Vorlesung", "Basting", "KA.213", ""], [4, 945, 1035, "Konstruktion 1", "#d9822b", "Übung 6.4", "Frey", "KA.336", "gm"], [4, 1050, 1140, "CAD 1", "#8a6d1f", "Tutorium", "Tutor", "online", "fo"], [5, 480, 570, "Konstruktion 1", "#d9822b", "Vorlesung", "Koch", "KA.002", "u"], [5, 585, 675, "Physik", "#d6456b", "Vorlesung", "Kottcke", "KA.213", "u"], [5, 945, 1035, "Informatik", "#3d8a3d", "Übung 7.4", "Wagner", "KI.203", "m"]];
 var DN=["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"],DS=["So","Mo","Di","Mi","Do","Fr","Sa"],MN=["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
 var ALIAS={"Ingenieurmathematik 1":["inma","inma1","mathe","mathe1","mathematik","ingenieurmathematik"],"Konstruktion 1":["k1","konstruktion","kon"],"Werkstoffkunde":["wsk","werkstoff","werkstoffe"],"Technische Mechanik 1":["tm","tm1","mechanik","technischemechanik"],"Physik":["phys"],"Informatik":["info","cs"],"CAD 1":["cad","cad1"]};
@@ -368,7 +395,7 @@ function blockText(d,pin){return START+"\nvar PIN_SCHUTZ = "+qv(pin||"")+"; // w
 function genBlock(){return blockText(genData(),"");}
 var SRC=null;
 var lastChk=0,PEND=null,RX=new RegExp("var "+"BUILD=\"(\\d+)\"");
-function toast(t){var el=document.getElementById("toast");if(!el){el=document.createElement("div");el.id="toast";document.body.appendChild(el);}el.textContent=t;el.classList.add("show");clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove("show");},2200);}
+function toast(t,sub){var el=document.getElementById("toast");if(!el){el=document.createElement("div");el.id="toast";el.setAttribute("role","status");document.body.appendChild(el);}el.innerHTML='<span class="tz-ic">✓</span><span class="tz-tx"><b>'+esc(t)+'</b>'+(sub?'<small>'+esc(sub)+'</small>':'')+'</span>';el.classList.remove("show");void el.offsetWidth;el.classList.add("show");clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove("show");},3000);}
 function doReload(v){try{if(sessionStorage.getItem("sp_rl")===v)return;sessionStorage.setItem("sp_rl",v);}catch(x){}location.replace(location.pathname+"?v="+v);}
 /* Einstellungsblock ohne eval lesen (die Sicherheitsregeln der Seite verbieten eval) */
 function parseCfg(txt){
@@ -387,7 +414,7 @@ function checkUpdate(force){if(!/^https?:/.test(location.protocol)||!window.fetc
 fetch(location.pathname,{cache:"no-cache"}).then(function(r){return r.ok?r.text():null;}).then(function(t){if(!t)return;var a=t.indexOf(START),b=t.indexOf(END,a);if(a<0||b<0)return;SRC=t;
 var m=t.match(RX);if(m&&m[1]!==BUILD){PEND=m[1];if(!document.body.classList.contains("so"))doReload(PEND);return;}
 var cfg=null;cfg=parseCfg(t.slice(a,b));
-if(cfg&&Array.isArray(cfg.a)&&Array.isArray(cfg.w)&&JSON.stringify({a:cfg.a,w:cfg.w})!==JSON.stringify({a:RAW_A,w:RAW_W})){loadCfg(cfg.a,cfg.w);applyDom();render();if(document.body.classList.contains("so"))buildSet(true);toast("Stundenplan aktualisiert ✓");}
+if(cfg&&Array.isArray(cfg.a)&&Array.isArray(cfg.w)&&JSON.stringify({a:cfg.a,w:cfg.w})!==JSON.stringify({a:RAW_A,w:RAW_W})){loadCfg(cfg.a,cfg.w);applyDom();render();if(document.body.classList.contains("so"))buildSet(true);toast("Stundenplan aktualisiert","Neue Änderungen wurden übernommen");}
 else if(L1==="gh"&&document.body.classList.contains("so"))buildSet(true);}).catch(function(){});}
 function fullFile(){if(!SRC)return null;var a=SRC.indexOf(START),b=SRC.indexOf(END,a);if(a<0||b<0)return null;return SRC.slice(0,a)+genBlock()+SRC.slice(b+END.length);}
 function copyText(txt,btn){var old=btn.textContent;function ok(){btn.textContent="Kopiert ✓";btn.classList.add("ok");setTimeout(function(){btn.textContent=old;btn.classList.remove("ok");},2000);}
@@ -433,7 +460,7 @@ function render(){
 var now=NOW(),wd=now.getDay(),min=now.getHours()*60+now.getMinutes(),s0=ds(now),par=parOf(now),wk=(wd>=1&&wd<=5);
 var ids=wk?evFor(now):[],act=ids.filter(function(i){return good(i,s0);});
 var out='<div class="c-head"><div class="c-day">'+DN[wd]+', '+now.getDate()+'. '+MN[now.getMonth()]+'</div><div class="c-kw">KW '+isoWeek(now)+' · '+(par==="g"?"gerade":"ungerade")+' Woche</div></div>';
-if(wk){var s='<div class="strip">';for(var i=0;i<act.length;i++){var e=E[act[i]];s+='<i style="left:'+((e[1]-480)/660*100)+'%;width:'+((e[2]-e[1])/660*100)+'%;background:'+e[4]+'"></i>';}
+if(wk){var s='<div class="strip">';ids.forEach(function(x){if(!isOff(x)&&isCx(x,s0)){var y=E[x];s+='<i class="sx" style="left:'+((y[1]-480)/660*100)+'%;width:'+((y[2]-y[1])/660*100)+'%"></i>';}});for(var i=0;i<act.length;i++){var e=E[act[i]];s+='<i style="left:'+((e[1]-480)/660*100)+'%;width:'+((e[2]-e[1])/660*100)+'%;background:'+e[4]+'"></i>';}
 if(min>=480&&min<=1140)s+='<u style="left:'+((min-480)/660*100)+'%"></u>';out+=s+'</div><div class="slab"><span>8:00</span><span>13:30</span><span>19:00</span></div>';}
 var cur=null,nxt=null;for(var j=0;j<act.length;j++){var q=E[act[j]];if(!cur&&q[1]<=min&&min<q[2])cur=q;if(!nxt&&q[1]>min)nxt=q;}
 if(cur)out+=card("",cur,"endet in "+dur(cur[2]-min),(min-cur[1])/(cur[2]-cur[1]));
@@ -446,9 +473,13 @@ else out+=empty("JETZT","Feierabend","Für heute ist alles geschafft.");
 if(nxt)out+=card("DANACH",nxt,"startet in "+dur(nxt[1]-min),null);
 else out+=empty("DANACH","Heute nichts mehr","Keine weiteren Termine heute.");
 if(ids.length){out+='<div class="c-lab" style="margin:20px 0 8px">HEUTE IM ÜBERBLICK</div>';
-for(var k=0;k<ids.length;k++){var i2=ids[k],r=E[i2],cls,sl,ci=cxInfo(i2,s0);
-if(isOff(i2)){cls="off";sl="abgewählt";}else if(ci){cls="cxl";sl="fällt aus"+(ci.g?"<br>"+esc(ci.g):"");}else if(r[2]<=min){cls="done";sl="vorbei";}else if(r[1]<=min){cls="now";sl="● läuft";}else{cls="later";sl="";}
-out+='<div class="t-row '+cls+'" style="--c:'+r[4]+'"><div class="t-tm">'+fmt(r[1])+'<br>'+fmt(r[2])+'</div><div class="t-nm"><b>'+r[3]+'</b> <small>'+r[5]+'</small><div class="c-room">'+room(r)+'</div></div><div class="t-st">'+sl+'</div></div>';}}
+var nextShown=false;for(var k=0;k<ids.length;k++){var i2=ids[k],r=E[i2],cls,pill="",why="",ci=cxInfo(i2,s0);
+if(isOff(i2)){cls="off";pill='<span class="pl pl-off">abgewählt</span>';}
+else if(ci){cls="cxl";pill='<span class="pl pl-cx">Fällt aus</span>';if(ci.g)why='<div class="t-why"><span>Grund</span>'+esc(ci.g)+'</div>';}
+else if(r[2]<=min){cls="done";pill='<span class="pl pl-done">vorbei</span>';}
+else if(r[1]<=min){cls="now";pill='<span class="pl pl-now"><i></i>läuft</span>';}
+else{cls="later";if(!nextShown){nextShown=true;pill='<span class="pl pl-soon">in '+dur(r[1]-min)+'</span>';}}
+out+='<div class="t-row '+cls+'" style="--c:'+r[4]+'"><div class="t-tm">'+fmt(r[1])+'<br>'+fmt(r[2])+'</div><div class="t-nm"><b>'+r[3]+'</b> <small>'+r[5]+'</small><div class="c-room">'+room(r)+'</div>'+why+'</div><div class="t-st">'+pill+'</div></div>';}}
 document.getElementById("cur").innerHTML=out;}
 /* ---------- Liste & Woche ---------- */
 function enhance(){
