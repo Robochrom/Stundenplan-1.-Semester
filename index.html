@@ -19,16 +19,10 @@
    Am einfachsten: Menü ☰ -> GitHub -> Veröffentlichen.
    ================================================================ */
 // ▼▼▼ AB HIER ERSETZEN ▼▼▼
-var PIN_SCHUTZ = ""; // wird automatisch gesetzt – nicht ändern
+var PIN_SCHUTZ = ""; // bleibt leer (PIN liegt nur auf deinen Geräten)
 var AUSFAELLE = [
-  { datum: "20.10.2026", start: "11:30", fach: "Technische Mechanik 1", grund: "„Erstsemester-Begrüßung“" },
 ];
 var ABGEWAEHLT = [
-  { tag: "Di", start: "08:00", fach: "Konstruktion 1" },
-  { tag: "Do", start: "15:45", fach: "Konstruktion 1" },
-  { tag: "Fr", start: "08:00", fach: "Konstruktion 1" },
-  { tag: "Di", start: "17:30", fach: "CAD 1" },
-  { tag: "Do", start: "17:30", fach: "CAD 1" },
 ];
 // ▲▲▲ BIS HIER ERSETZEN ▲▲▲
 </script>
@@ -284,7 +278,7 @@ body.so #set{animation:fi .3s cubic-bezier(.2,.8,.2,1)}
 <div class="box extra"><h3>Kürzel</h3><p><b>SU</b> Vorlesung · <b>Ue</b> Übung in deiner Gruppe</p><p>Gestrichelte Karten sind freiwillig. Die Mathe-Übung am Montag wählst du frei (4.3 um 8:00 oder 4.4 um 9:45). Die andere kannst du im Menü unter „Wiederkehrend“ abwählen.</p></div>
 </main><script>
 (function(){
-var BUILD="14";
+var BUILD="15";
 var E=[[1, 480, 570, "Ingenieurmathematik 1", "#2a6fdb", "Übung 4.3", "Khayat", "KA.107", "x"], [1, 585, 675, "Ingenieurmathematik 1", "#2a6fdb", "Übung 4.4", "Khayat", "KA.104", "x"], [1, 735, 825, "Ingenieurmathematik 1", "#2a6fdb", "Vorlesung", "Basting", "KA.034", ""], [1, 840, 930, "Werkstoffkunde", "#2a9d8f", "Vorlesung", "Frick", "WD.001", "u"], [1, 1050, 1140, "Physik", "#d6456b", "Tutorium", "Tutor", "", "f"], [2, 480, 570, "Konstruktion 1", "#d9822b", "Vorlesung", "Koch", "KA.034", ""], [2, 690, 780, "Technische Mechanik 1", "#7b4fd1", "Vorlesung", "Adrian", "KA.213", ""], [2, 840, 930, "Technische Mechanik 1", "#7b4fd1", "Vorlesung", "Adrian", "KA.213", ""], [2, 1050, 1140, "CAD 1", "#8a6d1f", "Vorlesung", "Koch", "online", "go"], [3, 480, 570, "Werkstoffkunde", "#2a9d8f", "Vorlesung", "Frick", "WD.001", ""], [3, 585, 675, "Werkstoffkunde", "#2a9d8f", "Vorlesung", "Frick", "WD.001", ""], [3, 690, 780, "Technische Mechanik 1", "#7b4fd1", "Vorlesung", "Adrian", "KA.002", ""], [3, 840, 930, "Informatik", "#3d8a3d", "Vorlesung", "Gölzer", "KA.034", "h"], [4, 585, 675, "Physik", "#d6456b", "Vorlesung", "Kottcke", "KA.215", ""], [4, 690, 780, "Ingenieurmathematik 1", "#2a6fdb", "Vorlesung", "Basting", "KA.213", ""], [4, 945, 1035, "Konstruktion 1", "#d9822b", "Übung 6.4", "Frey", "KA.336", "gm"], [4, 1050, 1140, "CAD 1", "#8a6d1f", "Tutorium", "Tutor", "online", "fo"], [5, 480, 570, "Konstruktion 1", "#d9822b", "Vorlesung", "Koch", "KA.002", "u"], [5, 585, 675, "Physik", "#d6456b", "Vorlesung", "Kottcke", "KA.213", "u"], [5, 945, 1035, "Informatik", "#3d8a3d", "Übung 7.4", "Wagner", "KI.203", "m"]];
 var DN=["Sonntag","Montag","Dienstag","Mittwoch","Donnerstag","Freitag","Samstag"],DS=["So","Mo","Di","Mi","Do","Fr","Sa"],MN=["Januar","Februar","März","April","Mai","Juni","Juli","August","September","Oktober","November","Dezember"];
 var ALIAS={"Ingenieurmathematik 1":["inma","inma1","mathe","mathe1","mathematik","ingenieurmathematik"],"Konstruktion 1":["k1","konstruktion","kon"],"Werkstoffkunde":["wsk","werkstoff","werkstoffe"],"Technische Mechanik 1":["tm","tm1","mechanik","technischemechanik"],"Physik":["phys"],"Informatik":["info","cs"],"CAD 1":["cad","cad1"]};
@@ -375,10 +369,23 @@ var SRC=null;
 var lastChk=0,PEND=null,RX=new RegExp("var "+"BUILD=\"(\\d+)\"");
 function toast(t){var el=document.getElementById("toast");if(!el){el=document.createElement("div");el.id="toast";document.body.appendChild(el);}el.textContent=t;el.classList.add("show");clearTimeout(el._t);el._t=setTimeout(function(){el.classList.remove("show");},2200);}
 function doReload(v){try{if(sessionStorage.getItem("sp_rl")===v)return;sessionStorage.setItem("sp_rl",v);}catch(x){}location.replace(location.pathname+"?v="+v);}
+/* Einstellungsblock ohne eval lesen (die Sicherheitsregeln der Seite verbieten eval) */
+function parseCfg(txt){
+function toJson(s){var out="",q=null;for(var k=0;k<s.length;k++){var c=s[k];
+if(q){if(c==="\\"){var n=s[k+1];out+=(n==="'"?"'":"\\"+n);k++;continue;}if(c===q){out+='"';q=null;continue;}if(c==='"'){out+='\\"';continue;}out+=c;continue;}
+if(c==='"'||c==="'"){q=c;out+='"';continue;}
+if(c==="/"&&s[k+1]==="/"){var nl=s.indexOf("\n",k);k=(nl<0?s.length:nl)-1;continue;}
+if(/[A-Za-z_$]/.test(c)){var w=/^[A-Za-z_$][\w$]*/.exec(s.slice(k))[0];out+=/^\s*:/.test(s.slice(k+w.length))?'"'+w+'"':w;k+=w.length-1;continue;}
+out+=c;}return JSON.parse(out.replace(/,(\s*[\]}])/g,"$1"));}
+function arr(name){var m=new RegExp("var\\s+"+name+"\\s*=\\s*\\[").exec(txt);if(!m)return null;var i=m.index+m[0].length-1,d=0,q=null,j;
+for(j=i;j<txt.length;j++){var c=txt[j];if(q){if(c==="\\"){j++;continue;}if(c===q)q=null;continue;}if(c==='"'||c==="'"){q=c;continue;}
+if(c==="/"&&txt[j+1]==="/"){var nl=txt.indexOf("\n",j);j=nl<0?txt.length:nl;continue;}if(c==="["||c==="{")d++;else if(c==="]"||c==="}"){d--;if(d===0)break;}}
+return toJson(txt.slice(i,j+1));}
+try{var a=arr("AUSFAELLE"),w=arr("ABGEWAEHLT");return Array.isArray(a)&&Array.isArray(w)?{a:a,w:w}:null;}catch(x){return null;}}
 function checkUpdate(force){if(!/^https?:/.test(location.protocol)||!window.fetch||document.hidden)return;var n=Date.now();if(!force&&n-lastChk<30000)return;lastChk=n;
 fetch(location.pathname,{cache:"no-cache"}).then(function(r){return r.ok?r.text():null;}).then(function(t){if(!t)return;var a=t.indexOf(START),b=t.indexOf(END,a);if(a<0||b<0)return;SRC=t;
 var m=t.match(RX);if(m&&m[1]!==BUILD){PEND=m[1];if(!document.body.classList.contains("so"))doReload(PEND);return;}
-var cfg=null;try{cfg=new Function(t.slice(a,b)+";return{a:AUSFAELLE,w:ABGEWAEHLT};")();}catch(x){}
+var cfg=null;cfg=parseCfg(t.slice(a,b));
 if(cfg&&Array.isArray(cfg.a)&&Array.isArray(cfg.w)&&JSON.stringify({a:cfg.a,w:cfg.w})!==JSON.stringify({a:RAW_A,w:RAW_W})){loadCfg(cfg.a,cfg.w);applyDom();render();if(document.body.classList.contains("so"))buildSet(true);toast("Stundenplan aktualisiert ✓");}
 else if(L1==="gh"&&document.body.classList.contains("so"))buildSet(true);}).catch(function(){});}
 function fullFile(){if(!SRC)return null;var a=SRC.indexOf(START),b=SRC.indexOf(END,a);if(a<0||b<0)return null;return SRC.slice(0,a)+genBlock()+SRC.slice(b+END.length);}
@@ -411,7 +418,7 @@ async function publish(newPin){var rec=ghRec();if(!TOKEN||!rec)throw ownErr("Auf
 var cur=await ghReq(rec,TOKEN,"GET"),txt=TD.decode(b64d(cur.content)),a=txt.indexOf(START),b=txt.indexOf(END,a);
 if(a<0||b<0)throw ownErr("In der Datei auf GitHub fehlt der Einstellungsblock.");
 if((txt.slice(0,a)+txt.slice(b)).indexOf("typeof PIN_SCHUTZ")<0)throw ownErr("Auf GitHub liegt noch eine ältere Version des Stundenplans. Lade einmal die neue Datei von Hand hoch, danach klappt das Veröffentlichen.");
-var remote=null;try{remote=new Function(txt.slice(a,b)+";return{a:AUSFAELLE,w:ABGEWAEHLT,p:typeof PIN_SCHUTZ==='string'?PIN_SCHUTZ:''};")();}catch(x){}
+var remote=parseCfg(txt.slice(a,b));if(!remote)throw ownErr("Der Einstellungsblock auf GitHub ist fehlerhaft. Bitte einmal von Hand prüfen.");
 var oldA=RAW_A,oldW=RAW_W;if(remote&&Array.isArray(remote.a)&&Array.isArray(remote.w))loadCfg(remote.a,remote.w);
 var data=genData(),out=txt.slice(0,a)+blockText(data,"")+txt.slice(b+END.length);
 try{await ghReq(rec,TOKEN,"PUT",{message:"Stundenplan aktualisiert",content:b64e(TE.encode(out)),sha:cur.sha,branch:rec.branch});}catch(x){loadCfg(oldA,oldW);throw x;}
